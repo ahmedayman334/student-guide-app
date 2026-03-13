@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:student_guide/core/theming/app_colors.dart';
+import 'package:student_guide/core/theming/app_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(StudentGuideApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp();
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class StudentGuideApp extends StatelessWidget {
+  const StudentGuideApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Ahmed Ayman")));
+    return MaterialApp(
+      title: 'Student Guide',
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
+      home: Scaffold(
+        body: Center(
+          child: Text(
+            "sydent guide app",
+            style: TextStyle(color: AppColors.textPrimary),
+          ),
+        ),
+      ),
+    );
   }
 }
