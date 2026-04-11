@@ -1,73 +1,63 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyles {
   AppTextStyles._();
 
-  // Headings
-  static const TextStyle heading1 = TextStyle(
+  // Headings — Plus Jakarta Sans
+  static TextStyle heading1 = GoogleFonts.plusJakartaSans(
     fontSize: 24,
     fontWeight: FontWeight.bold,
-    color: AppColors.textPrimary,
     letterSpacing: -0.5,
   );
 
-  static const TextStyle heading2 = TextStyle(
+  static TextStyle heading2 = GoogleFonts.plusJakartaSans(
     fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: AppColors.textPrimary,
     letterSpacing: -0.3,
   );
 
-  static const TextStyle heading3 = TextStyle(
+  static TextStyle heading3 = GoogleFonts.plusJakartaSans(
     fontSize: 16,
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
   );
 
-  // Body
-  static const TextStyle bodyLarge = TextStyle(
+  // Body — Inter
+  static TextStyle bodyLarge = GoogleFonts.inter(
     fontSize: 15,
     fontWeight: FontWeight.normal,
-    color: AppColors.textPrimary,
   );
 
-  static const TextStyle bodyMedium = TextStyle(
+  static TextStyle bodyMedium = GoogleFonts.inter(
     fontSize: 13,
     fontWeight: FontWeight.normal,
-    color: AppColors.textSecondary,
   );
 
-  static const TextStyle bodySmall = TextStyle(
+  static TextStyle bodySmall = GoogleFonts.inter(
     fontSize: 11,
     fontWeight: FontWeight.normal,
-    color: AppColors.textHint,
   );
 
-  // Labels
-  static const TextStyle labelLarge = TextStyle(
+  // Labels — Inter
+  static TextStyle labelLarge = GoogleFonts.inter(
     fontSize: 14,
     fontWeight: FontWeight.w600,
-    color: AppColors.textPrimary,
   );
 
-  static const TextStyle labelSmall = TextStyle(
+  static TextStyle labelSmall = GoogleFonts.inter(
     fontSize: 11,
     fontWeight: FontWeight.w500,
-    color: AppColors.textSecondary,
     letterSpacing: 0.5,
   );
 
-  // Welcome text
-  static const TextStyle welcomeTitle = TextStyle(
+  // Welcome
+  static TextStyle welcomeTitle = GoogleFonts.plusJakartaSans(
     fontSize: 22,
     fontWeight: FontWeight.bold,
-    color: AppColors.textPrimary,
   );
 
-  static const TextStyle welcomeSubtitle = TextStyle(
+  static TextStyle welcomeSubtitle = GoogleFonts.inter(
     fontSize: 14,
     fontWeight: FontWeight.normal,
-    color: AppColors.textSecondary,
   );
 }
