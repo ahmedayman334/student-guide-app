@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GPA Calculator - Student Guide</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface": "#2c2a51",
+                        "on-secondary-container": "#005c53",
+                        "primary-container": "#8899ff",
+                        "surface-dim": "#d4cfff",
+                        "secondary-fixed-dim": "#76e7d7",
+                        "inverse-primary": "#8596ff",
+                        "surface-container-low": "#f3eeff",
+                        "inverse-on-surface": "#9c98c6",
+                        "on-primary-fixed-variant": "#001b86",
+                        "on-secondary": "#c0fff4",
+                        "secondary-dim": "#005a51",
+                        "outline": "#75729e",
+                        "surface": "#f9f5ff",
+                        "on-primary-fixed": "#000000",
+                        "on-tertiary-container": "#523700",
+                        "on-surface-variant": "#5a5781",
+                        "error-container": "#f74b6d",
+                        "tertiary-dim": "#6b4900",
+                        "surface-bright": "#f9f5ff",
+                        "tertiary-fixed-dim": "#eda600",
+                        "tertiary-container": "#feb300",
+                        "on-tertiary-fixed-variant": "#5e4000",
+                        "on-tertiary": "#fff1df",
+                        "surface-tint": "#4052b6",
+                        "surface-container-highest": "#ddd9ff",
+                        "on-secondary-fixed": "#004841",
+                        "on-primary": "#f3f1ff",
+                        "surface-variant": "#ddd9ff",
+                        "on-primary-container": "#00156e",
+                        "on-background": "#2c2a51",
+                        "secondary": "#00675d",
+                        "primary-fixed": "#8899ff",
+                        "tertiary-fixed": "#feb300",
+                        "surface-container": "#e9e5ff",
+                        "secondary-fixed": "#85f6e5",
+                        "primary-fixed-dim": "#7a8cf3",
+                        "outline-variant": "#aca8d7",
+                        "surface-container-high": "#e3dfff",
+                        "inverse-surface": "#0b082f",
+                        "tertiary": "#7b5400",
+                        "error": "#b41340",
+                        "error-dim": "#a70138",
+                        "primary-dim": "#3346a9",
+                        "background": "#f9f5ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#00675d",
+                        "on-error-container": "#510017",
+                        "on-tertiary-fixed": "#382400",
+                        "primary": "#4052b6",
+                        "on-error": "#ffefef",
+                        "secondary-container": "#85f6e5"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm dark:shadow-none flex justify-between items-center px-6 py-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-indigo-600 dark:text-indigo-400 cursor-pointer hover:opacity-80 transition-opacity">menu</span>
+<h1 class="text-xl font-headline font-bold tracking-tight text-slate-900 dark:text-slate-50">Student Guide</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden border-2 border-white dark:border-slate-800">
+<img alt="User Profile" data-alt="Professional headshot of a young male student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr-GxfXAJyOhJhEtauHIH7yaX0FwJuGBJJZ-MnOYTvWu2fUJDeNA6HMA3peoij6gDS3797UFW6hcND3wCjKO0Sp315lLyjbVAbRX_kRN-hDmlP4z_JKwEsQ2-4A5Z8wAGq9XZgznnUosi2REctWHlRuhEawkVf8XvXZVs-5PDN8M3QED7HdlheD5MUssKZj1XlUIbJXHR7I5rL7LshfZgkAl_GdiD23JMR3OXX1T2JntJ50Ih8XvZdMOq5MsO2IJo4Wz5d9urdnVsJ"/>
+</div>
+</nav>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto space-y-8">
+<!-- Header Section: Editorial Style -->
+<header class="space-y-2">
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/20 text-primary font-label text-xs font-bold uppercase tracking-wider">
+                Academic Tool
+            </div>
+<h2 class="text-4xl font-headline font-extrabold tracking-tight text-on-surface">GPA Strategy</h2>
+<p class="text-on-surface-variant max-w-md">Simulate your semester outcomes and plan your path to academic excellence with precision.</p>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Left Column: Calculator -->
+<section class="md:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_-4px_24px_rgba(44,42,81,0.04)]">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-headline font-bold">Semester Subjects</h3>
+<button class="flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded-full hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg">add</span>
+<span class="text-sm font-bold font-label">Add Subject</span>
+</button>
+</div>
+<!-- Subject Rows -->
+<div class="space-y-4">
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-4 items-center p-4 bg-surface-container-low rounded-lg transition-colors hover:bg-surface-container">
+<div class="col-span-12 md:col-span-6">
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Subject Name</label>
+<input class="w-full bg-white border-none rounded-lg focus:ring-2 focus:ring-primary py-2 px-3 text-sm font-medium" type="text" value="Advanced Microeconomics"/>
+</div>
+<div class="col-span-5 md:col-span-2">
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Credits</label>
+<input class="w-full bg-white border-none rounded-lg focus:ring-2 focus:ring-primary py-2 px-3 text-sm font-medium" type="number" value="4"/>
+</div>
+<div class="col-span-5 md:col-span-3">
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Grade</label>
+<select class="w-full bg-white border-none rounded-lg focus:ring-2 focus:ring-primary py-2 px-3 text-sm font-medium">
+<option>A (4.0)</option>
+<option selected="">A- (3.7)</option>
+<option>B+ (3.3)</option>
+<option>B (3.0)</option>
+</select>
+</div>
+<div class="col-span-2 md:col-span-1 flex justify-center pt-5">
+<button class="text-error-dim hover:bg-error-container/20 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-4 items-center p-4 bg-surface-container-low rounded-lg transition-colors hover:bg-surface-container">
+<div class="col-span-12 md:col-span-6">
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Subject Name</label>
+<input class="w-full bg-white border-none rounded-lg focus:ring-2 focus:ring-primary py-2 px-3 text-sm font-medium" type="text" value="Data Structures &amp; Algorithms"/>
+</div>
+<div class="col-span-5 md:col-span-2">
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Credits</label>
+<input class="w-full bg-white border-none rounded-lg focus:ring-2 focus:ring-primary py-2 px-3 text-sm font-medium" type="number" value="3"/>
+</div>
+<div class="col-span-5 md:col-span-3">
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Grade</label>
+<select class="w-full bg-white border-none rounded-lg focus:ring-2 focus:ring-primary py-2 px-3 text-sm font-medium">
+<option selected="">A (4.0)</option>
+<option>A- (3.7)</option>
+<option>B+ (3.3)</option>
+<option>B (3.0)</option>
+</select>
+</div>
+<div class="col-span-2 md:col-span-1 flex justify-center pt-5">
+<button class="text-error-dim hover:bg-error-container/20 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 gap-4 items-center p-4 bg-surface-container-low rounded-lg transition-colors hover:bg-surface-container">
+<div class="col-span-12 md:col-span-6">
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Subject Name</label>
+<input class="w-full bg-white border-none rounded-lg focus:ring-2 focus:ring-primary py-2 px-3 text-sm font-medium" placeholder="Add subject name..." type="text"/>
+</div>
+<div class="col-span-5 md:col-span-2">
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Credits</label>
+<input class="w-full bg-white border-none rounded-lg focus:ring-2 focus:ring-primary py-2 px-3 text-sm font-medium" placeholder="0" type="number"/>
+</div>
+<div class="col-span-5 md:col-span-3">
+<label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Grade</label>
+<select class="w-full bg-white border-none rounded-lg focus:ring-2 focus:ring-primary py-2 px-3 text-sm font-medium">
+<option disabled="" selected="">Select Grade</option>
+<option>A (4.0)</option>
+<option>A- (3.7)</option>
+<option>B+ (3.3)</option>
+</select>
+</div>
+<div class="col-span-2 md:col-span-1 flex justify-center pt-5">
+<button class="text-outline-variant p-2 rounded-full cursor-not-allowed">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Target Planner Tool -->
+<div class="bg-primary/5 rounded-xl p-6 border-l-4 border-primary">
+<h3 class="text-xl font-headline font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">target</span>
+                        Target CGPA Planner
+                    </h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-bold text-on-surface mb-2">Desired Final CGPA</label>
+<input class="w-full h-2 bg-primary-container rounded-full appearance-none cursor-pointer accent-primary" max="4.0" min="3.0" step="0.01" type="range" value="3.85"/>
+<div class="flex justify-between mt-2 text-xs font-bold font-label text-primary">
+<span>Current: 3.62</span>
+<span>Target: 3.85</span>
+</div>
+</div>
+</div>
+<div class="bg-white/50 p-4 rounded-lg">
+<p class="text-xs font-label font-bold text-on-surface-variant uppercase mb-1 italic">Simulation Result</p>
+<p class="text-sm leading-relaxed">To reach <span class="font-bold text-primary">3.85</span>, you need an average of <span class="font-bold text-secondary">3.92</span> across the next 3 semesters.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Summary Display -->
+<aside class="md:col-span-4 space-y-6">
+<!-- Large GPA Display -->
+<div class="bg-gradient-to-br from-primary to-primary-dim rounded-xl p-8 text-on-primary shadow-xl flex flex-col items-center text-center space-y-4">
+<span class="text-xs font-label font-bold uppercase tracking-widest opacity-80">Estimated GPA</span>
+<div class="text-7xl font-headline font-extrabold tracking-tighter">3.82</div>
+<div class="px-4 py-1.5 bg-white/20 rounded-full text-sm font-bold backdrop-blur-md">
+                        Distinction Level
+                    </div>
+<p class="text-xs opacity-70 leading-relaxed px-4">Based on 7 current credits and selected grade projections.</p>
+</div>
+<!-- Performance Shift -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-sm font-headline font-bold">Performance Shift</h4>
+<span class="text-secondary font-bold text-sm">+12%</span>
+</div>
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden mb-4">
+<div class="h-full bg-secondary rounded-full" style="width: 72%"></div>
+</div>
+<p class="text-xs text-on-surface-variant">Your projected semester GPA is higher than last semester's 3.41 by 0.41 points.</p>
+<div class="mt-6 pt-6 border-t border-outline-variant/20 space-y-3">
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface-variant">Current CGPA</span>
+<span class="font-bold">3.62</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface-variant">Total Credits Earnt</span>
+<span class="font-bold">84</span>
+</div>
+</div>
+</div>
+<!-- Quick Action -->
+<div class="bg-tertiary-container/10 p-4 rounded-xl space-y-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h5 class="text-sm font-headline font-bold text-tertiary">Strategy Tip</h5>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Focus on 'Data Structures' (4 credits). Increasing that grade to A+ would boost your CGPA by an additional <span class="font-bold text-on-surface">0.03</span>.</p>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0_-4px_24px_rgba(44,42,81,0.06)] rounded-t-3xl z-50">
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-wider mt-1">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all">
+<span class="material-symbols-outlined">school</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-wider mt-1">Academic</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-200 rounded-2xl px-3 py-1.5 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-wider mt-1">GPA</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-wider mt-1">Schedule</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-3 py-1.5 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all">
+<span class="material-symbols-outlined">link</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-wider mt-1">Quick Links</span>
+</div>
+</nav>
+</body></html>
