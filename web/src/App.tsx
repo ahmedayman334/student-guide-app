@@ -1,11 +1,12 @@
-import './App.css'
+import "./App.css";
+import LoginPage from "./pages/auth/LoginPage";
 
 function App() {
-  return (
-    <>
-      
-    </>
-  )
+    return (
+        <>
+            <LoginPage />
+        </>
+    );
 }
 
-export default App
+export default App;
