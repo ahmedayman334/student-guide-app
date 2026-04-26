@@ -10,8 +10,10 @@ class AppColors {
 
   // ─── Light Theme ───────────────────────────────
   static const Color background = Color(0xFFFFFFFF);
-  static const Color scaffoldBackground = Color(0xFFF3EEFF);
+  static const Color scaffoldBackground = Color(0xFFf9f5ff);
   static const Color cardBackground = Color(0xFFFFFFFF);
+  static const Color cardScheduleBackground = Color(0xfff3eeff);
+
   static const Color surfaceGrey = Color(0xFFEEEFF5);
 
   static const Color textPrimary = Color(0xFF36365F);

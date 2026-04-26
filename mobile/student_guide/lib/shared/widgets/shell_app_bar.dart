@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_guide/core/constants/app_images.dart';
+import 'package:student_guide/core/routing/app_routes.dart';
 import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 
@@ -16,7 +17,7 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          onPressed: () => context.push("/profile"),
+          onPressed: () => context.push(AppRoutes.profile),
 
           icon: CircleAvatar(
             backgroundImage: AssetImage(AppImages.profileImage),

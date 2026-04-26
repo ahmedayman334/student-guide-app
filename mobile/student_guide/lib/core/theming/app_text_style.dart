@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTextStyles {
   AppTextStyles._();
 
-  static TextStyle displayTitle = GoogleFonts.plusJakartaSans(
+static TextStyle displayTitle = GoogleFonts.plusJakartaSans(
     fontSize: 28,
     fontWeight: FontWeight.w800,
     letterSpacing: -0.8,
@@ -19,7 +19,7 @@ class AppTextStyles {
   );
 
   static TextStyle heading2 = GoogleFonts.plusJakartaSans(
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
     letterSpacing: -0.3,
   );
@@ -93,8 +93,8 @@ class AppTextStyles {
   );
 
   static TextStyle timeSlot = GoogleFonts.plusJakartaSans(
-    fontSize: 13,
-    fontWeight: FontWeight.w600,
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
   );
 
   static TextStyle badge = GoogleFonts.plusJakartaSans(
