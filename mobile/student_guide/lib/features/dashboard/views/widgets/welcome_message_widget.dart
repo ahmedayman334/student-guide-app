@@ -23,13 +23,13 @@ class WelcomeMessage extends StatelessWidget {
               children: [
                 TextSpan(
                   text: "welcome back, ",
-                  style: AppTextStyles.heading1.copyWith(
+                  style: AppTextStyles.displayTitle.copyWith(
                     color: AppColors.textPrimary,
                   ),
                 ),
                 TextSpan(
                   text: name,
-                  style: AppTextStyles.heading1.copyWith(
+                  style: AppTextStyles.displayTitle.copyWith(
                     color: AppColors.primary,
                   ),
                 ),
