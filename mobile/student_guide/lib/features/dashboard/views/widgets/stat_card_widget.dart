@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 
 class StatCard extends StatelessWidget {
   final String title;
   final String value;
-  final IconData icon;
-  final Color iconColor;
-  final Color iconBackgroundColor;
+  final String? subtitle;
+
   const StatCard({
     super.key,
     required this.title,
     required this.value,
-    required this.icon,
-    required this.iconColor,
-    required this.iconBackgroundColor,
+    this.subtitle,
   });
 
   @override
@@ -31,29 +29,26 @@ class StatCard extends StatelessWidget {
           ),
         ],
       ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
 
-      child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-
-            children: [
-              Text(title, style: AppTextStyles.bodyMedium),
-              Text(value, style: AppTextStyles.heading1),
-            ],
-          ),
-          const Spacer(),
-          Container(
-            decoration: BoxDecoration(
-              color: iconBackgroundColor,
-
-              borderRadius: BorderRadius.circular(10),
+          Text(
+            title,
+            style: AppTextStyles.cardLabel.copyWith(
+              color: AppColors.bottomNavInactive,
             ),
-            height: 40,
-            width: 40,
-
-            child: Center(child: Icon(icon, color: iconColor)),
           ),
+
+          SizedBox(height: 6),
+          Text(
+            value,
+            style: AppTextStyles.statNumber.copyWith(
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 10),
+          if (subtitle != null) Text(subtitle!, style: AppTextStyles.bodySmall),
         ],
       ),
     );

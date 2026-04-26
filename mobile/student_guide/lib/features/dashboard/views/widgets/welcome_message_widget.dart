@@ -1,9 +1,15 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 
 class WelcomeMessage extends StatelessWidget {
   final String name;
-  const WelcomeMessage({super.key, required this.name});
+  final int classCount;
+  const WelcomeMessage({
+    super.key,
+    required this.name,
+    required this.classCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +18,31 @@ class WelcomeMessage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("welcome back, $name! 👋", style: AppTextStyles.welcomeTitle),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "welcome back, ",
+                  style: AppTextStyles.heading1.copyWith(
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                TextSpan(
+                  text: name,
+                  style: AppTextStyles.heading1.copyWith(
+                    color: AppColors.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          SizedBox(height: 6),
           Text(
-            "Here's what's happening with your academic schedule today.",
-            style: AppTextStyles.welcomeSubtitle,
+            "You have $classCount classes today. Stay focused!",
+            style: AppTextStyles.subtitle.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ],
       ),

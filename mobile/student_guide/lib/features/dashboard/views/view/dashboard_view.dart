@@ -9,13 +9,13 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(child: WelcomeMessage(name: 'Ahmed')),
-            StatCardGridView(),
-          ],
-        ),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: WelcomeMessage(name: 'Ahmed', classCount: 3),
+          ),
+          StatCardGridView(),
+        ],
       ),
     );
   }

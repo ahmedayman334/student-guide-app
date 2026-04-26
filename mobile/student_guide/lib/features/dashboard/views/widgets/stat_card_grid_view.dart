@@ -8,13 +8,13 @@ class StatCardGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       sliver: SliverGrid(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
-          childAspectRatio: 1.8,
+          childAspectRatio: 1.5,
         ),
 
         delegate: SliverChildListDelegate(
@@ -22,9 +22,7 @@ class StatCardGridView extends StatelessWidget {
             return StatCard(
               title: card.title,
               value: card.value,
-              icon: card.icon,
-              iconColor: card.iconColor,
-              iconBackgroundColor: card.iconBgColor,
+              subtitle: card.subtitle,
             );
           }).toList(),
         ),

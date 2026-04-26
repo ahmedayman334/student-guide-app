@@ -5,6 +5,10 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("profile screen")));
+    return Scaffold(
+      appBar: AppBar(iconTheme: IconThemeData(color: Colors.black)),
+
+      body: Center(child: Text("profile screen")),
+    );
   }
 }

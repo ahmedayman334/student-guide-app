@@ -41,9 +41,9 @@ class AppTheme {
       }),
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return AppTextStyles.labelSmall.copyWith(color: AppColors.primary);
+          return AppTextStyles.navLabel.copyWith(color: AppColors.primary);  // was: labelSmall
         }
-        return AppTextStyles.labelSmall.copyWith(
+        return AppTextStyles.navLabel.copyWith(
           color: AppColors.bottomNavInactive,
         );
       }),
@@ -55,7 +55,7 @@ class AppTheme {
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        textStyle: AppTextStyles.labelLarge,
+        textStyle: AppTextStyles.buttonPrimary,  // was: labelLarge
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -66,7 +66,7 @@ class AppTheme {
         borderSide: BorderSide.none,
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      hintStyle: AppTextStyles.bodyMedium,
+      hintStyle: AppTextStyles.inputHint,  // was: bodyMedium
     ),
     dividerTheme: const DividerThemeData(
       color: AppColors.divider,
@@ -109,11 +109,11 @@ class AppTheme {
       }),
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return AppTextStyles.labelSmall.copyWith(
+          return AppTextStyles.navLabel.copyWith(
             color: AppColors.darkPrimary,
-          );
+          );  // was: labelSmall
         }
-        return AppTextStyles.labelSmall.copyWith(
+        return AppTextStyles.navLabel.copyWith(
           color: AppColors.darkBottomNavInactive,
         );
       }),
@@ -125,7 +125,7 @@ class AppTheme {
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        textStyle: AppTextStyles.labelLarge,
+        textStyle: AppTextStyles.buttonPrimary,  // was: labelLarge
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -136,7 +136,7 @@ class AppTheme {
         borderSide: BorderSide.none,
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      hintStyle: AppTextStyles.bodyMedium,
+      hintStyle: AppTextStyles.inputHint,  // was: bodyMedium
     ),
     dividerTheme: const DividerThemeData(
       color: AppColors.darkDivider,
