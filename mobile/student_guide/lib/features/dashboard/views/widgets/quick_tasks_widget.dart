@@ -24,7 +24,7 @@ class _QuickTasksWidgetState extends State<QuickTasksWidget> {
 
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardScheduleBackground,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
