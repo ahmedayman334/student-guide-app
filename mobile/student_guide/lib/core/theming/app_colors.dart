@@ -3,6 +3,17 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
+  
+  static const LinearGradient balanceGradient = LinearGradient(
+    colors: [
+      primary,
+      Color.fromARGB(255, 101, 114, 200),
+    ], // Muted Green to Dark Green 1
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+
   // ─── Brand ─────────────────────────────────────
   static const Color primary = Color(0xFF3D4DB7); // deep blue
   static const Color secondary = Color(0xFF009688); // teal
@@ -33,8 +44,8 @@ class AppColors {
   static const Color darkPrimary = Color(0xFF6674CC);
   static const Color darkBackground = Color(0xFF12121F);
   static const Color darkScaffoldBackground = Color(0xFF12121F);
-  static const Color darkCardBackground = Color(0xFF1E1E32);
   static const Color darkSurfaceGrey = Color(0xFF2A2A42);
+  static const Color darkCardBackground = Color(0xFF1E2040); // slightly lighter
 
   static const Color darkTextPrimary = Color(0xFFF1F1F1);
   static const Color darkTextSecondary = Color(0xFFADB5BD);
