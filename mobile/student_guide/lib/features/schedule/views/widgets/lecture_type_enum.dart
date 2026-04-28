@@ -1,0 +1,1 @@
+enum LectureType { lecture, section }

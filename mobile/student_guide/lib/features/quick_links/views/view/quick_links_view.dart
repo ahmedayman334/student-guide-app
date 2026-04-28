@@ -21,7 +21,7 @@ class QuickLinksView extends StatelessWidget {
     padding: const EdgeInsets.only(bottom: 12),
     child: LinkCardWidget(
       linkCardModel: entry.value,
-      isFirst: entry.key == 0,
+      // isFirst: entry.key == 0,
     ),
   ),
 ),
