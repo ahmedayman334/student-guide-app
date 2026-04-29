@@ -51,7 +51,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: AppRoutes.gpa,
-              builder: (context, state) => GPAView(),
+              builder: (context, state) => GpaCalculatorView(),
             ),
           ],
         ),
