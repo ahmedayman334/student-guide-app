@@ -1,4 +1,3 @@
-// lib/features/schedule/views/widgets/add_lecture_form.dart
 
 import 'package:flutter/material.dart';
 import 'package:student_guide/core/theming/app_colors.dart';
