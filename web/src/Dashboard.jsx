@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { userContext } from './context/context';
 import SideBar from './compontents/SideBar';
 import { FaStar } from "react-icons/fa";
 import { 
@@ -16,6 +17,11 @@ import {
 } from "react-icons/io5";
 
 function Dashboard() {
+  const { userData } = useContext(userContext);
+  const firstName = userData?.name ? userData.name.split(' ')[0] : "Alex";
+  const currentGpa = userData?.gpa || "3.62";
+  const subjectsCount = userData?.subjects?.length || 6;
+
   return (
     <div className="flex min-h-screen bg-[#F5F5FA] font-sans text-left" dir="ltr">
       <SideBar />
@@ -25,7 +31,7 @@ function Dashboard() {
         <div className="flex justify-between items-start mb-8">
           <div>
             <h1 className="text-[34px] font-bold text-[#1D214E] tracking-tight">
-              Welcome back, <span className="text-[#4E58CA]">Alex</span>
+              Welcome back, <span className="text-[#4E58CA]">{firstName}</span>
             </h1>
             <p className="text-[#7F8A9E] text-[16px] mt-1 font-medium">
               You have 3 classes today. Stay focused!
@@ -41,7 +47,7 @@ function Dashboard() {
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] relative overflow-hidden flex flex-col justify-between">
             <div className="w-1.5 h-12 bg-[#4E58CA] absolute left-0 top-6 rounded-r-full"></div>
             <p className="text-[#7F8A9E] text-[12px] font-bold tracking-widest mb-2 pl-2">CURRENT GPA</p>
-            <h2 className="text-[36px] font-bold text-[#1D214E] mb-2 leading-none pl-2">3.82</h2>
+            <h2 className="text-[36px] font-bold text-[#1D214E] mb-2 leading-none pl-2">{currentGpa}</h2>
             <div className="flex items-center gap-1.5 text-[13px] font-bold text-[#00A86B] pl-2 mt-auto">
               <IoTrendingUp size={16} /> +0.12 this term
             </div>
@@ -49,7 +55,7 @@ function Dashboard() {
 
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
             <p className="text-[#7F8A9E] text-[12px] font-bold tracking-widest mb-2">SUBJECTS</p>
-            <h2 className="text-[36px] font-bold text-[#1D214E] mb-3 leading-none">6</h2>
+            <h2 className="text-[36px] font-bold text-[#1D214E] mb-3 leading-none">{subjectsCount}</h2>
             <div className="flex items-center -space-x-2 mt-auto">
               <div className="w-8 h-8 rounded-full bg-[#8A94FA] text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-30">M</div>
               <div className="w-8 h-8 rounded-full bg-[#6EE2C8] text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-20">P</div>

@@ -15,7 +15,7 @@ import { userContext } from '../context/context';
 
 
 function Register() {
-  const {setUesrname,setIsLoggedIn}=useContext(userContext)
+  const { loginUser } = useContext(userContext)
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const isMatch = password === confirmPassword;
@@ -38,8 +38,13 @@ function Register() {
       register.year&&
       password ===confirmPassword
     ) {
-      setUesrname(register.FullName);
-      setIsLoggedIn(true)
+      loginUser({
+        FullName: register.FullName,
+        email: register.email,
+        id: register.id,
+        year: register.year,
+        department: register.Dep
+      });
       navigate("/dashboard");
     }
   }
