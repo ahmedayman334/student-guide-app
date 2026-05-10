@@ -1,73 +1,57 @@
 import React from 'react';
-import { IoBookOutline } from "react-icons/io5";
-import { IoIosMenu } from "react-icons/io";
-import { LuCalculator } from "react-icons/lu";
-import { FaCalendar, FaRegUserCircle } from "react-icons/fa";
-import { PiLinkSimpleLight } from "react-icons/pi";
+import { FaGraduationCap, FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineDashboard } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
-function SideBar({ openMenu, SetopenMenu }) {
-  const navgaite=useNavigate();
+import { IoCalendarOutline, IoLinkOutline } from "react-icons/io5";
+import { BsBarChartFill } from "react-icons/bs";
+import { Link, useLocation } from "react-router-dom";
+
+function SideBar() {
+  const location = useLocation();
+
   return (
-    <div
-      className={`border-r border-gray-200 bg-white h-screen sticky top-0 transition-all duration-300 flex flex-col ${
-        openMenu  ? "w-full lg:w-[200px]"
-      : "w-[60px] lg:w-[85px] overflow-hidden"
-      }`}
-    >
-      <div className="h-[70px] flex items-center justify-center border-b border-gray-100">
-        {openMenu ? (
-          <h1 className="text-xl font-bold text-[#4f39f6] whitespace-nowrap">
-            Student Guide
-          </h1>
-        ) : (
-          <div className="w-10 h-10 bg-[#4f39f6] rounded-xl flex items-center justify-center text-white font-bold">
-            S
+    <div className="w-[260px] h-screen bg-white flex flex-col justify-between py-8 px-6 border-r border-[#F0F0F5] sticky top-0 shrink-0">
+      <div>
+        <div className="flex items-center gap-3 px-2 mb-12">
+          <div className="bg-[#4E58CA] p-2 rounded-lg text-white">
+             <FaGraduationCap size={20} />
           </div>
-        )}
+          <span className="font-bold text-[20px] text-[#1D214E]">Student Guide</span>
+        </div>
+
+        <nav className="space-y-2">
+          <MenuItem icon={<MdOutlineDashboard size={22} />} label="DASHBOARD" path="/dashboard" currentPath={location.pathname} />
+          <MenuItem icon={<FaGraduationCap size={22} />} label="ACADEMIC" path="/academic" currentPath={location.pathname} />
+          <MenuItem icon={<BsBarChartFill size={22} />} label="GPA Calculator" path="/calculator" currentPath={location.pathname} />
+          <MenuItem icon={<IoCalendarOutline size={22} />} label="SCHEDULE" path="/schedule" currentPath={location.pathname} />
+          <MenuItem icon={<IoLinkOutline size={22} />} label="QUICK LINKS" path="/links" currentPath={location.pathname} />
+          <MenuItem icon={<FaRegUserCircle size={22} />} label="PROFILE" path="/profile" currentPath={location.pathname} />
+        </nav>
       </div>
-      <div className="pt-2 flex justify-center">
-        <IoIosMenu
-          className="text-3xl cursor-pointer text-gray-600 hover:text-[#4f39f6] transition-colors"
-          onClick={() => SetopenMenu(!openMenu)}
-        />
+
+      <div className="bg-[#F2F2FF] rounded-[20px] p-4 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-[#FFD7A3] flex items-center justify-center overflow-hidden border-2 border-white shrink-0 relative">
+          <div className="w-6 h-6 bg-[#D8A783] rounded-full absolute -bottom-1"></div>
+        </div>
+        <div className="overflow-hidden">
+          <h4 className="text-[14px] font-bold text-[#1D214E] truncate">Alex Student</h4>
+          <p className="text-[10px] text-[#7F8A9E] font-bold tracking-wider uppercase truncate">Economics Major</p>
+        </div>
       </div>
-  <ul
-  className={`mt-4 flex flex-col gap-y-3 ${
-    openMenu ? "px-3 -ml-[40px] md:text-center py-3" : "px-5 items-center py-3"
-  }`}
->
-        <MenuItem className icon={<MdOutlineDashboard />} label="Dashboard" isOpen={openMenu} active />
-        <MenuItem icon={<IoBookOutline />} label="Academic Guide" isOpen={openMenu} onClick={()=>{navgaite("/login")}} />
-        <MenuItem icon={<LuCalculator />} label="GPA Calculator" isOpen={openMenu} />
-        <MenuItem icon={<FaCalendar />} label="Smart Schedule" isOpen={openMenu} />
-        <MenuItem icon={<PiLinkSimpleLight />} label="Quick Links" isOpen={openMenu} />
-        <MenuItem icon={<FaRegUserCircle />} label="Profile" isOpen={openMenu} />
-      </ul>
     </div>
   );
 }
 
-const MenuItem = ({ icon, label, isOpen, active = false ,onClick}) => {
+const MenuItem = ({ icon, label, path, currentPath }) => {
+  const active = currentPath === path;
   return (
-    <li
-    onClick={onClick}
-      className={`flex items-center mt-5 justify-center sm:justify-start mt-5 ${
-        isOpen ? "gap-2 ml-12 px-3 py-1   "  : "justify-center p-2 "
-      } rounded-xl cursor-pointer transition-all duration-200 ${
-        active
-          ? "bg-[#4f39f6] text-white"
-          : "text-gray-500 hover:bg-indigo-50 hover:text-[#4f39f6]"
-      }`}
-    >
-      <div className="text-xl">{icon}</div>
-
-      {isOpen && (
-        <span className="sm:text-center md:text-center font-semibold whitespace-nowrap ">
-          {label}
-        </span>
-      )}
-    </li>
+    <Link to={path}>
+      <div className={`flex items-center gap-4 px-4 py-3.5 rounded-xl cursor-pointer transition-colors ${
+        active ? "bg-[#F2F2FF] text-[#4E58CA] font-bold" : "text-[#7F8A9E] font-semibold hover:bg-gray-50"
+      }`}>
+        {icon}
+        <span className="text-[13px] tracking-wide">{label}</span>
+      </div>
+    </Link>
   );
 };
 
