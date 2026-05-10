@@ -3,11 +3,14 @@ import { FaGraduationCap, FaGoogle, FaLinkedin, FaInfo } from "react-icons/fa";
 import { FiAtSign, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { IoArrowForward } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { userContext } from "../context/context";
 
 export default function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { loginUser } = useContext(userContext);
 
   const [login, setLogin] = useState({
     email: "",
@@ -34,7 +37,7 @@ export default function Login() {
       );
 
       if (student) {
-        localStorage.setItem("token", "fake-token");
+        loginUser(student);
         navigate("/dashboard");
       } else {
         setError("Invalid email or password");
