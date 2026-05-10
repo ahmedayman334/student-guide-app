@@ -1,7 +1,8 @@
 import React from 'react';
 import { FaGraduationCap, FaRegUserCircle } from "react-icons/fa";
-import { MdOutlineDashboard, MdOutlineInsertChart } from "react-icons/md";
+import { MdOutlineDashboard } from "react-icons/md";
 import { IoCalendarOutline, IoLinkOutline } from "react-icons/io5";
+import { BsBarChartFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 
 function SideBar() {
@@ -20,7 +21,7 @@ function SideBar() {
         <nav className="space-y-2">
           <MenuItem icon={<MdOutlineDashboard size={22} />} label="DASHBOARD" path="/dashboard" currentPath={location.pathname} />
           <MenuItem icon={<FaGraduationCap size={22} />} label="ACADEMIC" path="/academic" currentPath={location.pathname} />
-          <MenuItem icon={<MdOutlineInsertChart size={22} />} label="GPA ANALYTICS" path="/analytics" currentPath={location.pathname} />
+          <MenuItem icon={<BsBarChartFill size={22} />} label="GPA Calculator" path="/calculator" currentPath={location.pathname} />
           <MenuItem icon={<IoCalendarOutline size={22} />} label="SCHEDULE" path="/schedule" currentPath={location.pathname} />
           <MenuItem icon={<IoLinkOutline size={22} />} label="QUICK LINKS" path="/links" currentPath={location.pathname} />
           <MenuItem icon={<FaRegUserCircle size={22} />} label="PROFILE" path="/profile" currentPath={location.pathname} />
@@ -32,8 +33,8 @@ function SideBar() {
           <div className="w-6 h-6 bg-[#D8A783] rounded-full absolute -bottom-1"></div>
         </div>
         <div className="overflow-hidden">
-          <h4 className="text-[14px] font-bold text-[#1D214E] truncate">Alex Johnson</h4>
-          <p className="text-[12px] text-[#7F8A9E] font-medium truncate">Computer Science</p>
+          <h4 className="text-[14px] font-bold text-[#1D214E] truncate">Alex Student</h4>
+          <p className="text-[10px] text-[#7F8A9E] font-bold tracking-wider uppercase truncate">Economics Major</p>
         </div>
       </div>
     </div>
