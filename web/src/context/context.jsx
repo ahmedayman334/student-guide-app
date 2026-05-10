@@ -7,7 +7,7 @@ const defaultUser = {
   name: "Johnathan Doe",
   email: "john.doe@university.edu",
   department: "Computer Science",
-  year: "3rd Year",
+  year: "Third Year",
   gpa: 3.62,
   credits: 84,
   targetGpa: 3.85,
@@ -34,20 +34,20 @@ export function UserProvider({children}) {
     }, [userData]);
 
     const loginUser = (userApiData) => {
+        const savedDataRaw = localStorage.getItem('studentGuideUserData');
+        const savedData = savedDataRaw ? JSON.parse(savedDataRaw) : {};
+
         const newUserData = {
             ...defaultUser,
-            name: userApiData.username || userApiData.FullName || defaultUser.name,
-            email: userApiData.email || defaultUser.email,
-            id: userApiData.id || defaultUser.id,
-            // Try to keep existing saved data if user logging in matches the saved user
-            ...(localStorage.getItem('studentGuideUserData') && JSON.parse(localStorage.getItem('studentGuideUserData')).email === userApiData.email 
-                ? JSON.parse(localStorage.getItem('studentGuideUserData')) 
-                : {})
+            ...(savedData.email === userApiData.email ? savedData : {}), // Keep old data if same user
+            
+            // Override with newly provided data
+            name: userApiData.username || userApiData.FullName || savedData.name || defaultUser.name,
+            email: userApiData.email || savedData.email || defaultUser.email,
+            id: userApiData.id || savedData.id || defaultUser.id,
+            year: userApiData.year || savedData.year || defaultUser.year,
+            department: userApiData.department || savedData.department || defaultUser.department,
         };
-        
-        if (userApiData.username || userApiData.FullName) {
-           newUserData.name = userApiData.username || userApiData.FullName;
-        }
 
         setUserData(newUserData);
         setIsLoggedIn(true);
