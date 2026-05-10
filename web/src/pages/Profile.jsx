@@ -21,7 +21,7 @@ export default function Profile() {
     name: userData?.name || "",
     email: userData?.email || "",
     department: userData?.department || "Computer Science",
-    year: userData?.year || "3rd Year"
+    year: userData?.year || "Third Year"
   });
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function Profile() {
         name: userData.name || "",
         email: userData.email || "",
         department: userData.department || "Computer Science",
-        year: userData.year || "3rd Year"
+        year: userData.year || "Third Year"
       });
     }
   }, [userData]);
@@ -71,7 +71,7 @@ export default function Profile() {
 
             <div className="bg-white rounded-2xl px-8 py-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] mb-2 relative">
               <h1 className="text-[28px] font-bold text-[#1D214E] tracking-tight leading-none mb-2">{userData?.name || "Johnathan Doe"}</h1>
-              <p className="text-[#7F8A9E] text-[15px] font-medium">{userData?.department || "B.Sc. Computer Science"} • {userData?.year || "3rd Year Student"}</p>
+              <p className="text-[#7F8A9E] text-[15px] font-medium">{userData?.department || "B.Sc. Computer Science"} • {userData?.year || "Third Year"} Student</p>
             </div>
           </div>
         </div>
@@ -188,11 +188,22 @@ export default function Profile() {
                   <label className="block text-[#A09DB0] text-[11px] font-bold tracking-widest mb-2 uppercase">Primary Department</label>
                   <div className="relative cursor-pointer">
                     <FaBuilding className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0]" />
-                    <select value={formData.department} onChange={e => setFormData({...formData, department: e.target.value})} className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold appearance-none cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all">
-                      <option value="Computer Science">Computer Science</option>
-                      <option value="Information Technology">Information Technology</option>
-                      <option value="Software Engineering">Software Engineering</option>
-                    </select>
+                    <input 
+                      type="text" 
+                      list="DepartmentOptions"
+                      value={formData.department} 
+                      onChange={e => setFormData({...formData, department: e.target.value})} 
+                      className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all"
+                    />
+                    <datalist id="DepartmentOptions">
+                      <option value="Computer Science" />
+                      <option value="Information Technology" />
+                      <option value="Software Engineering" />
+                      <option value="Physics" />
+                      <option value="Applied Science" />
+                      <option value="Chemistry" />
+                      <option value="Statistics" />
+                    </datalist>
                     <IoChevronDownOutline className="absolute right-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-lg pointer-events-none" />
                   </div>
                 </div>
@@ -202,13 +213,20 @@ export default function Profile() {
                   <label className="block text-[#A09DB0] text-[11px] font-bold tracking-widest mb-2 uppercase">Current Academic Year</label>
                   <div className="relative cursor-pointer">
                     <IoCalendarOutline className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-lg" />
-                    <select value={formData.year} onChange={e => setFormData({...formData, year: e.target.value})} className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold appearance-none cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all">
-                      <option value="First Year">First Year</option>
-                      <option value="Second Year">Second Year</option>
-                      <option value="3rd Year">3rd Year</option>
-                      <option value="4th Year">4th Year</option>
-                      <option value="Graduated">Graduated</option>
-                    </select>
+                    <input 
+                      type="text" 
+                      list="YearOptions"
+                      value={formData.year} 
+                      onChange={e => setFormData({...formData, year: e.target.value})} 
+                      className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all"
+                    />
+                    <datalist id="YearOptions">
+                      <option value="First Year" />
+                      <option value="Second Year" />
+                      <option value="Third Year" />
+                      <option value="Fourth Year" />
+                      <option value="Graduated" />
+                    </datalist>
                     <IoChevronDownOutline className="absolute right-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-lg pointer-events-none" />
                   </div>
                 </div>
