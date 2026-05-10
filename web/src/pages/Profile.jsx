@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { userContext } from '../context/context';
 import SideBar from '../compontents/SideBar';
 import { FaPen, FaCheckCircle, FaUser, FaBuilding, FaMoon } from "react-icons/fa";
 import { FaFileLines } from "react-icons/fa6";
@@ -14,6 +15,33 @@ import {
 import { BsBellFill } from "react-icons/bs";
 
 export default function Profile() {
+  const { userData, updateProfile } = useContext(userContext);
+  
+  const [formData, setFormData] = useState({
+    name: userData?.name || "",
+    email: userData?.email || "",
+    department: userData?.department || "Computer Science",
+    year: userData?.year || "3rd Year"
+  });
+
+  useEffect(() => {
+    if (userData) {
+      setFormData({
+        name: userData.name || "",
+        email: userData.email || "",
+        department: userData.department || "Computer Science",
+        year: userData.year || "3rd Year"
+      });
+    }
+  }, [userData]);
+
+  const handleSave = () => {
+    updateProfile(formData);
+    alert("Profile changes saved successfully!");
+  };
+
+  const initials = formData.name ? formData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : "JD";
+
   return (
     <div className="flex min-h-screen bg-[#F5F5FA] font-sans text-left" dir="ltr">
       <SideBar />
@@ -34,7 +62,7 @@ export default function Profile() {
           <div className="absolute -bottom-16 left-12 flex items-end gap-6">
             <div className="relative">
               <div className="w-[140px] h-[140px] rounded-full bg-[#8758FF] border-[6px] border-[#F5F5FA] flex items-center justify-center shadow-lg">
-                <span className="text-[48px] font-bold text-white tracking-widest">JD</span>
+                <span className="text-[48px] font-bold text-white tracking-widest">{initials}</span>
               </div>
               <div className="absolute bottom-2 right-2 w-10 h-10 bg-[#2D439A] rounded-full border-[3px] border-[#F5F5FA] flex items-center justify-center text-white cursor-pointer shadow-sm hover:bg-[#1d2d70] transition-colors">
                 <FaPen size={14} />
@@ -42,8 +70,8 @@ export default function Profile() {
             </div>
 
             <div className="bg-white rounded-2xl px-8 py-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] mb-2 relative">
-              <h1 className="text-[28px] font-bold text-[#1D214E] tracking-tight leading-none mb-2">Johnathan Doe</h1>
-              <p className="text-[#7F8A9E] text-[15px] font-medium">B.Sc. Computer Science • 3rd Year Student</p>
+              <h1 className="text-[28px] font-bold text-[#1D214E] tracking-tight leading-none mb-2">{userData?.name || "Johnathan Doe"}</h1>
+              <p className="text-[#7F8A9E] text-[15px] font-medium">{userData?.department || "B.Sc. Computer Science"} • {userData?.year || "3rd Year Student"}</p>
             </div>
           </div>
         </div>
@@ -107,7 +135,7 @@ export default function Profile() {
                   <h2 className="text-[24px] font-bold text-[#1D214E]">Personal Information</h2>
                   <p className="text-[#7F8A9E] text-[15px] font-medium mt-1">Update your university profile and contact details</p>
                 </div>
-                <button className="bg-[#4E58CA] text-white px-8 py-3.5 rounded-xl font-bold text-[15px] shadow-[0_8px_20px_rgba(78,88,202,0.3)] hover:bg-[#3c4dba] transition-colors leading-snug">
+                <button onClick={handleSave} className="bg-[#4E58CA] text-white px-8 py-3.5 rounded-xl font-bold text-[15px] shadow-[0_8px_20px_rgba(78,88,202,0.3)] hover:bg-[#3c4dba] transition-colors leading-snug">
                   Save Profile<br/>Changes
                 </button>
               </div>
@@ -120,7 +148,8 @@ export default function Profile() {
                     <FaUser className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0]" />
                     <input 
                       type="text" 
-                      defaultValue="Johnathan Doe" 
+                      value={formData.name}
+                      onChange={e => setFormData({...formData, name: e.target.value})}
                       className="w-full pl-12 pr-4 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold focus:ring-2 focus:ring-[#4E58CA] transition-all"
                     />
                   </div>
@@ -134,7 +163,7 @@ export default function Profile() {
                     <input 
                       type="text" 
                       readOnly 
-                      defaultValue="ST-9982441" 
+                      value={userData?.id || "ST-9982441"}
                       className="w-full pl-12 pr-4 py-4 bg-[#F2F1F7] rounded-2xl outline-none text-[#A09DB0] font-bold italic opacity-80"
                     />
                   </div>
@@ -147,7 +176,8 @@ export default function Profile() {
                     <MdEmail className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-lg" />
                     <input 
                       type="email" 
-                      defaultValue="john.doe@university.edu" 
+                      value={formData.email}
+                      onChange={e => setFormData({...formData, email: e.target.value})}
                       className="w-full pl-12 pr-4 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold focus:ring-2 focus:ring-[#4E58CA] transition-all"
                     />
                   </div>
@@ -158,10 +188,10 @@ export default function Profile() {
                   <label className="block text-[#A09DB0] text-[11px] font-bold tracking-widest mb-2 uppercase">Primary Department</label>
                   <div className="relative cursor-pointer">
                     <FaBuilding className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0]" />
-                    <select className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold appearance-none cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all">
-                      <option>Computer Science</option>
-                      <option>Information Technology</option>
-                      <option>Software Engineering</option>
+                    <select value={formData.department} onChange={e => setFormData({...formData, department: e.target.value})} className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold appearance-none cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all">
+                      <option value="Computer Science">Computer Science</option>
+                      <option value="Information Technology">Information Technology</option>
+                      <option value="Software Engineering">Software Engineering</option>
                     </select>
                     <IoChevronDownOutline className="absolute right-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-lg pointer-events-none" />
                   </div>
@@ -172,10 +202,12 @@ export default function Profile() {
                   <label className="block text-[#A09DB0] text-[11px] font-bold tracking-widest mb-2 uppercase">Current Academic Year</label>
                   <div className="relative cursor-pointer">
                     <IoCalendarOutline className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-lg" />
-                    <select className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold appearance-none cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all">
-                      <option>3rd Year</option>
-                      <option>4th Year</option>
-                      <option>Graduated</option>
+                    <select value={formData.year} onChange={e => setFormData({...formData, year: e.target.value})} className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold appearance-none cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all">
+                      <option value="First Year">First Year</option>
+                      <option value="Second Year">Second Year</option>
+                      <option value="3rd Year">3rd Year</option>
+                      <option value="4th Year">4th Year</option>
+                      <option value="Graduated">Graduated</option>
                     </select>
                     <IoChevronDownOutline className="absolute right-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-lg pointer-events-none" />
                   </div>

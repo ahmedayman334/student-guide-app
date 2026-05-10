@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { userContext } from '../context/context';
 import { FaGraduationCap, FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineDashboard } from "react-icons/md";
 import { IoCalendarOutline, IoLinkOutline } from "react-icons/io5";
@@ -7,6 +8,10 @@ import { Link, useLocation } from "react-router-dom";
 
 function SideBar() {
   const location = useLocation();
+  const { userData } = useContext(userContext);
+  
+  const displayName = userData?.name || "Alex Student";
+  const displayDepartment = userData?.department || "Economics Major";
 
   return (
     <div className="w-[260px] h-screen bg-white flex flex-col justify-between py-8 px-6 border-r border-[#F0F0F5] sticky top-0 shrink-0">
@@ -33,8 +38,8 @@ function SideBar() {
           <div className="w-6 h-6 bg-[#D8A783] rounded-full absolute -bottom-1"></div>
         </div>
         <div className="overflow-hidden">
-          <h4 className="text-[14px] font-bold text-[#1D214E] truncate">Alex Student</h4>
-          <p className="text-[10px] text-[#7F8A9E] font-bold tracking-wider uppercase truncate">Economics Major</p>
+          <h4 className="text-[14px] font-bold text-[#1D214E] truncate">{displayName}</h4>
+          <p className="text-[10px] text-[#7F8A9E] font-bold tracking-wider uppercase truncate">{displayDepartment}</p>
         </div>
       </div>
     </div>
