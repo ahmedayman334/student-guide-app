@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard"
 import Register from "./pages/Register"
 import Profile from "./pages/Profile"
 import GpaCalculator from "./pages/GpaCalculator"
+import AdminDashboard from "./AdminDashboard"
 import { UserProvider } from "./context/context"
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<Register/>}></Route>
           <Route path="/profile" element={<Profile/>}></Route>
           <Route path="/calculator" element={<GpaCalculator/>}></Route>
+          <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
         </Routes>
       </div>
     </UserProvider>
