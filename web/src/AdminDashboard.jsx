@@ -5,9 +5,6 @@ import {
   IoMegaphoneOutline, 
   IoPeopleOutline, 
   IoSettingsOutline,
-  IoSearchOutline,
-  IoNotificationsOutline,
-  IoHelpCircleOutline,
   IoAdd,
   IoSchoolOutline,
   IoMedkitOutline,
@@ -96,22 +93,9 @@ export default function AdminDashboard() {
       <main className="flex-1 ml-[260px] flex flex-col min-h-screen">
         
         {/* Top Header */}
-        <header className="h-[80px] bg-white px-8 flex items-center justify-between sticky top-0 z-10 border-b border-[#EBEBF2]">
-          <div className="relative w-[380px]">
-            <IoSearchOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A0A5BA] text-[18px]" />
-            <input 
-              type="text" 
-              placeholder="Search data, students, or events..."
-              className="w-full pl-11 pr-4 py-2.5 bg-[#F5F6FA] rounded-full text-[13px] font-medium text-[#1D214E] placeholder-[#A0A5BA] outline-none focus:ring-2 focus:ring-[#3B44B3] transition-all"
-            />
-          </div>
+        <header className="h-[80px] bg-white px-8 flex items-center justify-end sticky top-0 z-10 border-b border-[#EBEBF2]">
 
           <div className="flex items-center gap-6">
-            <button className="relative text-[#6B7280] hover:text-[#1D214E] transition-colors">
-              <IoNotificationsOutline size={22} />
-              <span className="absolute top-0 right-0 w-2 h-2 bg-[#F05252] rounded-full border-2 border-white"></span>
-            </button>
-            <div className="h-8 w-[1px] bg-[#EBEBF2]"></div>
             <div className="flex items-center gap-3 cursor-pointer">
               <img src="https://ui-avatars.com/api/?name=Admin+Console&background=EBF4FF&color=3B44B3&bold=true" alt="Admin" className="w-9 h-9 rounded-full" />
               <span className="text-[#1D214E] font-bold text-[14px]">Admin Console</span>
@@ -302,10 +286,111 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {activeMenu !== 'Dashboard' && activeMenu !== 'Students' && (
+          {activeMenu === 'Schedule Manager' && (
+            <div className="bg-white rounded-[20px] p-8 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
+              <h2 className="text-[22px] font-bold text-[#1D214E] mb-8 border-b border-[#EBEBF2] pb-4">Schedule Manager</h2>
+              
+              <div className="grid grid-cols-2 gap-10">
+                <div>
+                  <h3 className="text-[16px] font-bold text-[#1D214E] mb-5">Add New Event (Lecture / Exam)</h3>
+                  <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); alert("Event added successfully!"); }}>
+                    <div>
+                      <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Event Title</label>
+                      <input type="text" placeholder="e.g. Advanced Calculus Midterm" className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" required />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Event Type</label>
+                        <select className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all">
+                          <option>Lecture</option>
+                          <option>Exam</option>
+                          <option>Workshop</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Date</label>
+                        <input type="date" className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" required />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Time</label>
+                        <input type="time" className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" required />
+                      </div>
+                      <div>
+                        <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Room / Hall</label>
+                        <input type="text" placeholder="e.g. Hall C" className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" />
+                      </div>
+                    </div>
+                    <button type="submit" className="mt-4 bg-[#3B44B3] text-white px-6 py-3 rounded-[12px] font-bold text-[14px] shadow-[0_4px_15px_rgba(59,68,179,0.3)] hover:bg-[#2D3380] transition-colors w-full">
+                      Save Event
+                    </button>
+                  </form>
+                </div>
+                
+                <div>
+                  <h3 className="text-[16px] font-bold text-[#1D214E] mb-5">Upload Full Schedule (Excel/CSV)</h3>
+                  <div className="border-2 border-dashed border-[#EBEBF2] rounded-[20px] bg-[#F9FAFB] p-10 flex flex-col items-center justify-center text-center hover:bg-[#F3F4F6] transition-colors cursor-pointer">
+                    <div className="w-16 h-16 bg-[#EEF0FF] rounded-full flex items-center justify-center text-[#3B44B3] mb-4">
+                      <IoCalendarOutline size={30} />
+                    </div>
+                    <h4 className="text-[15px] font-bold text-[#1D214E] mb-1">Click to upload or drag and drop</h4>
+                    <p className="text-[#6B7280] text-[13px]">XLSX, CSV up to 10MB</p>
+                    <input type="file" className="hidden" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                    <button className="mt-6 border border-[#3B44B3] text-[#3B44B3] px-6 py-2 rounded-full font-bold text-[13px] hover:bg-[#3B44B3] hover:text-white transition-colors">
+                      Browse Files
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeMenu === 'Announcements' && (
+            <div className="bg-white rounded-[20px] p-8 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
+              <h2 className="text-[22px] font-bold text-[#1D214E] mb-8 border-b border-[#EBEBF2] pb-4">Create Announcement</h2>
+              
+              <div className="max-w-2xl">
+                <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); alert("Announcement published!"); }}>
+                  <div>
+                    <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Announcement Title</label>
+                    <input type="text" placeholder="Enter a catchy title..." className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" required />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Message Body</label>
+                    <textarea rows="5" placeholder="Write the details of the announcement here..." className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all resize-none" required></textarea>
+                  </div>
+
+                  <div>
+                    <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Attach Image (Optional)</label>
+                    <div className="flex items-center gap-4">
+                      <label className="flex items-center justify-center gap-2 bg-[#EEF0FF] text-[#3B44B3] px-5 py-3 rounded-[12px] font-bold text-[14px] cursor-pointer hover:bg-[#E0E5FF] transition-colors border border-[#D1D9FF]">
+                        <IoAdd size={20} />
+                        Choose Image
+                        <input type="file" accept="image/*" className="hidden" />
+                      </label>
+                      <span className="text-[#6B7280] text-[13px]">JPG, PNG or GIF. Max size 5MB.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 pt-4">
+                    <button type="submit" className="bg-[#3B44B3] text-white px-8 py-3 rounded-[12px] font-bold text-[14px] shadow-[0_4px_15px_rgba(59,68,179,0.3)] hover:bg-[#2D3380] transition-colors flex items-center gap-2">
+                      <IoPaperPlaneOutline size={18} /> Publish Now
+                    </button>
+                    <button type="button" className="bg-[#F3F4F6] text-[#4B5563] px-8 py-3 rounded-[12px] font-bold text-[14px] hover:bg-[#E5E7EB] transition-colors">
+                      Save as Draft
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {activeMenu === 'Settings' && (
             <div className="flex flex-col items-center justify-center h-[60vh] text-[#8E95C0]">
-              <IoGridOutline size={48} className="mb-4 opacity-50" />
-              <h2 className="text-[20px] font-bold text-[#1D214E] mb-2">{activeMenu}</h2>
+              <IoSettingsOutline size={48} className="mb-4 opacity-50" />
+              <h2 className="text-[20px] font-bold text-[#1D214E] mb-2">Settings</h2>
               <p className="font-medium text-[15px]">This module is currently under construction.</p>
             </div>
           )}
