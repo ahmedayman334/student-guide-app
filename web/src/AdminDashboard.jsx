@@ -111,9 +111,6 @@ export default function AdminDashboard() {
               <IoNotificationsOutline size={22} />
               <span className="absolute top-0 right-0 w-2 h-2 bg-[#F05252] rounded-full border-2 border-white"></span>
             </button>
-            <button className="text-[#6B7280] hover:text-[#1D214E] transition-colors">
-              <IoHelpCircleOutline size={22} />
-            </button>
             <div className="h-8 w-[1px] bg-[#EBEBF2]"></div>
             <div className="flex items-center gap-3 cursor-pointer">
               <img src="https://ui-avatars.com/api/?name=Admin+Console&background=EBF4FF&color=3B44B3&bold=true" alt="Admin" className="w-9 h-9 rounded-full" />
@@ -260,22 +257,6 @@ export default function AdminDashboard() {
                     </button>
                     {/* Decorative circle */}
                     <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
-                  </div>
-
-                  {/* Support Card */}
-                  <div className="bg-white rounded-[20px] p-5 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full border border-[#EBEBF2] flex items-center justify-center text-[#3B44B3]">
-                        <IoHeadsetOutline size={20} />
-                      </div>
-                      <div>
-                        <h4 className="text-[15px] font-bold text-[#1D214E]">Need help?</h4>
-                        <p className="text-[#6B7280] text-[12px] font-medium mt-0.5">Contact campus IT support</p>
-                      </div>
-                    </div>
-                    <button className="w-10 h-10 rounded-full bg-[#3B44B3] text-white flex items-center justify-center hover:bg-[#2D3380] transition-colors shadow-[0_4px_10px_rgba(59,68,179,0.3)]">
-                      <IoAdd size={20} />
-                    </button>
                   </div>
 
                 </div>
