@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   IoGridOutline, 
   IoCalendarOutline, 
@@ -22,6 +22,23 @@ import {
 
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState('Dashboard');
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const res = await fetch("https://ahmedamara.pythonanywhere.com/api/students/");
+        const data = await res.json();
+        setStudents(data);
+      } catch (err) {
+        console.error("Failed to fetch students:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStudents();
+  }, []);
 
   const menuItems = [
     { name: 'Dashboard', icon: <IoGridOutline size={20} /> },
@@ -108,159 +125,209 @@ export default function AdminDashboard() {
         {/* Dashboard Content */}
         <div className="p-8 flex-1">
           
-          {/* Stat Cards */}
-          <div className="grid grid-cols-4 gap-6 mb-8">
-            <StatCard 
-              icon={<IoPeopleOutline size={24} />} 
-              iconBg="bg-[#3B44B3]" 
-              iconColor="text-white"
-              title="Total Students" 
-              value="12,482" 
-              badge="+4%" 
-              badgeColor="text-[#059669] bg-[#DEF7EC]"
-            />
-            <StatCard 
-              icon={<IoCalendarOutline size={24} />} 
-              iconBg="bg-[#06B6D4]" 
-              iconColor="text-white"
-              title="Active Schedules" 
-              value="148" 
-              badge="Live" 
-              badgeColor="text-[#6B7280] bg-[#F3F4F6]"
-            />
-            <StatCard 
-              icon={<IoMegaphoneOutline size={24} />} 
-              iconBg="bg-[#F59E0B]" 
-              iconColor="text-white"
-              title="Announcements Sent" 
-              value="52" 
-              badge="Weekly" 
-              badgeColor="text-[#6B7280] bg-[#F3F4F6]"
-            />
-            <StatCard 
-              icon={<IoClipboardOutline size={24} />} 
-              iconBg="bg-[#F05252]" 
-              iconColor="text-white"
-              title="Pending Items" 
-              value="14" 
-              badge="Action Required" 
-              badgeColor="text-[#9B1C1C] bg-[#FDE8E8]"
-            />
-          </div>
-
-          <div className="grid grid-cols-3 gap-8">
-            
-            {/* Left Column - Recent Announcements */}
-            <div className="col-span-2 bg-white rounded-[20px] p-7 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-[20px] font-bold text-[#1D214E]">Recent Announcements</h2>
-                <button className="text-[#3B44B3] text-[13px] font-bold hover:underline">View All</button>
-              </div>
-
-              <div className="space-y-0 divide-y divide-[#F3F4F6]">
-                <AnnouncementItem 
-                  icon={<IoSchoolOutline size={20} />}
-                  title="Spring 2024 Final Exam Schedule Released"
-                  desc="The comprehensive final exam schedule for the upcoming spring semester i..."
-                  date="Oct 12, 2023 • 09:30 AM"
-                  status="Sent"
-                  statusColor="text-[#059669] bg-[#DEF7EC]"
+          {activeMenu === 'Dashboard' && (
+            <>
+              {/* Stat Cards */}
+              <div className="grid grid-cols-4 gap-6 mb-8">
+                <StatCard 
+                  icon={<IoPeopleOutline size={24} />} 
+                  iconBg="bg-[#3B44B3]" 
+                  iconColor="text-white"
+                  title="Total Students" 
+                  value={loading ? "..." : students.length} 
+                  badge="+4%" 
+                  badgeColor="text-[#059669] bg-[#DEF7EC]"
                 />
-                <AnnouncementItem 
-                  icon={<IoCalendarOutline size={20} />}
-                  title="Campus Infrastructure Maintenance Notice"
-                  desc="Scheduled server maintenance will occur this weekend, affecting access to..."
-                  date="Oct 11, 2023 • 02:15 PM"
-                  status="Sent"
-                  statusColor="text-[#059669] bg-[#DEF7EC]"
+                <StatCard 
+                  icon={<IoCalendarOutline size={24} />} 
+                  iconBg="bg-[#06B6D4]" 
+                  iconColor="text-white"
+                  title="Active Schedules" 
+                  value="148" 
+                  badge="Live" 
+                  badgeColor="text-[#6B7280] bg-[#F3F4F6]"
                 />
-                <AnnouncementItem 
-                  icon={<IoMedkitOutline size={20} />}
-                  title="Winter Vaccination Drive Volunteers"
-                  desc="We are seeking student volunteers for the upcoming campus-wide health..."
-                  date="Oct 10, 2023 • 11:00 AM"
-                  status="Draft"
-                  statusColor="text-[#B45309] bg-[#FEF3C7]"
+                <StatCard 
+                  icon={<IoMegaphoneOutline size={24} />} 
+                  iconBg="bg-[#F59E0B]" 
+                  iconColor="text-white"
+                  title="Announcements Sent" 
+                  value="52" 
+                  badge="Weekly" 
+                  badgeColor="text-[#6B7280] bg-[#F3F4F6]"
                 />
-                <AnnouncementItem 
-                  icon={<IoCashOutline size={20} />}
-                  title="Scholarship Application Deadline Extended"
-                  desc="Great news for students: the deadline for the University Merit Scholarship ha..."
-                  date="Oct 08, 2023 • 04:45 PM"
-                  status="Sent"
-                  statusColor="text-[#059669] bg-[#DEF7EC]"
-                />
-                <AnnouncementItem 
-                  icon={<IoRibbonOutline size={20} />}
-                  title="Official Graduation Ceremony Details"
-                  desc="Find the complete schedule and ticketing information for the Class of 2023..."
-                  date="Oct 05, 2023 • 10:20 AM"
-                  status="Sent"
-                  statusColor="text-[#059669] bg-[#DEF7EC]"
+                <StatCard 
+                  icon={<IoClipboardOutline size={24} />} 
+                  iconBg="bg-[#F05252]" 
+                  iconColor="text-white"
+                  title="Pending Items" 
+                  value="14" 
+                  badge="Action Required" 
+                  badgeColor="text-[#9B1C1C] bg-[#FDE8E8]"
                 />
               </div>
-            </div>
 
-            {/* Right Column */}
-            <div className="col-span-1 space-y-6">
-              
-              {/* Quick Actions */}
-              <div className="bg-white rounded-[20px] p-7 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
-                <h2 className="text-[20px] font-bold text-[#1D214E] mb-5">Quick Actions</h2>
-                <div className="space-y-3">
-                  <button className="w-full bg-gradient-to-r from-[#3B44B3] to-[#06B6D4] text-white p-4 rounded-[12px] flex items-center justify-between shadow-[0_4px_15px_rgba(59,68,179,0.3)] hover:opacity-90 transition-opacity">
-                    <div className="flex items-center gap-3 font-semibold text-[15px]">
-                      <IoAdd size={20} /> Add Lecture
-                    </div>
-                    <IoChevronForwardOutline />
-                  </button>
-                  <button className="w-full border-2 border-[#EBEBF2] bg-white text-[#4B5563] p-4 rounded-[12px] flex items-center justify-between hover:border-[#3B44B3] hover:text-[#3B44B3] transition-colors">
-                    <div className="flex items-center gap-3 font-semibold text-[15px]">
-                      <IoPaperPlaneOutline size={20} /> Send Announcement
-                    </div>
-                    <IoChevronForwardOutline />
-                  </button>
-                  <button className="w-full border-2 border-[#EBEBF2] bg-white text-[#4B5563] p-4 rounded-[12px] flex items-center justify-between hover:border-[#3B44B3] hover:text-[#3B44B3] transition-colors">
-                    <div className="flex items-center gap-3 font-semibold text-[15px]">
-                      <IoCalendarOutline size={20} /> Add Exam
-                    </div>
-                    <IoChevronForwardOutline />
-                  </button>
-                </div>
-              </div>
-
-              {/* Featured Activity */}
-              <div className="bg-gradient-to-br from-[#2D3380] to-[#181B34] rounded-[20px] p-7 shadow-[0_10px_30px_rgba(45,51,128,0.3)] relative overflow-hidden text-white">
-                <p className="text-[11px] font-bold tracking-widest text-white/70 uppercase mb-3">FEATURED ACTIVITY</p>
-                <h3 className="text-[24px] font-bold leading-tight mb-4">Faculty Orientation<br/>Workshop</h3>
-                <div className="flex items-center gap-2 text-white/80 text-[13px] font-medium mb-6">
-                  <IoTimeOutline size={16} /> Tomorrow, 09:00 AM
-                </div>
-                <button className="bg-white text-[#1D214E] px-6 py-2.5 rounded-full text-[13px] font-bold hover:bg-gray-100 transition-colors">
-                  Manage Event
-                </button>
-                {/* Decorative circle */}
-                <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
-              </div>
-
-              {/* Support Card */}
-              <div className="bg-white rounded-[20px] p-5 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full border border-[#EBEBF2] flex items-center justify-center text-[#3B44B3]">
-                    <IoHeadsetOutline size={20} />
+              <div className="grid grid-cols-3 gap-8">
+                
+                {/* Left Column - Recent Announcements */}
+                <div className="col-span-2 bg-white rounded-[20px] p-7 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-[20px] font-bold text-[#1D214E]">Recent Announcements</h2>
+                    <button className="text-[#3B44B3] text-[13px] font-bold hover:underline">View All</button>
                   </div>
-                  <div>
-                    <h4 className="text-[15px] font-bold text-[#1D214E]">Need help?</h4>
-                    <p className="text-[#6B7280] text-[12px] font-medium mt-0.5">Contact campus IT support</p>
+
+                  <div className="space-y-0 divide-y divide-[#F3F4F6]">
+                    <AnnouncementItem 
+                      icon={<IoSchoolOutline size={20} />}
+                      title="Spring 2024 Final Exam Schedule Released"
+                      desc="The comprehensive final exam schedule for the upcoming spring semester i..."
+                      date="Oct 12, 2023 • 09:30 AM"
+                      status="Sent"
+                      statusColor="text-[#059669] bg-[#DEF7EC]"
+                    />
+                    <AnnouncementItem 
+                      icon={<IoCalendarOutline size={20} />}
+                      title="Campus Infrastructure Maintenance Notice"
+                      desc="Scheduled server maintenance will occur this weekend, affecting access to..."
+                      date="Oct 11, 2023 • 02:15 PM"
+                      status="Sent"
+                      statusColor="text-[#059669] bg-[#DEF7EC]"
+                    />
+                    <AnnouncementItem 
+                      icon={<IoMedkitOutline size={20} />}
+                      title="Winter Vaccination Drive Volunteers"
+                      desc="We are seeking student volunteers for the upcoming campus-wide health..."
+                      date="Oct 10, 2023 • 11:00 AM"
+                      status="Draft"
+                      statusColor="text-[#B45309] bg-[#FEF3C7]"
+                    />
+                    <AnnouncementItem 
+                      icon={<IoCashOutline size={20} />}
+                      title="Scholarship Application Deadline Extended"
+                      desc="Great news for students: the deadline for the University Merit Scholarship ha..."
+                      date="Oct 08, 2023 • 04:45 PM"
+                      status="Sent"
+                      statusColor="text-[#059669] bg-[#DEF7EC]"
+                    />
+                    <AnnouncementItem 
+                      icon={<IoRibbonOutline size={20} />}
+                      title="Official Graduation Ceremony Details"
+                      desc="Find the complete schedule and ticketing information for the Class of 2023..."
+                      date="Oct 05, 2023 • 10:20 AM"
+                      status="Sent"
+                      statusColor="text-[#059669] bg-[#DEF7EC]"
+                    />
                   </div>
                 </div>
-                <button className="w-10 h-10 rounded-full bg-[#3B44B3] text-white flex items-center justify-center hover:bg-[#2D3380] transition-colors shadow-[0_4px_10px_rgba(59,68,179,0.3)]">
-                  <IoAdd size={20} />
-                </button>
-              </div>
 
+                {/* Right Column */}
+                <div className="col-span-1 space-y-6">
+                  
+                  {/* Quick Actions */}
+                  <div className="bg-white rounded-[20px] p-7 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
+                    <h2 className="text-[20px] font-bold text-[#1D214E] mb-5">Quick Actions</h2>
+                    <div className="space-y-3">
+                      <button className="w-full bg-gradient-to-r from-[#3B44B3] to-[#06B6D4] text-white p-4 rounded-[12px] flex items-center justify-between shadow-[0_4px_15px_rgba(59,68,179,0.3)] hover:opacity-90 transition-opacity">
+                        <div className="flex items-center gap-3 font-semibold text-[15px]">
+                          <IoAdd size={20} /> Add Lecture
+                        </div>
+                        <IoChevronForwardOutline />
+                      </button>
+                      <button className="w-full border-2 border-[#EBEBF2] bg-white text-[#4B5563] p-4 rounded-[12px] flex items-center justify-between hover:border-[#3B44B3] hover:text-[#3B44B3] transition-colors">
+                        <div className="flex items-center gap-3 font-semibold text-[15px]">
+                          <IoPaperPlaneOutline size={20} /> Send Announcement
+                        </div>
+                        <IoChevronForwardOutline />
+                      </button>
+                      <button className="w-full border-2 border-[#EBEBF2] bg-white text-[#4B5563] p-4 rounded-[12px] flex items-center justify-between hover:border-[#3B44B3] hover:text-[#3B44B3] transition-colors">
+                        <div className="flex items-center gap-3 font-semibold text-[15px]">
+                          <IoCalendarOutline size={20} /> Add Exam
+                        </div>
+                        <IoChevronForwardOutline />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Featured Activity */}
+                  <div className="bg-gradient-to-br from-[#2D3380] to-[#181B34] rounded-[20px] p-7 shadow-[0_10px_30px_rgba(45,51,128,0.3)] relative overflow-hidden text-white">
+                    <p className="text-[11px] font-bold tracking-widest text-white/70 uppercase mb-3">FEATURED ACTIVITY</p>
+                    <h3 className="text-[24px] font-bold leading-tight mb-4">Faculty Orientation<br/>Workshop</h3>
+                    <div className="flex items-center gap-2 text-white/80 text-[13px] font-medium mb-6">
+                      <IoTimeOutline size={16} /> Tomorrow, 09:00 AM
+                    </div>
+                    <button className="bg-white text-[#1D214E] px-6 py-2.5 rounded-full text-[13px] font-bold hover:bg-gray-100 transition-colors">
+                      Manage Event
+                    </button>
+                    {/* Decorative circle */}
+                    <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+                  </div>
+
+                  {/* Support Card */}
+                  <div className="bg-white rounded-[20px] p-5 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full border border-[#EBEBF2] flex items-center justify-center text-[#3B44B3]">
+                        <IoHeadsetOutline size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-[15px] font-bold text-[#1D214E]">Need help?</h4>
+                        <p className="text-[#6B7280] text-[12px] font-medium mt-0.5">Contact campus IT support</p>
+                      </div>
+                    </div>
+                    <button className="w-10 h-10 rounded-full bg-[#3B44B3] text-white flex items-center justify-center hover:bg-[#2D3380] transition-colors shadow-[0_4px_10px_rgba(59,68,179,0.3)]">
+                      <IoAdd size={20} />
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </>
+          )}
+
+          {activeMenu === 'Students' && (
+            <div className="bg-white rounded-[20px] p-7 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
+              <h2 className="text-[20px] font-bold text-[#1D214E] mb-6">All Students</h2>
+              {loading ? (
+                <div className="flex justify-center items-center py-20">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#3B44B3]"></div>
+                </div>
+              ) : students.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-[#EBEBF2] text-[#8E95C0] text-[13px]">
+                        <th className="py-4 px-2 font-semibold">ID</th>
+                        <th className="py-4 px-2 font-semibold">Name</th>
+                        <th className="py-4 px-2 font-semibold">Email</th>
+                        <th className="py-4 px-2 font-semibold">Department</th>
+                        <th className="py-4 px-2 font-semibold">CGPA</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-[14px] text-[#1D214E]">
+                      {students.map(student => (
+                        <tr key={student.student_id} className="border-b border-[#EBEBF2] hover:bg-[#F9FAFB] transition-colors">
+                          <td className="py-4 px-2 font-medium">{student.student_id}</td>
+                          <td className="py-4 px-2 font-semibold">{student.full_name}</td>
+                          <td className="py-4 px-2 text-[#6B7280]">{student.user?.email || '-'}</td>
+                          <td className="py-4 px-2">{student.department?.name || '-'}</td>
+                          <td className="py-4 px-2 font-bold text-[#3B44B3]">{student.current_cgpa || '0.00'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p className="text-[#6B7280] py-4 text-center">No students found.</p>
+              )}
             </div>
-          </div>
+          )}
+
+          {activeMenu !== 'Dashboard' && activeMenu !== 'Students' && (
+            <div className="flex flex-col items-center justify-center h-[60vh] text-[#8E95C0]">
+              <IoGridOutline size={48} className="mb-4 opacity-50" />
+              <h2 className="text-[20px] font-bold text-[#1D214E] mb-2">{activeMenu}</h2>
+              <p className="font-medium text-[15px]">This module is currently under construction.</p>
+            </div>
+          )}
         </div>
       </main>
     </div>
