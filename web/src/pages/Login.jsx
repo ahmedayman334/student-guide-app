@@ -26,6 +26,12 @@ export default function Login() {
       return;
     }
 
+    // Admin Check
+    if (login.email === "admin" && login.password === "1234") {
+      navigate("/admin-dashboard");
+      return;
+    }
+
     try {
       const res = await fetch(
         "https://ahmedamara.pythonanywhere.com/api/students/"
@@ -94,7 +100,7 @@ export default function Login() {
               <div className="relative">
                 <FiAtSign className="absolute left-5 top-1/2 -translate-y-1/2 text-[#8D8A9F] text-xl" />
                 <input
-                  type="email"
+                  type="text"
                   placeholder="name@university.edu"
                   className="w-full pl-12 pr-5 py-4 bg-[#EBE8F4] rounded-[20px] outline-none text-[#2A2744] font-medium placeholder-[#A09DB0] focus:ring-2 focus:ring-[#6370E8] transition-all"
                   onChange={(e) =>
