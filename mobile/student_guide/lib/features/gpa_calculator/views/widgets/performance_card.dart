@@ -1,6 +1,7 @@
-// lib/features/gpa_calculator/views/widgets/performance_card.dart
-
 import 'package:flutter/material.dart';
+import 'package:student_guide/core/theming/app_colors.dart';
+import 'package:student_guide/core/theming/app_text_style.dart';
+import 'package:student_guide/features/gpa_calculator/views/widgets/stat_row.dart';
 
 class PerformanceCard extends StatelessWidget {
   final double currentGpa;
@@ -18,16 +19,19 @@ class PerformanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shift = ((currentGpa - lastGpa) / lastGpa * 100).clamp(-100.0, 100.0);
+    final hasHistory = lastGpa > 0;
+    final shift = hasHistory
+        ? ((currentGpa - lastGpa) / lastGpa * 100).clamp(-100.0, 100.0)
+        : 0.0;
     final isPositive = shift >= 0;
+    final shiftColor = isPositive ? AppColors.success : AppColors.error;
 
     return Column(
       children: [
-        // ── Performance Shift ──────────────────────────────
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.cardBackground,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
@@ -40,59 +44,57 @@ class PerformanceCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Performance Shift',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF1A1A2E))),
-                  Text(
-                    '${isPositive ? '+' : ''}${shift.toStringAsFixed(0)}%',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: isPositive
-                          ? const Color(0xFF059669)
-                          : const Color(0xFFDC2626),
+              // shift section — only when history exists
+              if (hasHistory) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Performance Shift',
+                      style: AppTextStyles.heading3.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: (currentGpa / 4.0).clamp(0.0, 1.0),
-                  backgroundColor: const Color(0xFFE5E7EB),
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    isPositive
-                        ? const Color(0xFF059669)
-                        : const Color(0xFFDC2626),
-                  ),
-                  minHeight: 8,
+                    Text(
+                      '${isPositive ? '+' : ''}${shift.toStringAsFixed(0)}%',
+                      style: AppTextStyles.heading3.copyWith(color: shiftColor),
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: LinearProgressIndicator(
+                    value: (currentGpa / 4.0).clamp(0.0, 1.0),
+                    backgroundColor: AppColors.divider,
+                    valueColor: AlwaysStoppedAnimation<Color>(shiftColor),
+                    minHeight: 8,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Your projected GPA is ${isPositive ? 'higher' : 'lower'} than last semester\'s ${lastGpa.toStringAsFixed(2)} by ${(currentGpa - lastGpa).abs().toStringAsFixed(2)} points.',
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                Divider(height: 24, color: AppColors.divider),
+              ],
+              StatRow(
+                label: 'Current CGPA',
+                value: currentGpa.toStringAsFixed(2),
               ),
-              const SizedBox(height: 10),
-              Text(
-                'Your projected semester GPA is ${isPositive ? 'higher' : 'lower'} than last semester\'s ${lastGpa.toStringAsFixed(2)} by ${(currentGpa - lastGpa).abs().toStringAsFixed(2)} points.',
-                style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
-              ),
-              const Divider(height: 24),
-              _StatRow(label: 'Current CGPA', value: currentGpa.toStringAsFixed(2)),
               const SizedBox(height: 8),
-              _StatRow(label: 'Total Credits Earnt', value: '$totalCredits'),
+              StatRow(label: 'Total Credits Earned', value: '$totalCredits'),
             ],
           ),
         ),
         const SizedBox(height: 16),
-
-        // ── Strategy Tip ───────────────────────────────────
+        // Strategy tip
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: const Color(0xFFFFFBEB),
+            color: AppColors.tertiary.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
@@ -104,45 +106,25 @@ class PerformanceCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Strategy Tip',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF1A1A2E))),
+                    Text(
+                      'Strategy Tip',
+                      style: AppTextStyles.heading3.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    Text(strategyTip,
-                        style: const TextStyle(
-                            fontSize: 13,
-                            color: Color(0xFF6B7280),
-                            height: 1.4)),
+                    Text(
+                      strategyTip,
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
         ),
-      ],
-    );
-  }
-}
-
-class _StatRow extends StatelessWidget {
-  final String label;
-  final String value;
-  const _StatRow({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(label,
-            style: const TextStyle(fontSize: 13, color: Color(0xFF6B7280))),
-        Text(value,
-            style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1A1A2E))),
       ],
     );
   }

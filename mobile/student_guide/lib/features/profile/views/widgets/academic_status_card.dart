@@ -1,0 +1,99 @@
+// lib/features/profile/views/widgets/academic_status_card.dart
+import 'package:flutter/material.dart';
+import 'package:student_guide/core/theming/app_text_style.dart';
+
+import '../../../../core/theming/app_colors.dart';
+
+class AcademicStatusCard extends StatelessWidget {
+  final double gpa;
+  final int creditsEarned;
+  final int totalCredits;
+
+  const AcademicStatusCard({
+    super.key,
+    required this.gpa,
+    required this.creditsEarned,
+    required this.totalCredits,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.shield, color: AppColors.primary, size: 18),
+              const SizedBox(width: 6),
+              Text(
+                'Academic Status',
+                style: AppTextStyles.heading3.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          _StatusRow(
+            label: 'Current GPA',
+            value: gpa.toStringAsFixed(2),
+            highlighted: false,
+          ),
+          const SizedBox(height: 8),
+          _StatusRow(
+            label: 'Credits Earned',
+            value: '$creditsEarned / $totalCredits',
+            highlighted: true,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatusRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final bool highlighted;
+
+  const _StatusRow({
+    required this.label,
+    required this.value,
+    required this.highlighted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      decoration: BoxDecoration(
+        color: highlighted ? const Color(0xFFFFF8E7) : Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(8),
+        border: highlighted
+            ? const Border(left: BorderSide(color: Color(0xFFFFB800), width: 3))
+            : null,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: AppTextStyles.bodyMedium),
+          Text(
+            value,
+            style: AppTextStyles.bodyMedium.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -1,5 +1,3 @@
-// lib/features/academic/views/widgets/ai_recommender_card.dart
-
 import 'package:flutter/material.dart';
 import 'package:student_guide/core/theming/app_colors.dart';
 
@@ -23,7 +21,11 @@ class AiRecommenderCard extends StatelessWidget {
               color: AppColors.primary,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.auto_awesome, color: Colors.white, size: 22),
+            child: const Icon(
+              Icons.auto_awesome,
+              color: Colors.white,
+              size: 22,
+            ),
           ),
           const SizedBox(width: 14),
 

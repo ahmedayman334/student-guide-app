@@ -1,6 +1,6 @@
-// lib/features/gpa_calculator/views/widgets/subject_row.dart
-
 import 'package:flutter/material.dart';
+import 'package:student_guide/core/theming/app_colors.dart';
+import 'package:student_guide/core/theming/app_text_style.dart';
 import 'package:student_guide/features/gpa_calculator/models/subject_entry_model.dart';
 import 'package:student_guide/features/gpa_calculator/views/widgets/grade_option.dart';
 
@@ -16,17 +16,9 @@ class SubjectRow extends StatelessWidget {
     required this.onChanged,
   });
 
-  static const _fieldFill = Color(0xFFF3F4FF);
-  static const _labelStyle = TextStyle(
-    fontSize: 11,
-    fontWeight: FontWeight.w600,
-    color: Color(0xFF6B7280),
-    letterSpacing: 0.8,
-  );
-
   InputDecoration get _inputDecoration => InputDecoration(
         filled: true,
-        fillColor: _fieldFill,
+        fillColor: AppColors.surfaceGrey,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide.none,
@@ -37,7 +29,7 @@ class SubjectRow extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFF4B6BFB), width: 1.5),
+          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -49,20 +41,26 @@ class SubjectRow extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: AppColors.divider),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ── Subject Name ───────────────────────────────
-          const Text('SUBJECT NAME', style: _labelStyle),
+          Text('SUBJECT NAME',
+              style: AppTextStyles.sectionLabel
+                  .copyWith(color: AppColors.textSecondary)),
           const SizedBox(height: 6),
           TextFormField(
             initialValue: entry.name.isEmpty ? null : entry.name,
+            style: AppTextStyles.inputValue
+                .copyWith(color: AppColors.textPrimary),
             decoration: _inputDecoration.copyWith(
               hintText: 'Add subject name...',
+              hintStyle: AppTextStyles.inputHint
+                  .copyWith(color: AppColors.textHint),
             ),
             onChanged: (val) {
               entry.name = val;
@@ -74,17 +72,22 @@ class SubjectRow extends StatelessWidget {
           // ── Credits + Grade + Delete ───────────────────
           Row(
             children: [
-              // Credits
               Expanded(
                 flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('CREDITS', style: _labelStyle),
+                    Text('CREDITS',
+                        style: AppTextStyles.sectionLabel
+                            .copyWith(color: AppColors.textSecondary)),
                     const SizedBox(height: 6),
                     TextFormField(
-                      initialValue: entry.credits == 0 ? '0' : '${entry.credits}',
+                      initialValue: entry.credits == 0
+                          ? '0'
+                          : '${entry.credits}',
                       keyboardType: TextInputType.number,
+                      style: AppTextStyles.inputValue
+                          .copyWith(color: AppColors.textPrimary),
                       decoration: _inputDecoration,
                       onChanged: (val) {
                         entry.credits = int.tryParse(val) ?? 0;
@@ -95,19 +98,20 @@ class SubjectRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-
-              // Grade
               Expanded(
                 flex: 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('GRADE', style: _labelStyle),
+                    Text('GRADE',
+                        style: AppTextStyles.sectionLabel
+                            .copyWith(color: AppColors.textSecondary)),
                     const SizedBox(height: 6),
                     DropdownButtonFormField<double>(
                       initialValue: entry.grade,
-                      hint: const Text('Select Grade',
-                          style: TextStyle(fontSize: 13)),
+                      hint: Text('Select Grade',
+                          style: AppTextStyles.inputHint
+                              .copyWith(color: AppColors.textHint)),
                       icon: const Icon(Icons.keyboard_arrow_down_rounded,
                           size: 18),
                       decoration: _inputDecoration,
@@ -115,7 +119,8 @@ class SubjectRow extends StatelessWidget {
                           .map((g) => DropdownMenuItem(
                                 value: g.value,
                                 child: Text(g.label,
-                                    style: const TextStyle(fontSize: 13)),
+                                    style: AppTextStyles.inputValue.copyWith(
+                                        color: AppColors.textPrimary)),
                               ))
                           .toList(),
                       onChanged: (val) {
@@ -127,8 +132,6 @@ class SubjectRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-
-              // Delete
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: GestureDetector(
@@ -136,11 +139,11 @@ class SubjectRow extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFFE4E4),
+                      color: AppColors.error.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(Icons.delete_outline,
-                        color: Color(0xFFDC2626), size: 18),
+                    child: Icon(Icons.delete_outline,
+                        color: AppColors.error, size: 18),
                   ),
                 ),
               ),
