@@ -14,11 +14,14 @@ import {
   IoHeadsetOutline,
   IoChevronForwardOutline,
   IoPaperPlaneOutline,
-  IoClipboardOutline
+  IoClipboardOutline,
+  IoLogOutOutline
 } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState('Dashboard');
+  const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -78,7 +81,7 @@ export default function AdminDashboard() {
 
         {/* Admin Profile Bottom */}
         <div className="p-6 border-t border-[#202442]">
-          <div className="flex items-center gap-3 cursor-pointer group">
+          <div className="flex items-center gap-3 cursor-pointer group mb-4">
             <div className="w-10 h-10 rounded-full bg-[#18C4B8] flex items-center justify-center text-white font-bold text-[16px]">
               A
             </div>
@@ -86,6 +89,13 @@ export default function AdminDashboard() {
               Admin Profile
             </span>
           </div>
+          <button 
+            onClick={() => navigate('/login')}
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-[10px] text-[#F05252] font-semibold hover:bg-[#F05252]/10 transition-colors"
+          >
+            <IoLogOutOutline size={20} />
+            Logout
+          </button>
         </div>
       </aside>
 
@@ -208,19 +218,19 @@ export default function AdminDashboard() {
                   <div className="bg-white rounded-[20px] p-7 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
                     <h2 className="text-[20px] font-bold text-[#1D214E] mb-5">Quick Actions</h2>
                     <div className="space-y-3">
-                      <button className="w-full bg-gradient-to-r from-[#3B44B3] to-[#06B6D4] text-white p-4 rounded-[12px] flex items-center justify-between shadow-[0_4px_15px_rgba(59,68,179,0.3)] hover:opacity-90 transition-opacity">
+                      <button onClick={() => setActiveMenu('Schedule Manager')} className="w-full bg-gradient-to-r from-[#3B44B3] to-[#06B6D4] text-white p-4 rounded-[12px] flex items-center justify-between shadow-[0_4px_15px_rgba(59,68,179,0.3)] hover:opacity-90 transition-opacity">
                         <div className="flex items-center gap-3 font-semibold text-[15px]">
                           <IoAdd size={20} /> Add Lecture
                         </div>
                         <IoChevronForwardOutline />
                       </button>
-                      <button className="w-full border-2 border-[#EBEBF2] bg-white text-[#4B5563] p-4 rounded-[12px] flex items-center justify-between hover:border-[#3B44B3] hover:text-[#3B44B3] transition-colors">
+                      <button onClick={() => setActiveMenu('Announcements')} className="w-full border-2 border-[#EBEBF2] bg-white text-[#4B5563] p-4 rounded-[12px] flex items-center justify-between hover:border-[#3B44B3] hover:text-[#3B44B3] transition-colors">
                         <div className="flex items-center gap-3 font-semibold text-[15px]">
                           <IoPaperPlaneOutline size={20} /> Send Announcement
                         </div>
                         <IoChevronForwardOutline />
                       </button>
-                      <button className="w-full border-2 border-[#EBEBF2] bg-white text-[#4B5563] p-4 rounded-[12px] flex items-center justify-between hover:border-[#3B44B3] hover:text-[#3B44B3] transition-colors">
+                      <button onClick={() => setActiveMenu('Schedule Manager')} className="w-full border-2 border-[#EBEBF2] bg-white text-[#4B5563] p-4 rounded-[12px] flex items-center justify-between hover:border-[#3B44B3] hover:text-[#3B44B3] transition-colors">
                         <div className="flex items-center gap-3 font-semibold text-[15px]">
                           <IoCalendarOutline size={20} /> Add Exam
                         </div>
