@@ -37,9 +37,6 @@ function Dashboard() {
               You have 3 classes today. Stay focused!
             </p>
           </div>
-          <button className="flex items-center gap-2 bg-white px-5 py-3 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-[#1D214E] font-bold text-[14px]">
-            <IoCalendarOutline className="text-[#4E58CA] text-lg" /> October 24, 2023
-          </button>
         </div>
 
         {/* Stat Cards */}
