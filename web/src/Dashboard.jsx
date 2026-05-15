@@ -41,9 +41,33 @@ function Dashboard() {
     }
   };
 
-  const today = new Date().toISOString().split('T')[0];
+  const getLocalDate = () => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  };
+
+  const formatTime12h = (time24) => {
+    if (!time24) return "--:--";
+    if (time24.includes("AM") || time24.includes("PM")) return time24; // Already formatted
+    let [hours, minutes] = time24.split(':');
+    hours = parseInt(hours);
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; 
+    return `${hours}:${minutes} ${ampm}`;
+  };
+
+  const today = getLocalDate();
   const todaysSchedules = schedules?.filter(s => s.date === today) || [];
-  const nextLecture = todaysSchedules.length > 0 ? todaysSchedules[0] : null;
+  
+  // If no schedules for today, get upcoming ones
+  const upcomingSchedules = !todaysSchedules.length 
+    ? (schedules?.filter(s => s.date > today) || []).slice(0, 3)
+    : [];
+
+  const [showAll, setShowAll] = useState(false);
+  const displaySchedules = showAll ? schedules : (todaysSchedules.length > 0 ? todaysSchedules : upcomingSchedules);
+  const nextLecture = displaySchedules.length > 0 ? displaySchedules[0] : null;
 
   return (
     <div className="flex min-h-screen bg-[#F5F5FA] font-sans text-left" dir="ltr">
@@ -57,7 +81,11 @@ function Dashboard() {
               Welcome back, <span className="text-[#4E58CA]">{firstName}</span>
             </h1>
             <p className="text-[#7F8A9E] text-[16px] mt-1 font-medium">
-              You have {todaysSchedules.length} classes today. {todaysSchedules.length > 0 ? "Stay focused!" : "Enjoy your free time!"}
+              {todaysSchedules.length > 0 
+                ? `You have ${todaysSchedules.length} classes today. Stay focused!` 
+                : upcomingSchedules.length > 0 
+                  ? `No classes today, but you have ${upcomingSchedules.length} upcoming soon.`
+                  : "No classes scheduled. Enjoy your free time!"}
             </p>
           </div>
         </div>
@@ -87,7 +115,7 @@ function Dashboard() {
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
             <p className="text-[#7F8A9E] text-[12px] font-bold tracking-widest mb-2">NEXT LECTURE</p>
             <h2 className="text-[20px] font-bold text-[#1D214E] mb-2 leading-tight mt-1">{nextLecture ? nextLecture.title : "No more classes"}</h2>
-            <p className="text-[#4E58CA] text-[14px] font-bold mt-auto">{nextLecture ? nextLecture.time : "--:--"}</p>
+            <p className="text-[#4E58CA] text-[14px] font-bold mt-auto">{nextLecture ? formatTime12h(nextLecture.time) : "--:--"}</p>
           </div>
 
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
@@ -105,13 +133,25 @@ function Dashboard() {
           {/* Left Col */}
           <div className="col-span-2">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-[22px] font-bold text-[#1D214E]">Today's Schedule</h2>
+              <div className="flex flex-col">
+                <h2 className="text-[22px] font-bold text-[#1D214E]">
+                  {showAll ? "All Schedules" : todaysSchedules.length > 0 ? "Today's Schedule" : "Upcoming Schedule"}
+                </h2>
+                {schedules?.length > 0 && (
+                   <button 
+                    onClick={() => setShowAll(!showAll)} 
+                    className="text-[#4E58CA] text-[12px] font-bold mt-1 hover:underline text-left"
+                   >
+                    {showAll ? "← Show Today Only" : `Show All (${schedules.length}) →`}
+                   </button>
+                )}
+              </div>
               <button className="text-[#4E58CA] text-[12px] font-bold tracking-widest hover:underline uppercase">VIEW FULL CALENDAR</button>
             </div>
 
             <div className="space-y-4 mb-8">
-              {todaysSchedules.length > 0 ? (
-                todaysSchedules.map((item, index) => (
+              {displaySchedules.length > 0 ? (
+                displaySchedules.map((item, index) => (
                   <div key={item.id} className={`${item.bgColor || "bg-white"} rounded-[24px] p-5 flex items-center justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative overflow-hidden`}>
                     {index === 0 && <div className="w-1.5 h-[60%] bg-[#4E58CA] absolute left-0 top-1/2 -translate-y-1/2 rounded-r-full"></div>}
                     <div className="flex items-center gap-5 ml-4">
@@ -120,12 +160,22 @@ function Dashboard() {
                       </div>
                       <div>
                         <h3 className="text-[17px] font-bold text-[#1D214E]">{item.title}</h3>
-                        <p className="text-[#7F8A9E] text-[14px] font-medium mt-1">{item.room}</p>
+                        <div className="flex items-center gap-3 mt-1">
+                          <p className="text-[#7F8A9E] text-[13px] font-medium">{item.room}</p>
+                          <div className="flex items-center gap-1 bg-[#EEF0FF] px-2 py-0.5 rounded-md">
+                            <IoCalendarOutline size={12} className="text-[#4E58CA]" />
+                            <span className="text-[#4E58CA] text-[11px] font-bold">{item.date}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-[16px] font-bold text-[#1D214E] mb-1.5">{item.time}</p>
-                      {index === 0 && <span className="bg-[#4E58CA] text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider inline-block uppercase">NEXT UP</span>}
+                      <p className="text-[16px] font-bold text-[#1D214E] mb-1.5">{formatTime12h(item.time)}</p>
+                      {index === 0 && (
+                        <span className="bg-[#4E58CA] text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider inline-block uppercase">
+                          {todaysSchedules.length > 0 ? "NEXT UP" : "UPCOMING"}
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))
@@ -195,6 +245,21 @@ function Dashboard() {
           </div>
 
         </div>
+
+        {/* Debug: All Schedules (Hidden in production or subtle) */}
+        {schedules?.length > 0 && todaysSchedules.length === 0 && upcomingSchedules.length === 0 && (
+          <div className="mt-10 p-6 bg-white rounded-[24px] border border-[#EBEBF2]">
+            <h3 className="text-[#1D214E] font-bold mb-4">Note: You have {schedules.length} schedules in the system, but none for today or the future.</h3>
+            <div className="flex gap-4 overflow-x-auto pb-2">
+              {schedules.map(s => (
+                <div key={s.id} className="min-w-[200px] p-4 bg-[#F5F5FA] rounded-xl text-[12px]">
+                  <p className="font-bold">{s.title}</p>
+                  <p>{s.date} at {s.time}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
