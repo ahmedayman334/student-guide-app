@@ -31,7 +31,11 @@ export function UserProvider({children}) {
         const saved = localStorage.getItem('globalSchedules');
         if (saved) return JSON.parse(saved);
         
-        const today = new Date().toISOString().split('T')[0];
+        const now = new Date();
+        const offset = now.getTimezoneOffset();
+        const localNow = new Date(now.getTime() - (offset * 60 * 1000));
+        const today = localNow.toISOString().split('T')[0];
+        
         return [
             {
                 id: 1,
