@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { userContext } from './context/context';
 import SideBar from './compontents/SideBar';
 import { FaStar } from "react-icons/fa";
@@ -17,10 +17,33 @@ import {
 } from "react-icons/io5";
 
 function Dashboard() {
-  const { userData } = useContext(userContext);
+  const { userData, schedules } = useContext(userContext);
   const firstName = userData?.name ? userData.name.split(' ')[0] : "Alex";
   const currentGpa = userData?.gpa || "3.62";
   const subjectsCount = userData?.subjects?.length || 6;
+
+  // Interactive Tasks State
+  const [tasks, setTasks] = useState([
+    { id: 1, label: "Finish Lab Report", checked: false },
+    { id: 2, label: "Buy New Notebooks", checked: true },
+    { id: 3, label: "Email Professor Higgins", checked: false },
+    { id: 4, label: "Update Portfolio", checked: false },
+  ]);
+
+  const toggleTask = (id) => {
+    setTasks(tasks.map(t => t.id === id ? { ...t, checked: !t.checked } : t));
+  };
+
+  const addTask = () => {
+    const label = prompt("Enter task name:");
+    if (label) {
+      setTasks([...tasks, { id: Date.now(), label, checked: false }]);
+    }
+  };
+
+  const today = new Date().toISOString().split('T')[0];
+  const todaysSchedules = schedules?.filter(s => s.date === today) || [];
+  const nextLecture = todaysSchedules.length > 0 ? todaysSchedules[0] : null;
 
   return (
     <div className="flex min-h-screen bg-[#F5F5FA] font-sans text-left" dir="ltr">
@@ -34,7 +57,7 @@ function Dashboard() {
               Welcome back, <span className="text-[#4E58CA]">{firstName}</span>
             </h1>
             <p className="text-[#7F8A9E] text-[16px] mt-1 font-medium">
-              You have 3 classes today. Stay focused!
+              You have {todaysSchedules.length} classes today. {todaysSchedules.length > 0 ? "Stay focused!" : "Enjoy your free time!"}
             </p>
           </div>
         </div>
@@ -63,8 +86,8 @@ function Dashboard() {
 
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
             <p className="text-[#7F8A9E] text-[12px] font-bold tracking-widest mb-2">NEXT LECTURE</p>
-            <h2 className="text-[20px] font-bold text-[#1D214E] mb-2 leading-tight mt-1">Adv. Calculus</h2>
-            <p className="text-[#4E58CA] text-[14px] font-bold mt-auto">10:30 AM</p>
+            <h2 className="text-[20px] font-bold text-[#1D214E] mb-2 leading-tight mt-1">{nextLecture ? nextLecture.title : "No more classes"}</h2>
+            <p className="text-[#4E58CA] text-[14px] font-bold mt-auto">{nextLecture ? nextLecture.time : "--:--"}</p>
           </div>
 
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
@@ -87,53 +110,30 @@ function Dashboard() {
             </div>
 
             <div className="space-y-4 mb-8">
-              <div className="bg-white rounded-[24px] p-5 flex items-center justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative overflow-hidden">
-                <div className="w-1.5 h-[60%] bg-[#4E58CA] absolute left-0 top-1/2 -translate-y-1/2 rounded-r-full"></div>
-                <div className="flex items-center gap-5 ml-4">
-                  <div className="w-14 h-14 rounded-[16px] bg-[#EEF0FF] flex items-center justify-center text-[#4E58CA]">
-                     <IoBookOutline size={24} />
+              {todaysSchedules.length > 0 ? (
+                todaysSchedules.map((item, index) => (
+                  <div key={item.id} className={`${item.bgColor || "bg-white"} rounded-[24px] p-5 flex items-center justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative overflow-hidden`}>
+                    {index === 0 && <div className="w-1.5 h-[60%] bg-[#4E58CA] absolute left-0 top-1/2 -translate-y-1/2 rounded-r-full"></div>}
+                    <div className="flex items-center gap-5 ml-4">
+                      <div className={`w-14 h-14 rounded-[16px] ${item.bgColor ? "bg-black/5" : "bg-[#EEF0FF]"} flex items-center justify-center ${item.textColor || "text-[#4E58CA]"}`}>
+                         {item.iconType === 'flask' ? <IoFlaskOutline size={24} /> : item.iconType === 'palette' ? <IoColorPaletteOutline size={24} /> : <IoBookOutline size={24} />}
+                      </div>
+                      <div>
+                        <h3 className="text-[17px] font-bold text-[#1D214E]">{item.title}</h3>
+                        <p className="text-[#7F8A9E] text-[14px] font-medium mt-1">{item.room}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[16px] font-bold text-[#1D214E] mb-1.5">{item.time}</p>
+                      {index === 0 && <span className="bg-[#4E58CA] text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider inline-block uppercase">NEXT UP</span>}
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-[17px] font-bold text-[#1D214E]">Advanced Calculus</h3>
-                    <p className="text-[#7F8A9E] text-[14px] font-medium mt-1">Room 402 • Prof. Higgins</p>
-                  </div>
+                ))
+              ) : (
+                <div className="bg-white rounded-[24px] p-10 text-center border-2 border-dashed border-[#EBEBF2]">
+                  <p className="text-[#7F8A9E] font-bold">No lectures scheduled for today.</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-[16px] font-bold text-[#1D214E] mb-1.5">10:30 AM</p>
-                  <span className="bg-[#4E58CA] text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider inline-block">IN 15M</span>
-                </div>
-              </div>
-
-              <div className="bg-[#F4F9F8] rounded-[24px] p-5 flex items-center justify-between">
-                <div className="flex items-center gap-5 ml-4">
-                  <div className="w-14 h-14 rounded-[16px] bg-[#DFF1EB] flex items-center justify-center text-[#2A9D79]">
-                     <IoFlaskOutline size={24} />
-                  </div>
-                  <div>
-                    <h3 className="text-[17px] font-bold text-[#1D214E]">Organic Chemistry Lab</h3>
-                    <p className="text-[#7F8A9E] text-[14px] font-medium mt-1">Lab B • Dr. Aris</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-[16px] font-bold text-[#1D214E] mb-1.5">01:00 PM</p>
-                  <span className="text-[#7F8A9E] text-[12px] font-bold tracking-wider inline-block uppercase">2 HOURS</span>
-                </div>
-              </div>
-
-              <div className="bg-[#FCF5F0] rounded-[24px] p-5 flex items-center justify-between">
-                <div className="flex items-center gap-5 ml-4">
-                  <div className="w-14 h-14 rounded-[16px] bg-[#F3DEC9] flex items-center justify-center text-[#D68D4F]">
-                     <IoColorPaletteOutline size={24} />
-                  </div>
-                  <div>
-                    <h3 className="text-[17px] font-bold text-[#1D214E]">Modern Literature</h3>
-                    <p className="text-[#7F8A9E] text-[14px] font-medium mt-1">Hall C • Prof. Blake</p>
-                  </div>
-                </div>
-                <div className="text-right pr-2">
-                  <p className="text-[16px] font-bold text-[#1D214E]">03:30 PM</p>
-                </div>
-              </div>
+              )}
             </div>
 
             {/* Banner */}
@@ -165,10 +165,9 @@ function Dashboard() {
             </div>
 
             <div className="space-y-6 flex-1">
-              <TaskItem label="Finish Lab Report" checked={false} />
-              <TaskItem label="Buy New Notebooks" checked={true} />
-              <TaskItem label="Email Professor Higgins" checked={false} />
-              <TaskItem label="Update Portfolio" checked={false} />
+              {tasks.map(task => (
+                <TaskItem key={task.id} label={task.label} checked={task.checked} onToggle={() => toggleTask(task.id)} />
+              ))}
             </div>
 
             {/* Reminder */}
@@ -187,8 +186,11 @@ function Dashboard() {
             </button>
 
             {/* FAB */}
-            <div className="absolute -right-6 -bottom-6 w-16 h-16 bg-[#4E58CA] rounded-full shadow-[0_10px_25px_rgba(78,88,202,0.4)] flex items-center justify-center text-white cursor-pointer hover:bg-[#3c4dba] transition-colors z-20">
-              <IoPencil size={24} />
+            <div 
+              onClick={addTask}
+              className="absolute -right-6 -bottom-6 w-16 h-16 bg-[#4E58CA] rounded-full shadow-[0_10px_25px_rgba(78,88,202,0.4)] flex items-center justify-center text-white cursor-pointer hover:bg-[#3c4dba] transition-colors z-20"
+            >
+              <IoAdd size={24} />
             </div>
           </div>
 
@@ -198,8 +200,8 @@ function Dashboard() {
   );
 }
 
-const TaskItem = ({ label, checked }) => (
-  <label className="flex items-center gap-4 cursor-pointer group">
+const TaskItem = ({ label, checked, onToggle }) => (
+  <label className="flex items-center gap-4 cursor-pointer group" onClick={onToggle}>
     <div className={`w-[22px] h-[22px] rounded-md border-[2px] flex items-center justify-center transition-colors shrink-0 ${
       checked ? "bg-[#4E58CA] border-[#4E58CA]" : "border-[#D1D5E0] bg-white group-hover:border-[#4E58CA]"
     }`}>

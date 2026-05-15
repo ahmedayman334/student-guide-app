@@ -27,11 +27,79 @@ export function UserProvider({children}) {
         return !!localStorage.getItem('token');
     });
 
+    const [schedules, setSchedules] = useState(() => {
+        const saved = localStorage.getItem('globalSchedules');
+        if (saved) return JSON.parse(saved);
+        
+        const today = new Date().toISOString().split('T')[0];
+        return [
+            {
+                id: 1,
+                title: "Advanced Calculus",
+                type: "Lecture",
+                date: today,
+                time: "10:30",
+                room: "Room 402 • Prof. Higgins",
+                bgColor: "bg-[#EEF0FF]",
+                textColor: "text-[#4E58CA]",
+                iconType: "book"
+            },
+            {
+                id: 2,
+                title: "Organic Chemistry Lab",
+                type: "Lecture",
+                date: today,
+                time: "13:00",
+                room: "Lab B • Dr. Aris",
+                bgColor: "bg-[#DFF1EB]",
+                textColor: "text-[#2A9D79]",
+                iconType: "flask"
+            },
+            {
+                id: 3,
+                title: "Modern Literature",
+                type: "Lecture",
+                date: today,
+                time: "15:30",
+                room: "Hall C • Prof. Blake",
+                bgColor: "bg-[#F3DEC9]",
+                textColor: "text-[#D68D4F]",
+                iconType: "palette"
+            }
+        ];
+    });
+
     useEffect(() => {
         if (userData) {
             localStorage.setItem('studentGuideUserData', JSON.stringify(userData));
         }
     }, [userData]);
+
+    useEffect(() => {
+        localStorage.setItem('globalSchedules', JSON.stringify(schedules));
+    }, [schedules]);
+
+    const addSchedule = (schedule) => {
+        setSchedules(prev => {
+            const colors = [
+                { bgColor: "bg-[#EEF0FF]", textColor: "text-[#4E58CA]", iconType: "book" },
+                { bgColor: "bg-[#DFF1EB]", textColor: "text-[#2A9D79]", iconType: "flask" },
+                { bgColor: "bg-[#F3DEC9]", textColor: "text-[#D68D4F]", iconType: "palette" },
+                { bgColor: "bg-[#FFF4E5]", textColor: "text-[#FF9800]", iconType: "book" },
+            ];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const updated = [...prev, { ...schedule, id: Date.now(), ...randomColor }];
+            return updated.sort((a, b) => {
+                const dateA = new Date(`${a.date}T${a.time}`);
+                const dateB = new Date(`${b.date}T${b.time}`);
+                return dateA - dateB;
+            });
+        });
+    };
+
+    const deleteSchedule = (id) => {
+        setSchedules(prev => prev.filter(s => s.id !== id));
+    };
 
     const loginUser = (userApiData) => {
         const savedDataRaw = localStorage.getItem('studentGuideUserData');
@@ -100,7 +168,10 @@ export function UserProvider({children}) {
             addSubject,
             updateSubject,
             deleteSubject,
-            updateTargetGpa
+            updateTargetGpa,
+            schedules,
+            addSchedule,
+            deleteSchedule
         }}>
             {children}
         </userContext.Provider>
