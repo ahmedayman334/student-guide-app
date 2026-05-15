@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { userContext } from './context/context';
 import { 
   IoGridOutline, 
   IoCalendarOutline, 
@@ -22,8 +23,35 @@ import { useNavigate } from 'react-router-dom';
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState('Dashboard');
   const navigate = useNavigate();
+  const { addSchedule, schedules, deleteSchedule } = useContext(userContext);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // Form State for Schedule
+  const [formData, setFormData] = useState({
+    title: '',
+    type: 'Lecture',
+    date: '',
+    time: '',
+    room: ''
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addSchedule({
+      title: formData.title,
+      type: formData.type,
+      date: formData.date,
+      time: formData.time,
+      room: formData.room
+    });
+    alert("Event added successfully! It will now appear on the student dashboard.");
+    setFormData({ title: '', type: 'Lecture', date: '', time: '', room: '' });
+  };
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -303,15 +331,28 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-2 gap-10">
                 <div>
                   <h3 className="text-[16px] font-bold text-[#1D214E] mb-5">Add New Event (Lecture / Exam)</h3>
-                  <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); alert("Event added successfully!"); }}>
+                  <form className="space-y-5" onSubmit={handleSubmit}>
                     <div>
                       <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Event Title</label>
-                      <input type="text" placeholder="e.g. Advanced Calculus Midterm" className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" required />
+                      <input 
+                        type="text" 
+                        name="title"
+                        value={formData.title}
+                        onChange={handleInputChange}
+                        placeholder="e.g. Advanced Calculus Midterm" 
+                        className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" 
+                        required 
+                      />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Event Type</label>
-                        <select className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all">
+                        <select 
+                          name="type"
+                          value={formData.type}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all"
+                        >
                           <option>Lecture</option>
                           <option>Exam</option>
                           <option>Workshop</option>
@@ -319,17 +360,38 @@ export default function AdminDashboard() {
                       </div>
                       <div>
                         <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Date</label>
-                        <input type="date" className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" required />
+                        <input 
+                          type="date" 
+                          name="date"
+                          value={formData.date}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" 
+                          required 
+                        />
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Time</label>
-                        <input type="time" className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" required />
+                        <input 
+                          type="time" 
+                          name="time"
+                          value={formData.time}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" 
+                          required 
+                        />
                       </div>
                       <div>
                         <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Room / Hall</label>
-                        <input type="text" placeholder="e.g. Hall C" className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" />
+                        <input 
+                          type="text" 
+                          name="room"
+                          value={formData.room}
+                          onChange={handleInputChange}
+                          placeholder="e.g. Hall C" 
+                          className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" 
+                        />
                       </div>
                     </div>
                     <button type="submit" className="mt-4 bg-[#3B44B3] text-white px-6 py-3 rounded-[12px] font-bold text-[14px] shadow-[0_4px_15px_rgba(59,68,179,0.3)] hover:bg-[#2D3380] transition-colors w-full">
@@ -339,17 +401,28 @@ export default function AdminDashboard() {
                 </div>
                 
                 <div>
-                  <h3 className="text-[16px] font-bold text-[#1D214E] mb-5">Upload Full Schedule (Excel/CSV)</h3>
-                  <div className="border-2 border-dashed border-[#EBEBF2] rounded-[20px] bg-[#F9FAFB] p-10 flex flex-col items-center justify-center text-center hover:bg-[#F3F4F6] transition-colors cursor-pointer">
-                    <div className="w-16 h-16 bg-[#EEF0FF] rounded-full flex items-center justify-center text-[#3B44B3] mb-4">
-                      <IoCalendarOutline size={30} />
-                    </div>
-                    <h4 className="text-[15px] font-bold text-[#1D214E] mb-1">Click to upload or drag and drop</h4>
-                    <p className="text-[#6B7280] text-[13px]">XLSX, CSV up to 10MB</p>
-                    <input type="file" className="hidden" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-                    <button className="mt-6 border border-[#3B44B3] text-[#3B44B3] px-6 py-2 rounded-full font-bold text-[13px] hover:bg-[#3B44B3] hover:text-white transition-colors">
-                      Browse Files
-                    </button>
+                  <h3 className="text-[16px] font-bold text-[#1D214E] mb-5">Current Schedules</h3>
+                  <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                    {schedules.length > 0 ? (
+                      schedules.map(item => (
+                        <div key={item.id} className="bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] p-4 flex justify-between items-center group hover:border-[#3B44B3] transition-all">
+                          <div>
+                            <h4 className="text-[14px] font-bold text-[#1D214E]">{item.title}</h4>
+                            <p className="text-[12px] text-[#6B7280]">{item.date} • {item.time} • {item.room}</p>
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-[#3B44B3] mt-1 inline-block">{item.type}</span>
+                          </div>
+                          <button 
+                            onClick={() => deleteSchedule(item.id)}
+                            className="text-[#F05252] opacity-0 group-hover:opacity-100 p-2 hover:bg-[#F05252]/10 rounded-full transition-all"
+                            title="Delete Schedule"
+                          >
+                            <IoLogOutOutline size={18} className="rotate-180" />
+                          </button>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-[#6B7280] text-[13px] text-center py-10 italic">No schedules found. Add one on the left.</p>
+                    )}
                   </div>
                 </div>
               </div>
