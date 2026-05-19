@@ -6,6 +6,8 @@ import Profile from "./pages/Profile"
 import GpaCalculator from "./pages/GpaCalculator"
 import AdminDashboard from "./AdminDashboard"
 import { UserProvider } from "./context/context"
+import AcademicYear from "./pages/AcademicYear"
+import QuickLinks from "./pages/QuickLinks"
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/register" element={<Register/>}></Route>
           <Route path="/profile" element={<Profile/>}></Route>
           <Route path="/calculator" element={<GpaCalculator/>}></Route>
+          <Route path="/academic" element={<AcademicYear/>}></Route>
+          <Route path="/links" element={<QuickLinks/>}></Route>
           <Route path="/admin-dashboard" element={<AdminDashboard/>}></Route>
         </Routes>
       </div>

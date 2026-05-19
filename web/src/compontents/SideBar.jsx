@@ -23,7 +23,7 @@ function SideBar() {
           <span className="font-bold text-[20px] text-[#1D214E]">Student Guide</span>
         </div>
 
-        <nav className="space-y-2">
+        <nav className="space-y-1 flex flex-col gap-2">
           <MenuItem icon={<MdOutlineDashboard size={22} />} label="DASHBOARD" path="/dashboard" currentPath={location.pathname} />
           <MenuItem icon={<FaGraduationCap size={22} />} label="ACADEMIC" path="/academic" currentPath={location.pathname} />
           <MenuItem icon={<BsBarChartFill size={22} />} label="GPA Calculator" path="/calculator" currentPath={location.pathname} />
