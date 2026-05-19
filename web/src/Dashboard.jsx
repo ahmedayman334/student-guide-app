@@ -111,13 +111,26 @@ function Dashboard() {
 
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
             <p className="text-[#7F8A9E] text-[12px] font-bold tracking-widest mb-2">SUBJECTS</p>
-            <h2 className="text-[36px] font-bold text-[#1D214E] mb-3 leading-none">{subjectsCount}</h2>
-            <div className="flex items-center -space-x-2 mt-auto">
-              <div className="w-8 h-8 rounded-full bg-[#8A94FA] text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-30">M</div>
-              <div className="w-8 h-8 rounded-full bg-[#6EE2C8] text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-20">P</div>
-              <div className="w-8 h-8 rounded-full bg-[#FFBE5C] text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-10">C</div>
-              <div className="w-8 h-8 rounded-full bg-[#E8E8F2] text-[#7F8A9E] flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-0">+3</div>
-            </div>
+            <h2 className="text-[36px] font-bold text-[#1D214E] mb-3 leading-none">{userData?.subjects?.length || 0}</h2>
+            {userData?.subjects?.length > 0 ? (
+              <div className="flex items-center -space-x-2 mt-auto">
+                {userData.subjects.slice(0, 3).map((sub, idx) => {
+                  const colors = ["bg-[#8A94FA]", "bg-[#6EE2C8]", "bg-[#FFBE5C]"];
+                  return (
+                    <div key={idx} className={`w-8 h-8 rounded-full ${colors[idx % colors.length]} text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative`} style={{ zIndex: 30 - idx }}>
+                      {sub.name ? sub.name.charAt(0).toUpperCase() : 'S'}
+                    </div>
+                  );
+                })}
+                {userData.subjects.length > 3 && (
+                  <div className="w-8 h-8 rounded-full bg-[#E8E8F2] text-[#7F8A9E] flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-0">
+                    +{userData.subjects.length - 3}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-[12px] text-[#7F8A9E] font-medium mt-auto">No subjects added.</div>
+            )}
           </div>
 
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
