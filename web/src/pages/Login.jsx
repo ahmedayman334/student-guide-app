@@ -49,6 +49,7 @@ export default function Login() {
         setError("Invalid email or password");
       }
     } catch (err) {
+      console.log("Error in login:", err);
       setError("Server error");
     }
   };
@@ -177,11 +178,11 @@ export default function Login() {
 
           {/* Divider */}
           <div className="flex items-center gap-4 my-8">
-            <div className="flex-1 h-[1px] bg-[#E5E3F0]" />
+            <div className="flex-1 h-px bg-[#E5E3F0]" />
             <span className="text-[#A09DB0] text-[12px] font-bold tracking-widest">
               OR CONNECT WITH
             </span>
-            <div className="flex-1 h-[1px] bg-[#E5E3F0]" />
+            <div className="flex-1 h-px bg-[#E5E3F0]" />
           </div>
 
           {/* Social */}
