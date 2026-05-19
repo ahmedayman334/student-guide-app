@@ -13,7 +13,8 @@ import {
   IoWarning,
   IoListOutline,
   IoPencil,
-  IoCheckmark
+  IoCheckmark,
+  IoTrash
 } from "react-icons/io5";
 
 function Dashboard() {
@@ -30,14 +31,21 @@ function Dashboard() {
     { id: 4, label: "Update Portfolio", checked: false },
   ]);
 
+  const [newTaskLabel, setNewTaskLabel] = useState("");
+
   const toggleTask = (id) => {
     setTasks(tasks.map(t => t.id === id ? { ...t, checked: !t.checked } : t));
   };
 
-  const addTask = () => {
-    const label = prompt("Enter task name:");
-    if (label) {
-      setTasks([...tasks, { id: Date.now(), label, checked: false }]);
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(t => t.id !== id));
+  };
+
+  const handleAddTask = (e) => {
+    e.preventDefault();
+    if (newTaskLabel.trim()) {
+      setTasks([...tasks, { id: Date.now(), label: newTaskLabel.trim(), checked: false }]);
+      setNewTaskLabel("");
     }
   };
 
@@ -103,13 +111,26 @@ function Dashboard() {
 
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
             <p className="text-[#7F8A9E] text-[12px] font-bold tracking-widest mb-2">SUBJECTS</p>
-            <h2 className="text-[36px] font-bold text-[#1D214E] mb-3 leading-none">{subjectsCount}</h2>
-            <div className="flex items-center -space-x-2 mt-auto">
-              <div className="w-8 h-8 rounded-full bg-[#8A94FA] text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-30">M</div>
-              <div className="w-8 h-8 rounded-full bg-[#6EE2C8] text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-20">P</div>
-              <div className="w-8 h-8 rounded-full bg-[#FFBE5C] text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-10">C</div>
-              <div className="w-8 h-8 rounded-full bg-[#E8E8F2] text-[#7F8A9E] flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-0">+3</div>
-            </div>
+            <h2 className="text-[36px] font-bold text-[#1D214E] mb-3 leading-none">{userData?.subjects?.length || 0}</h2>
+            {userData?.subjects?.length > 0 ? (
+              <div className="flex items-center -space-x-2 mt-auto">
+                {userData.subjects.slice(0, 3).map((sub, idx) => {
+                  const colors = ["bg-[#8A94FA]", "bg-[#6EE2C8]", "bg-[#FFBE5C]"];
+                  return (
+                    <div key={idx} className={`w-8 h-8 rounded-full ${colors[idx % colors.length]} text-white flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative`} style={{ zIndex: 30 - idx }}>
+                      {sub.name ? sub.name.charAt(0).toUpperCase() : 'S'}
+                    </div>
+                  );
+                })}
+                {userData.subjects.length > 3 && (
+                  <div className="w-8 h-8 rounded-full bg-[#E8E8F2] text-[#7F8A9E] flex items-center justify-center text-[11px] font-bold border-[2px] border-white relative z-0">
+                    +{userData.subjects.length - 3}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-[12px] text-[#7F8A9E] font-medium mt-auto">No subjects added.</div>
+            )}
           </div>
 
           <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] flex flex-col justify-between">
@@ -209,15 +230,24 @@ function Dashboard() {
           <div className="bg-white rounded-[40px] p-8 shadow-[0_2px_20px_rgba(0,0,0,0.03)] relative flex flex-col h-full">
             <div className="flex justify-between items-center mb-10">
               <h2 className="text-[22px] font-bold text-[#1D214E]">Quick Tasks</h2>
-              <div className="w-8 h-8 rounded-full bg-[#4E58CA] text-white flex items-center justify-center cursor-pointer hover:bg-[#3c4dba] transition-colors">
-                <IoAdd size={20} />
-              </div>
             </div>
 
-            <div className="space-y-6 flex-1">
+            <div className="space-y-6 flex-1 overflow-y-auto">
               {tasks.map(task => (
-                <TaskItem key={task.id} label={task.label} checked={task.checked} onToggle={() => toggleTask(task.id)} />
+                <TaskItem key={task.id} label={task.label} checked={task.checked} onToggle={() => toggleTask(task.id)} onDelete={() => deleteTask(task.id)} />
               ))}
+              <form onSubmit={handleAddTask} className="flex items-center gap-3 mt-4">
+                <input 
+                  type="text" 
+                  value={newTaskLabel} 
+                  onChange={(e) => setNewTaskLabel(e.target.value)} 
+                  placeholder="Add a new task..."
+                  className="flex-1 bg-[#F5F5FA] rounded-xl px-4 py-3 text-[14px] font-semibold text-[#1D214E] outline-none border border-transparent focus:border-[#4E58CA]"
+                />
+                <button type="submit" className="w-12 h-12 rounded-xl bg-[#4E58CA] text-white flex items-center justify-center shrink-0 hover:bg-[#3c4dba] transition-colors cursor-pointer">
+                  <IoAdd size={24} />
+                </button>
+              </form>
             </div>
 
             {/* Reminder */}
@@ -234,14 +264,6 @@ function Dashboard() {
             <button className="w-full py-4 bg-[#F5F5FA] rounded-2xl text-[#1D214E] font-bold text-[14px] flex items-center justify-center gap-2 hover:bg-[#ebebf2] transition-colors">
               <IoListOutline size={18} /> View All Tasks
             </button>
-
-            {/* FAB */}
-            <div 
-              onClick={addTask}
-              className="absolute -right-6 -bottom-6 w-16 h-16 bg-[#4E58CA] rounded-full shadow-[0_10px_25px_rgba(78,88,202,0.4)] flex items-center justify-center text-white cursor-pointer hover:bg-[#3c4dba] transition-colors z-20"
-            >
-              <IoAdd size={24} />
-            </div>
           </div>
 
         </div>
@@ -265,19 +287,27 @@ function Dashboard() {
   );
 }
 
-const TaskItem = ({ label, checked, onToggle }) => (
-  <label className="flex items-center gap-4 cursor-pointer group" onClick={onToggle}>
-    <div className={`w-[22px] h-[22px] rounded-md border-[2px] flex items-center justify-center transition-colors shrink-0 ${
-      checked ? "bg-[#4E58CA] border-[#4E58CA]" : "border-[#D1D5E0] bg-white group-hover:border-[#4E58CA]"
-    }`}>
-      {checked && <IoCheckmark className="text-white text-md" />}
+const TaskItem = ({ label, checked, onToggle, onDelete }) => (
+  <div className="flex justify-between items-center group">
+    <label className="flex items-center gap-4 cursor-pointer flex-1" onClick={onToggle}>
+      <div className={`w-[22px] h-[22px] rounded-md border-[2px] flex items-center justify-center transition-colors shrink-0 ${
+        checked ? "bg-[#4E58CA] border-[#4E58CA]" : "border-[#D1D5E0] bg-white group-hover:border-[#4E58CA]"
+      }`}>
+        {checked && <IoCheckmark className="text-white text-md" />}
+      </div>
+      <span className={`text-[15px] font-semibold transition-colors truncate max-w-[200px] ${
+        checked ? "text-[#A0A5BA] line-through decoration-[1.5px]" : "text-[#1D214E]"
+      }`}>
+        {label}
+      </span>
+    </label>
+    <div 
+      onClick={(e) => { e.stopPropagation(); onDelete(); }} 
+      className="text-[#D1D5E0] hover:text-[#D64F5D] cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-lg hover:bg-[#FFF5F6]"
+    >
+      <IoTrash size={16} />
     </div>
-    <span className={`text-[15px] font-semibold transition-colors ${
-      checked ? "text-[#A0A5BA] line-through decoration-[1.5px]" : "text-[#1D214E]"
-    }`}>
-      {label}
-    </span>
-  </label>
+  </div>
 );
 
 export default Dashboard;
