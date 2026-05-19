@@ -214,9 +214,17 @@ export default function GpaCalculator() {
                 <div className="inline-block bg-[#5A66C2] rounded-full px-5 py-2.5 mb-6 text-[13px] font-bold tracking-wide">
                   {estimatedGpa >= 4.5 ? "Distinction Level" : estimatedGpa >= 4.0 ? "Excellent Level" : estimatedGpa >= 3.5 ? "Very Good Level" : "Good Level"}
                 </div>
-                <p className="text-[12px] opacity-80 leading-relaxed font-medium px-4">
+                <p className="text-[12px] opacity-80 leading-relaxed font-medium px-4 mb-6">
                   Based on {semCredits} current credits and selected grade projections.
                 </p>
+                {semCredits > 0 && (
+                  <button 
+                    onClick={() => updateProfile({ gpa: Number(estimatedGpa) })}
+                    className="w-full bg-white text-[#3A45A0] font-bold py-3.5 px-6 rounded-full text-[13px] tracking-wide hover:bg-[#F2F1FA] hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
+                  >
+                    Set as My GPA
+                  </button>
+                )}
               </div>
             </div>
 
