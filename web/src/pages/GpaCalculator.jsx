@@ -14,15 +14,15 @@ const GRADE_POINTS = {
 };
 
 export default function GpaCalculator() {
-  const { userData, addSubject, updateSubject, deleteSubject, updateTargetGpa } = useContext(userContext);
+  const { userData, addSubject, updateSubject, deleteSubject, updateTargetGpa, updateProfile } = useContext(userContext);
 
   const subjects = userData?.subjects || [];
-  const currentGpa = userData?.gpa || 3.62;
-  const totalCredits = userData?.credits || 84;
+  const currentGpa = userData?.gpa !== undefined ? userData.gpa : 3.62;
+  const totalCredits = userData?.credits !== undefined ? userData.credits : 84;
   const targetGpa = userData?.targetGpa || 3.85;
 
   const handleAddSubject = () => {
-    addSubject({ name: "", credits: 3, grade: "A", points: 4.0 });
+    addSubject({ name: "", credits: "", points: "" });
   };
 
   const handleUpdate = (id, field, value) => {
@@ -57,7 +57,7 @@ export default function GpaCalculator() {
 
   // Custom Slider Logic
   const minGpa = 2.0;
-  const maxGpa = 4.0;
+  const maxGpa = 5.0;
   const sliderPercentage = Math.max(0, Math.min(100, ((targetGpa - minGpa) / (maxGpa - minGpa)) * 100));
 
   return (
@@ -93,9 +93,6 @@ export default function GpaCalculator() {
             <div className="bg-white rounded-[24px] p-8 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-[20px] font-bold text-[#1D214E]">Semester Subjects</h2>
-                <button onClick={handleAddSubject} className="flex items-center gap-2 text-[#4E58CA] font-bold text-[14px] hover:underline cursor-pointer">
-                  <IoAddOutline size={18} /> Add Subject
-                </button>
               </div>
 
               <div className="space-y-4">
@@ -121,20 +118,17 @@ export default function GpaCalculator() {
                       />
                     </div>
                     <div className="w-[160px]">
-                      <label className="block text-[#1D214E] text-[10px] font-bold tracking-widest mb-1.5 uppercase ml-2">Grade</label>
-                      <div className="relative">
-                        <select 
-                          value={sub.grade} 
-                          onChange={e => handleUpdate(sub.id, "grade", e.target.value)}
-                          className="w-full bg-white px-4 py-3.5 rounded-xl text-[#1D214E] font-semibold text-[15px] outline-none shadow-sm appearance-none cursor-pointer"
-                        >
-                          <option value="Select Grade">Select Grade</option>
-                          {Object.keys(GRADE_POINTS).map(g => (
-                            <option key={g} value={g}>{g} ({GRADE_POINTS[g].toFixed(1)})</option>
-                          ))}
-                        </select>
-                        <FaChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-[#7F8A9E] text-xs pointer-events-none" />
-                      </div>
+                      <label className="block text-[#1D214E] text-[10px] font-bold tracking-widest mb-1.5 uppercase ml-2">Points</label>
+                      <input 
+                        type="number" 
+                        step="0.01"
+                        min="0"
+                        max="5"
+                        value={sub.points} 
+                        onChange={e => handleUpdate(sub.id, "points", Number(e.target.value))}
+                        placeholder="e.g. 5.0"
+                        className="w-full bg-white px-4 py-3.5 rounded-xl text-[#1D214E] font-semibold text-[15px] outline-none shadow-sm"
+                      />
                     </div>
                     <div 
                       onClick={() => deleteSubject(sub.id)}
@@ -144,6 +138,16 @@ export default function GpaCalculator() {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Centered Add Subject Button */}
+              <div className="flex justify-center mt-8">
+                <button 
+                  onClick={handleAddSubject} 
+                  className="flex items-center gap-2 text-[#4E58CA] font-bold text-[14px] hover:bg-[#F2F1FA] px-6 py-3 rounded-full transition-colors border border-[#E1E0EF] cursor-pointer shadow-sm"
+                >
+                  <IoAddOutline size={18} /> Add Subject
+                </button>
               </div>
             </div>
 
@@ -179,7 +183,7 @@ export default function GpaCalculator() {
                   
                   <div className="flex justify-between text-[#8A94FA] text-[11px] font-bold tracking-widest uppercase">
                     <span>Current: {currentGpa.toFixed(2)}</span>
-                    <span>Max: 4.00</span>
+                    <span>Max: 5.00</span>
                   </div>
                 </div>
 
@@ -208,7 +212,7 @@ export default function GpaCalculator() {
                 <p className="text-[11px] font-bold tracking-[0.25em] mb-2 opacity-90 uppercase">Estimated GPA</p>
                 <h1 className="text-[85px] font-bold leading-none tracking-tighter mb-4 mt-2">{estimatedGpa}</h1>
                 <div className="inline-block bg-[#5A66C2] rounded-full px-5 py-2.5 mb-6 text-[13px] font-bold tracking-wide">
-                  {estimatedGpa >= 3.8 ? "Distinction Level" : estimatedGpa >= 3.5 ? "Excellent Level" : estimatedGpa >= 3.0 ? "Very Good Level" : "Good Level"}
+                  {estimatedGpa >= 4.5 ? "Distinction Level" : estimatedGpa >= 4.0 ? "Excellent Level" : estimatedGpa >= 3.5 ? "Very Good Level" : "Good Level"}
                 </div>
                 <p className="text-[12px] opacity-80 leading-relaxed font-medium px-4">
                   Based on {semCredits} current credits and selected grade projections.
@@ -239,12 +243,28 @@ export default function GpaCalculator() {
 
               <div className="border-t border-[#F0EEF5] pt-5 space-y-3.5">
                 <div className="flex justify-between items-center">
-                  <span className="text-[#7F8A9E] text-[13px] font-medium">Current CGPA</span>
-                  <span className="text-[#1D214E] text-[14px] font-bold">{currentGpa.toFixed(2)}</span>
+                  <label htmlFor="currentGpa" className="text-[#7F8A9E] text-[13px] font-medium cursor-pointer">Current CGPA</label>
+                  <input 
+                    id="currentGpa"
+                    type="number" 
+                    step="0.01"
+                    min="0"
+                    max="5"
+                    value={currentGpa}
+                    onChange={(e) => updateProfile({ gpa: Number(e.target.value) })}
+                    className="w-20 text-right bg-transparent text-[#1D214E] text-[14px] font-bold outline-none border-b border-transparent hover:border-[#E1E0EF] focus:border-[#4E58CA] transition-colors"
+                  />
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-[#7F8A9E] text-[13px] font-medium">Total Credits Earnt</span>
-                  <span className="text-[#1D214E] text-[14px] font-bold">{totalCredits}</span>
+                  <label htmlFor="totalCredits" className="text-[#7F8A9E] text-[13px] font-medium cursor-pointer">Total Credits Earnt</label>
+                  <input 
+                    id="totalCredits"
+                    type="number" 
+                    min="0"
+                    value={totalCredits}
+                    onChange={(e) => updateProfile({ credits: Number(e.target.value) })}
+                    className="w-20 text-right bg-transparent text-[#1D214E] text-[14px] font-bold outline-none border-b border-transparent hover:border-[#E1E0EF] focus:border-[#4E58CA] transition-colors"
+                  />
                 </div>
               </div>
             </div>
