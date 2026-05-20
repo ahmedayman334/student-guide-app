@@ -137,7 +137,7 @@ export function UserProvider({children}) {
 
             const exists = (key) => existingNotifications.some(n => n.uniqueKey === key);
 
-            // 1. Lecture & Exam Notifications from schedules
+            // 1. Lecture & Exam Notifications from schedules (Upcoming alerts)
             schedules.forEach(schedule => {
                 const eventTime = new Date(`${schedule.date}T${schedule.time}`);
                 const timeDiffMs = eventTime.getTime() - now.getTime();
@@ -232,7 +232,7 @@ export function UserProvider({children}) {
                 });
             }
 
-            // 3. Announcements
+            // 3. Announcements (Important notices)
             announcements.forEach(ann => {
                 const annDate = new Date(ann.date);
                 const ageDays = (now.getTime() - annDate.getTime()) / (1000 * 60 * 60 * 24);
@@ -256,7 +256,34 @@ export function UserProvider({children}) {
                 }
             });
 
-            // 4. Automatic cleanup of expired notifications
+            // 4. New Schedule Additions (Triggered instantly when admin schedules a new lecture/exam/workshop)
+            schedules.forEach(schedule => {
+                if (schedule.createdAt) {
+                    const createdDate = new Date(schedule.createdAt);
+                    const ageHrs = (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60);
+
+                    // If added in the last 24 hours
+                    if (ageHrs >= 0 && ageHrs <= 24) {
+                        const uniqueKey = `new_schedule_added_${schedule.id}`;
+                        if (!exists(uniqueKey)) {
+                            newNotifications.push({
+                                id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                                uniqueKey,
+                                title: `New Event Scheduled`,
+                                message: `Admin has added a new ${schedule.type.toLowerCase()}: "${schedule.title}" on ${schedule.date} at ${schedule.time} in ${schedule.room || 'TBD'}.`,
+                                type: schedule.type === 'Exam' ? 'exam' : 'lecture',
+                                priority: 'important',
+                                timestamp: now.toISOString(),
+                                isRead: false,
+                                expiresAt: new Date(createdDate.getTime() + 48 * 60 * 60 * 1000).toISOString() // Expires in 48 hours
+                            });
+                            hasChanges = true;
+                        }
+                    }
+                }
+            });
+
+            // 5. Automatic cleanup of expired notifications
             const activeNotifications = newNotifications.filter(n => {
                 const isExpired = new Date(n.expiresAt).getTime() < now.getTime();
                 if (isExpired) {
@@ -290,7 +317,7 @@ export function UserProvider({children}) {
                 { bgColor: "bg-[#FFF4E5]", textColor: "text-[#FF9800]", iconType: "book" },
             ];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            const updated = [...prev, { ...schedule, id: Date.now(), ...randomColor }];
+            const updated = [...prev, { ...schedule, id: Date.now(), createdAt: new Date().toISOString(), ...randomColor }];
             return updated.sort((a, b) => {
                 const dateA = new Date(`${a.date}T${a.time}`);
                 const dateB = new Date(`${b.date}T${b.time}`);
