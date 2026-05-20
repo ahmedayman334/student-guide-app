@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { userContext } from '../context/context';
 import SideBar from '../compontents/SideBar';
+import NotificationBell from '../compontents/NotificationBell';
 import { FaPen, FaCheckCircle, FaUser, FaBuilding, FaMoon } from "react-icons/fa";
 import { FaFileLines } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
@@ -49,7 +50,7 @@ export default function Profile() {
         
         {/* Top Header */}
         <div className="flex justify-end items-center gap-6 mb-8 text-[#7F8A9E]">
-          <IoNotificationsOutline size={24} className="cursor-pointer hover:text-[#1D214E] transition-colors" />
+          <NotificationBell size={24} />
           <IoSettingsOutline size={24} className="cursor-pointer hover:text-[#1D214E] transition-colors" />
         </div>
 

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { userContext } from './context/context';
 import SideBar from './compontents/SideBar';
+import NotificationBell from './compontents/NotificationBell';
 import { FaStar } from "react-icons/fa";
 import { 
   IoCalendarOutline, 
@@ -95,6 +96,9 @@ function Dashboard() {
                   ? `No classes today, but you have ${upcomingSchedules.length} upcoming soon.`
                   : "No classes scheduled. Enjoy your free time!"}
             </p>
+          </div>
+          <div className="text-[#7F8A9E] mt-2 pr-2">
+            <NotificationBell size={24} />
           </div>
         </div>
 
