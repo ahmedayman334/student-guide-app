@@ -73,6 +73,44 @@ export function UserProvider({children}) {
         ];
     });
 
+    const [announcements, setAnnouncements] = useState(() => {
+        const saved = localStorage.getItem('globalAnnouncements');
+        if (saved) return JSON.parse(saved);
+        
+        const now = new Date();
+        const formatDate = (daysAgo, hoursAgo = 0) => {
+            const d = new Date(now.getTime() - (daysAgo * 24 * 60 * 60 * 1000) - (hoursAgo * 60 * 60 * 1000));
+            return d.toISOString();
+        };
+
+        return [
+            {
+                id: 1,
+                title: "Spring 2026 Final Exam Schedule Released",
+                desc: "The comprehensive final exam schedule for the upcoming spring semester is now officially published. Check the portal for details.",
+                date: formatDate(0, 2), // 2 hours ago
+                priority: "important",
+                status: "Sent"
+            },
+            {
+                id: 2,
+                title: "Scholarship Application Deadline Extended",
+                desc: "Great news for students: the deadline for the University Merit Scholarship has been extended by one additional week. Submit your forms.",
+                date: formatDate(1), // 1 day ago
+                priority: "urgent",
+                status: "Sent"
+            },
+            {
+                id: 3,
+                title: "Campus Infrastructure Maintenance Notice",
+                desc: "Scheduled server maintenance will occur this weekend, affecting access to the student library portals between 2 AM and 6 AM.",
+                date: formatDate(3), // 3 days ago
+                priority: "normal",
+                status: "Sent"
+            }
+        ];
+    });
+
     useEffect(() => {
         if (userData) {
             localStorage.setItem('studentGuideUserData', JSON.stringify(userData));
@@ -82,6 +120,166 @@ export function UserProvider({children}) {
     useEffect(() => {
         localStorage.setItem('globalSchedules', JSON.stringify(schedules));
     }, [schedules]);
+
+    useEffect(() => {
+        localStorage.setItem('globalAnnouncements', JSON.stringify(announcements));
+    }, [announcements]);
+
+    // Automatically generate notifications dynamically
+    useEffect(() => {
+        if (!isloggedIn || !userData) return;
+
+        const checkAndGenerate = () => {
+            const now = new Date();
+            const existingNotifications = userData.notifications || [];
+            const newNotifications = [...existingNotifications];
+            let hasChanges = false;
+
+            const exists = (key) => existingNotifications.some(n => n.uniqueKey === key);
+
+            // 1. Lecture & Exam Notifications from schedules
+            schedules.forEach(schedule => {
+                const eventTime = new Date(`${schedule.date}T${schedule.time}`);
+                const timeDiffMs = eventTime.getTime() - now.getTime();
+                const timeDiffHrs = timeDiffMs / (1000 * 60 * 60);
+
+                if (timeDiffHrs > -0.25) { // Active or upcoming (within last 15 mins)
+                    if (schedule.type === 'Lecture' || schedule.type === 'Workshop') {
+                        if (timeDiffHrs <= 4) { // within 4 hours
+                            const uniqueKey = `lecture_${schedule.id}_${schedule.date}`;
+                            if (!exists(uniqueKey)) {
+                                let priority = 'normal';
+                                if (timeDiffHrs <= 0.5) priority = 'urgent';
+                                else if (timeDiffHrs <= 2) priority = 'important';
+
+                                newNotifications.push({
+                                    id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                                    uniqueKey,
+                                    title: `Upcoming ${schedule.type}: ${schedule.title}`,
+                                    message: `Your class starts in ${Math.round(timeDiffHrs * 60)} mins in ${schedule.room || 'TBD'}.`,
+                                    type: 'lecture',
+                                    priority,
+                                    timestamp: now.toISOString(),
+                                    isRead: false,
+                                    expiresAt: new Date(eventTime.getTime() + 2 * 60 * 60 * 1000).toISOString() // Expires after 2 hrs
+                                });
+                                hasChanges = true;
+                            }
+                        }
+                    } else if (schedule.type === 'Exam') {
+                        if (timeDiffHrs <= 48) { // within 48 hours
+                            const uniqueKey = `exam_${schedule.id}_${schedule.date}`;
+                            if (!exists(uniqueKey)) {
+                                let priority = 'important';
+                                if (timeDiffHrs <= 2) priority = 'urgent';
+
+                                newNotifications.push({
+                                    id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                                    uniqueKey,
+                                    title: `Upcoming Exam: ${schedule.title}`,
+                                    message: `Prep time! Your exam is scheduled on ${schedule.date} at ${schedule.time} in ${schedule.room || 'TBD'}.`,
+                                    type: 'exam',
+                                    priority,
+                                    timestamp: now.toISOString(),
+                                    isRead: false,
+                                    expiresAt: new Date(eventTime.getTime() + 4 * 60 * 60 * 1000).toISOString() // Expires after 4 hrs
+                                });
+                                hasChanges = true;
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 2. Assignment Deadlines
+            if (userData.subjects && Array.isArray(userData.subjects)) {
+                userData.subjects.forEach(subject => {
+                    const nextFriday = new Date(now);
+                    const day = nextFriday.getDay();
+                    const daysUntilFriday = (5 - day + 7) % 7;
+                    nextFriday.setDate(nextFriday.getDate() + daysUntilFriday);
+                    nextFriday.setHours(23, 59, 0, 0);
+
+                    if (nextFriday.getTime() <= now.getTime()) {
+                        nextFriday.setDate(nextFriday.getDate() + 7);
+                    }
+
+                    const timeDiffMs = nextFriday.getTime() - now.getTime();
+                    const timeDiffHrs = timeDiffMs / (1000 * 60 * 60);
+
+                    if (timeDiffHrs <= 72) { // within 3 days
+                        const dateStr = nextFriday.toISOString().split('T')[0];
+                        const uniqueKey = `assignment_${subject.id}_${dateStr}`;
+
+                        if (!exists(uniqueKey)) {
+                            let priority = 'important';
+                            if (timeDiffHrs <= 24) priority = 'urgent';
+
+                            newNotifications.push({
+                                id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                                uniqueKey,
+                                title: `Assignment Due: ${subject.name}`,
+                                message: `The weekly assignment for ${subject.name} is due this Friday at 11:59 PM.`,
+                                type: 'assignment',
+                                priority,
+                                timestamp: now.toISOString(),
+                                isRead: false,
+                                expiresAt: new Date(nextFriday.getTime() + 1 * 60 * 60 * 1000).toISOString() // Expires 1 hr after deadline
+                            });
+                            hasChanges = true;
+                        }
+                    }
+                });
+            }
+
+            // 3. Announcements
+            announcements.forEach(ann => {
+                const annDate = new Date(ann.date);
+                const ageDays = (now.getTime() - annDate.getTime()) / (1000 * 60 * 60 * 24);
+
+                if (ageDays >= 0 && ageDays <= 7) {
+                    const uniqueKey = `announcement_${ann.id}`;
+                    if (!exists(uniqueKey)) {
+                        newNotifications.push({
+                            id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                            uniqueKey,
+                            title: `New Announcement: ${ann.title}`,
+                            message: ann.desc,
+                            type: 'announcement',
+                            priority: ann.priority || 'important',
+                            timestamp: now.toISOString(),
+                            isRead: false,
+                            expiresAt: new Date(annDate.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString() // Expires 7 days after
+                        });
+                        hasChanges = true;
+                    }
+                }
+            });
+
+            // 4. Automatic cleanup of expired notifications
+            const activeNotifications = newNotifications.filter(n => {
+                const isExpired = new Date(n.expiresAt).getTime() < now.getTime();
+                if (isExpired) {
+                    hasChanges = true;
+                }
+                return !isExpired;
+            });
+
+            if (hasChanges) {
+                setUserData(prev => ({
+                    ...prev,
+                    notifications: activeNotifications
+                }));
+            }
+        };
+
+        // Run immediately on load/change
+        checkAndGenerate();
+
+        // Run periodically every 15 seconds to catch upcoming schedules and expiration times
+        const intervalId = setInterval(checkAndGenerate, 15000);
+        return () => clearInterval(intervalId);
+    }, [isloggedIn, userData?.subjects, schedules, announcements]);
 
     const addSchedule = (schedule) => {
         setSchedules(prev => {
@@ -105,6 +303,43 @@ export function UserProvider({children}) {
         setSchedules(prev => prev.filter(s => s.id !== id));
     };
 
+    const addAnnouncement = (ann) => {
+        setAnnouncements(prev => [
+            { ...ann, id: Date.now(), date: new Date().toISOString(), status: "Sent" },
+            ...prev
+        ]);
+    };
+
+    const markNotificationAsRead = (id) => {
+        setUserData(prev => {
+            if (!prev || !prev.notifications) return prev;
+            return {
+                ...prev,
+                notifications: prev.notifications.map(n => n.id === id ? { ...n, isRead: true } : n)
+            };
+        });
+    };
+
+    const markAllNotificationsAsRead = () => {
+        setUserData(prev => {
+            if (!prev || !prev.notifications) return prev;
+            return {
+                ...prev,
+                notifications: prev.notifications.map(n => ({ ...n, isRead: true }))
+            };
+        });
+    };
+
+    const deleteNotification = (id) => {
+        setUserData(prev => {
+            if (!prev || !prev.notifications) return prev;
+            return {
+                ...prev,
+                notifications: prev.notifications.filter(n => n.id !== id)
+            };
+        });
+    };
+
     const loginUser = (userApiData) => {
         const savedDataRaw = localStorage.getItem('studentGuideUserData');
         const savedData = savedDataRaw ? JSON.parse(savedDataRaw) : {};
@@ -119,6 +354,7 @@ export function UserProvider({children}) {
             id: userApiData.id || savedData.id || defaultUser.id,
             year: userApiData.year || savedData.year || defaultUser.year,
             department: userApiData.department || savedData.department || defaultUser.department,
+            notifications: savedData.email === userApiData.email ? (savedData.notifications || []) : []
         };
 
         setUserData(newUserData);
@@ -175,7 +411,12 @@ export function UserProvider({children}) {
             updateTargetGpa,
             schedules,
             addSchedule,
-            deleteSchedule
+            deleteSchedule,
+            announcements,
+            addAnnouncement,
+            markNotificationAsRead,
+            markAllNotificationsAsRead,
+            deleteNotification
         }}>
             {children}
         </userContext.Provider>
