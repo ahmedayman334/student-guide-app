@@ -23,9 +23,14 @@ import { useNavigate } from 'react-router-dom';
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState('Dashboard');
   const navigate = useNavigate();
-  const { addSchedule, schedules, deleteSchedule } = useContext(userContext);
+  const { addSchedule, schedules, deleteSchedule, addAnnouncement, announcements } = useContext(userContext);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // Form State for Announcements
+  const [annTitle, setAnnTitle] = useState('');
+  const [annDesc, setAnnDesc] = useState('');
+  const [annPriority, setAnnPriority] = useState('important');
   
   // Form State for Schedule
   const [formData, setFormData] = useState({
@@ -51,6 +56,28 @@ export default function AdminDashboard() {
     });
     alert("Event added successfully! It will now appear on the student dashboard.");
     setFormData({ title: '', type: 'Lecture', date: '', time: '', room: '' });
+  };
+
+  const handleAnnSubmit = (e) => {
+    e.preventDefault();
+    if (!annTitle.trim() || !annDesc.trim()) return;
+    addAnnouncement({
+      title: annTitle.trim(),
+      desc: annDesc.trim(),
+      priority: annPriority,
+      status: "Sent"
+    });
+    alert("Announcement published successfully! It will trigger real-time notifications.");
+    setAnnTitle('');
+    setAnnDesc('');
+    setAnnPriority('important');
+  };
+
+  const formatAnnDate = (isoString) => {
+    if (!isoString) return "";
+    const d = new Date(isoString);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + " • " + 
+           d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
   };
 
   useEffect(() => {
@@ -196,46 +223,26 @@ export default function AdminDashboard() {
                   </div>
 
                   <div className="space-y-0 divide-y divide-[#F3F4F6]">
-                    <AnnouncementItem 
-                      icon={<IoSchoolOutline size={20} />}
-                      title="Spring 2024 Final Exam Schedule Released"
-                      desc="The comprehensive final exam schedule for the upcoming spring semester i..."
-                      date="Oct 12, 2023 • 09:30 AM"
-                      status="Sent"
-                      statusColor="text-[#059669] bg-[#DEF7EC]"
-                    />
-                    <AnnouncementItem 
-                      icon={<IoCalendarOutline size={20} />}
-                      title="Campus Infrastructure Maintenance Notice"
-                      desc="Scheduled server maintenance will occur this weekend, affecting access to..."
-                      date="Oct 11, 2023 • 02:15 PM"
-                      status="Sent"
-                      statusColor="text-[#059669] bg-[#DEF7EC]"
-                    />
-                    <AnnouncementItem 
-                      icon={<IoMedkitOutline size={20} />}
-                      title="Winter Vaccination Drive Volunteers"
-                      desc="We are seeking student volunteers for the upcoming campus-wide health..."
-                      date="Oct 10, 2023 • 11:00 AM"
-                      status="Draft"
-                      statusColor="text-[#B45309] bg-[#FEF3C7]"
-                    />
-                    <AnnouncementItem 
-                      icon={<IoCashOutline size={20} />}
-                      title="Scholarship Application Deadline Extended"
-                      desc="Great news for students: the deadline for the University Merit Scholarship ha..."
-                      date="Oct 08, 2023 • 04:45 PM"
-                      status="Sent"
-                      statusColor="text-[#059669] bg-[#DEF7EC]"
-                    />
-                    <AnnouncementItem 
-                      icon={<IoRibbonOutline size={20} />}
-                      title="Official Graduation Ceremony Details"
-                      desc="Find the complete schedule and ticketing information for the Class of 2023..."
-                      date="Oct 05, 2023 • 10:20 AM"
-                      status="Sent"
-                      statusColor="text-[#059669] bg-[#DEF7EC]"
-                    />
+                    {announcements && announcements.length > 0 ? (
+                      announcements.slice(0, 5).map(ann => {
+                        const statusColor = ann.priority === 'urgent' 
+                          ? "text-[#D64F5D] bg-[#FFF5F6]" 
+                          : (ann.status === 'Draft' ? "text-[#B45309] bg-[#FEF3C7]" : "text-[#059669] bg-[#DEF7EC]");
+                        return (
+                          <AnnouncementItem 
+                            key={ann.id}
+                            icon={ann.priority === 'urgent' ? <IoMegaphoneOutline size={20} /> : <IoSchoolOutline size={20} />}
+                            title={ann.title}
+                            desc={ann.desc}
+                            date={formatAnnDate(ann.date)}
+                            status={ann.status || "Sent"}
+                            statusColor={statusColor}
+                          />
+                        );
+                      })
+                    ) : (
+                      <p className="text-gray-500 py-6 text-center italic">No announcements published yet.</p>
+                    )}
                   </div>
                 </div>
 
@@ -434,15 +441,44 @@ export default function AdminDashboard() {
               <h2 className="text-[22px] font-bold text-[#1D214E] mb-8 border-b border-[#EBEBF2] pb-4">Create Announcement</h2>
               
               <div className="max-w-2xl">
-                <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); alert("Announcement published!"); }}>
+                <form className="space-y-6" onSubmit={handleAnnSubmit}>
                   <div>
                     <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Announcement Title</label>
-                    <input type="text" placeholder="Enter a catchy title..." className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" required />
+                    <input 
+                      type="text" 
+                      placeholder="Enter a catchy title..." 
+                      value={annTitle}
+                      onChange={(e) => setAnnTitle(e.target.value)}
+                      className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all" 
+                      required 
+                    />
                   </div>
                   
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Priority Level</label>
+                      <select 
+                        value={annPriority}
+                        onChange={(e) => setAnnPriority(e.target.value)}
+                        className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all cursor-pointer"
+                      >
+                        <option value="normal">Normal</option>
+                        <option value="important">Important</option>
+                        <option value="urgent">Urgent</option>
+                      </select>
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-[13px] font-bold text-[#6B7280] mb-2">Message Body</label>
-                    <textarea rows="5" placeholder="Write the details of the announcement here..." className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all resize-none" required></textarea>
+                    <textarea 
+                      rows="5" 
+                      placeholder="Write the details of the announcement here..." 
+                      value={annDesc}
+                      onChange={(e) => setAnnDesc(e.target.value)}
+                      className="w-full px-4 py-3 bg-[#F9FAFB] border border-[#EBEBF2] rounded-[12px] text-[14px] text-[#1D214E] outline-none focus:border-[#3B44B3] focus:ring-1 focus:ring-[#3B44B3] transition-all resize-none animate-none" 
+                      required
+                    ></textarea>
                   </div>
 
                   <div>

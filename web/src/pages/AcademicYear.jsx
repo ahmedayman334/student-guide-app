@@ -1,5 +1,6 @@
 import React from "react";
 import SideBar from "../compontents/SideBar";
+import NotificationBell from "../compontents/NotificationBell";
 import {
   IoArrowForward,
   IoBookOutline,
@@ -128,13 +129,9 @@ export default function AcademicYear() {
                 className="h-10 w-[260px] rounded-full bg-[#F1ECFA] pl-11 pr-4 text-[13px] font-semibold text-[#2B2B57] outline-none placeholder:text-[#9A94B5] focus:ring-2 focus:ring-[#4E58CA]/30"
               />
             </label>
-            <button
-              type="button"
-              aria-label="Notifications"
-              className="flex h-10 w-10 items-center justify-center rounded-full text-[#2B2B57] transition-colors hover:bg-[#F1ECFA]"
-            >
-              <IoNotificationsOutline size={21} />
-            </button>
+            <div className="flex h-10 w-10 items-center justify-center rounded-full text-[#2B2B57] transition-colors hover:bg-[#F1ECFA]">
+              <NotificationBell size={21} />
+            </div>
           </div>
         </header>
 
