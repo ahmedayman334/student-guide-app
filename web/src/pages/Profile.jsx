@@ -1,23 +1,31 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { userContext } from '../context/context';
 import SideBar from '../compontents/SideBar';
 import NotificationBell from '../compontents/NotificationBell';
 import { FaPen, FaCheckCircle, FaUser, FaBuilding, FaMoon } from "react-icons/fa";
 import { FaFileLines } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import { 
-  IoCalendarOutline, 
-  IoSettingsOutline, 
-  IoNotificationsOutline, 
+import {
+  IoCalendarOutline,
+  IoSettingsOutline,
+  IoNotificationsOutline,
   IoChevronDownOutline,
   IoDownloadOutline,
-  IoIdCardOutline
+  IoIdCardOutline,
+  IoLogOutOutline
 } from "react-icons/io5";
 import { BsBellFill } from "react-icons/bs";
 
 export default function Profile() {
-  const { userData, updateProfile } = useContext(userContext);
-  
+  const { userData, updateProfile, logoutUser } = useContext(userContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/login");
+  };
+
   const [formData, setFormData] = useState({
     name: userData?.name || "",
     email: userData?.email || "",
@@ -47,18 +55,25 @@ export default function Profile() {
     <div className="flex min-h-screen bg-[#F5F5FA] font-sans text-left" dir="ltr">
       <SideBar />
       <div className="flex-1 p-10 overflow-y-auto">
-        
+
         {/* Top Header */}
         <div className="flex justify-end items-center gap-6 mb-8 text-[#7F8A9E]">
           <NotificationBell size={24} />
           <IoSettingsOutline size={24} className="cursor-pointer hover:text-[#1D214E] transition-colors" />
+          <button 
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-[#EBEBF2] text-[#7F8A9E] hover:text-[#D64F5D] hover:bg-[#FFF5F6] hover:border-[#FADCDD] transition-all duration-200 font-bold text-[13px] shadow-[0_2px_10px_rgba(0,0,0,0.01)] cursor-pointer"
+          >
+            <IoLogOutOutline size={18} />
+            Logout
+          </button>
         </div>
 
         {/* Banner & Avatar Section */}
         <div className="relative mb-24">
           {/* Banner */}
           <div className="h-[200px] w-full rounded-[24px] bg-gradient-to-r from-[#5C6CE1] to-[#80DFE6] shadow-md"></div>
-          
+
           {/* Avatar Area */}
           <div className="absolute -bottom-16 left-12 flex items-end gap-6">
             <div className="relative">
@@ -79,22 +94,22 @@ export default function Profile() {
 
         {/* Content Grids */}
         <div className="grid grid-cols-12 gap-8">
-          
+
           {/* Left Column */}
           <div className="col-span-4 space-y-8">
-            
+
             {/* Academic Status */}
             <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
               <div className="flex items-center gap-3 mb-6">
                 <FaCheckCircle className="text-[#4E58CA] text-xl" />
                 <h3 className="text-[18px] font-bold text-[#1D214E]">Academic Status</h3>
               </div>
-              
+
               <div className="bg-[#F3F0FA] rounded-2xl p-5 flex justify-between items-center mb-4">
                 <span className="text-[#64617A] text-[14px] font-bold">Current GPA</span>
                 <span className="text-[#4E58CA] text-[28px] font-bold leading-none">3.85</span>
               </div>
-              
+
               <div className="bg-[#FFF8E7] rounded-2xl p-5 flex justify-between items-center border border-[#FDEBCC]">
                 <span className="text-[#A16F0F] text-[14px] font-bold">Credits Earned</span>
                 <span className="text-[#B07B18] text-[24px] font-bold leading-none">92 / 120</span>
@@ -104,31 +119,31 @@ export default function Profile() {
             {/* Quick Documents */}
             <div className="bg-white rounded-[24px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
               <h3 className="text-[18px] font-bold text-[#1D214E] mb-6">Quick Documents</h3>
-              
+
               <button className="w-full bg-[#F3F6FF] rounded-2xl p-4 flex items-center justify-center gap-4 mb-4 hover:bg-[#ebeeff] transition-colors group">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-[#4E58CA]">
                   <IoDownloadOutline size={20} className="group-hover:-translate-y-1 transition-transform" />
                 </div>
                 <span className="text-[#4E58CA] text-[13px] font-bold tracking-widest text-left leading-snug">
-                  DIGITAL STUDENT ID<br/>CARD
+                  DIGITAL STUDENT ID<br />CARD
                 </span>
               </button>
-              
+
               <button className="w-full bg-[#F2FBF6] rounded-2xl p-4 flex items-center justify-center gap-4 hover:bg-[#e6f7ec] transition-colors group">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-[#2A9D79]">
                   <FaFileLines size={18} />
                 </div>
                 <span className="text-[#2A9D79] text-[13px] font-bold tracking-widest text-left leading-snug">
-                  OFFICIAL ACADEMIC<br/>TRANSCRIPT
+                  OFFICIAL ACADEMIC<br />TRANSCRIPT
                 </span>
               </button>
             </div>
-            
+
           </div>
 
           {/* Right Column */}
           <div className="col-span-8 space-y-8">
-            
+
             {/* Personal Information */}
             <div className="bg-white rounded-[24px] p-8 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
               <div className="flex justify-between items-start mb-8">
@@ -137,7 +152,7 @@ export default function Profile() {
                   <p className="text-[#7F8A9E] text-[15px] font-medium mt-1">Update your university profile and contact details</p>
                 </div>
                 <button onClick={handleSave} className="bg-[#4E58CA] text-white px-8 py-3.5 rounded-xl font-bold text-[15px] shadow-[0_8px_20px_rgba(78,88,202,0.3)] hover:bg-[#3c4dba] transition-colors leading-snug">
-                  Save Profile<br/>Changes
+                  Save Profile<br />Changes
                 </button>
               </div>
 
@@ -147,10 +162,10 @@ export default function Profile() {
                   <label className="block text-[#A09DB0] text-[11px] font-bold tracking-widest mb-2 uppercase">Full Name</label>
                   <div className="relative">
                     <FaUser className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0]" />
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={formData.name}
-                      onChange={e => setFormData({...formData, name: e.target.value})}
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
                       className="w-full pl-12 pr-4 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold focus:ring-2 focus:ring-[#4E58CA] transition-all"
                     />
                   </div>
@@ -161,9 +176,9 @@ export default function Profile() {
                   <label className="block text-[#A09DB0] text-[11px] font-bold tracking-widest mb-2 uppercase">University ID (Read Only)</label>
                   <div className="relative">
                     <IoIdCardOutline className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-xl" />
-                    <input 
-                      type="text" 
-                      readOnly 
+                    <input
+                      type="text"
+                      readOnly
                       value={userData?.id || "ST-9982441"}
                       className="w-full pl-12 pr-4 py-4 bg-[#F2F1F7] rounded-2xl outline-none text-[#A09DB0] font-bold italic opacity-80"
                     />
@@ -175,10 +190,10 @@ export default function Profile() {
                   <label className="block text-[#A09DB0] text-[11px] font-bold tracking-widest mb-2 uppercase">Academic Email Address</label>
                   <div className="relative">
                     <MdEmail className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-lg" />
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       value={formData.email}
-                      onChange={e => setFormData({...formData, email: e.target.value})}
+                      onChange={e => setFormData({ ...formData, email: e.target.value })}
                       className="w-full pl-12 pr-4 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold focus:ring-2 focus:ring-[#4E58CA] transition-all"
                     />
                   </div>
@@ -189,11 +204,11 @@ export default function Profile() {
                   <label className="block text-[#A09DB0] text-[11px] font-bold tracking-widest mb-2 uppercase">Primary Department</label>
                   <div className="relative cursor-pointer">
                     <FaBuilding className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0]" />
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       list="DepartmentOptions"
-                      value={formData.department} 
-                      onChange={e => setFormData({...formData, department: e.target.value})} 
+                      value={formData.department}
+                      onChange={e => setFormData({ ...formData, department: e.target.value })}
                       className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all"
                     />
                     <datalist id="DepartmentOptions">
@@ -214,11 +229,11 @@ export default function Profile() {
                   <label className="block text-[#A09DB0] text-[11px] font-bold tracking-widest mb-2 uppercase">Current Academic Year</label>
                   <div className="relative cursor-pointer">
                     <IoCalendarOutline className="absolute left-5 top-1/2 -translate-y-1/2 text-[#A09DB0] text-lg" />
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       list="YearOptions"
-                      value={formData.year} 
-                      onChange={e => setFormData({...formData, year: e.target.value})} 
+                      value={formData.year}
+                      onChange={e => setFormData({ ...formData, year: e.target.value })}
                       className="w-full pl-12 pr-10 py-4 bg-[#EBE8F4] rounded-2xl outline-none text-[#1D214E] font-bold cursor-pointer focus:ring-2 focus:ring-[#4E58CA] transition-all"
                     />
                     <datalist id="YearOptions">
@@ -237,7 +252,7 @@ export default function Profile() {
             {/* Portal Preferences */}
             <div className="bg-white rounded-[24px] p-8 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
               <h2 className="text-[20px] font-bold text-[#1D214E] mb-6">Portal Preferences</h2>
-              
+
               <div className="grid grid-cols-2 gap-6">
                 {/* Dark Mode */}
                 <div className="bg-[#F8F7FB] rounded-2xl p-5 flex items-center justify-between border border-[#F0EEF5]">
