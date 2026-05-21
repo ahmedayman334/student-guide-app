@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { userContext } from './context/context';
 import SideBar from './compontents/SideBar';
 import NotificationBell from './compontents/NotificationBell';
 import { FaStar } from "react-icons/fa";
-import { 
-  IoCalendarOutline, 
-  IoTrendingUp, 
-  IoNotificationsOutline, 
+import {
+  IoCalendarOutline,
+  IoTrendingUp,
+  IoNotificationsOutline,
   IoBookOutline,
   IoFlaskOutline,
   IoColorPaletteOutline,
@@ -15,14 +16,21 @@ import {
   IoListOutline,
   IoPencil,
   IoCheckmark,
-  IoTrash
+  IoTrash,
+  IoLogOutOutline
 } from "react-icons/io5";
 
 function Dashboard() {
-  const { userData, schedules } = useContext(userContext);
+  const { userData, schedules, logoutUser } = useContext(userContext);
+  const navigate = useNavigate();
   const firstName = userData?.name ? userData.name.split(' ')[0] : "Alex";
   const currentGpa = userData?.gpa || "3.62";
   const subjectsCount = userData?.subjects?.length || 6;
+
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/login");
+  };
 
   // Interactive Tasks State
   const [tasks, setTasks] = useState([
@@ -62,15 +70,15 @@ function Dashboard() {
     hours = parseInt(hours);
     const ampm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12;
-    hours = hours ? hours : 12; 
+    hours = hours ? hours : 12;
     return `${hours}:${minutes} ${ampm}`;
   };
 
   const today = getLocalDate();
   const todaysSchedules = schedules?.filter(s => s.date === today) || [];
-  
+
   // If no schedules for today, get upcoming ones
-  const upcomingSchedules = !todaysSchedules.length 
+  const upcomingSchedules = !todaysSchedules.length
     ? (schedules?.filter(s => s.date > today) || []).slice(0, 3)
     : [];
 
@@ -82,7 +90,7 @@ function Dashboard() {
     <div className="flex min-h-screen bg-[#F5F5FA] font-sans text-left" dir="ltr">
       <SideBar />
       <div className="flex-1 p-10 overflow-y-auto">
-        
+
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
           <div>
@@ -90,15 +98,16 @@ function Dashboard() {
               Welcome back, <span className="text-[#4E58CA]">{firstName}</span>
             </h1>
             <p className="text-[#7F8A9E] text-[16px] mt-1 font-medium">
-              {todaysSchedules.length > 0 
-                ? `You have ${todaysSchedules.length} classes today. Stay focused!` 
-                : upcomingSchedules.length > 0 
+              {todaysSchedules.length > 0
+                ? `You have ${todaysSchedules.length} classes today. Stay focused!`
+                : upcomingSchedules.length > 0
                   ? `No classes today, but you have ${upcomingSchedules.length} upcoming soon.`
                   : "No classes scheduled. Enjoy your free time!"}
             </p>
           </div>
-          <div className="text-[#7F8A9E] mt-2 pr-2">
+          <div className="flex items-center gap-4 mt-2 pr-2">
             <NotificationBell size={24} />
+
           </div>
         </div>
 
@@ -154,7 +163,7 @@ function Dashboard() {
 
         {/* Main Area */}
         <div className="grid grid-cols-3 gap-8">
-          
+
           {/* Left Col */}
           <div className="col-span-2">
             <div className="flex justify-between items-center mb-6">
@@ -163,12 +172,12 @@ function Dashboard() {
                   {showAll ? "All Schedules" : todaysSchedules.length > 0 ? "Today's Schedule" : "Upcoming Schedule"}
                 </h2>
                 {schedules?.length > 0 && (
-                   <button 
-                    onClick={() => setShowAll(!showAll)} 
+                  <button
+                    onClick={() => setShowAll(!showAll)}
                     className="text-[#4E58CA] text-[12px] font-bold mt-1 hover:underline text-left"
-                   >
+                  >
                     {showAll ? "← Show Today Only" : `Show All (${schedules.length}) →`}
-                   </button>
+                  </button>
                 )}
               </div>
               <button className="text-[#4E58CA] text-[12px] font-bold tracking-widest hover:underline uppercase">VIEW FULL CALENDAR</button>
@@ -181,7 +190,7 @@ function Dashboard() {
                     {index === 0 && <div className="w-1.5 h-[60%] bg-[#4E58CA] absolute left-0 top-1/2 -translate-y-1/2 rounded-r-full"></div>}
                     <div className="flex items-center gap-5 ml-4">
                       <div className={`w-14 h-14 rounded-[16px] ${item.bgColor ? "bg-black/5" : "bg-[#EEF0FF]"} flex items-center justify-center ${item.textColor || "text-[#4E58CA]"}`}>
-                         {item.iconType === 'flask' ? <IoFlaskOutline size={24} /> : item.iconType === 'palette' ? <IoColorPaletteOutline size={24} /> : <IoBookOutline size={24} />}
+                        {item.iconType === 'flask' ? <IoFlaskOutline size={24} /> : item.iconType === 'palette' ? <IoColorPaletteOutline size={24} /> : <IoBookOutline size={24} />}
                       </div>
                       <div>
                         <h3 className="text-[17px] font-bold text-[#1D214E]">{item.title}</h3>
@@ -241,10 +250,10 @@ function Dashboard() {
                 <TaskItem key={task.id} label={task.label} checked={task.checked} onToggle={() => toggleTask(task.id)} onDelete={() => deleteTask(task.id)} />
               ))}
               <form onSubmit={handleAddTask} className="flex items-center gap-3 mt-4">
-                <input 
-                  type="text" 
-                  value={newTaskLabel} 
-                  onChange={(e) => setNewTaskLabel(e.target.value)} 
+                <input
+                  type="text"
+                  value={newTaskLabel}
+                  onChange={(e) => setNewTaskLabel(e.target.value)}
                   placeholder="Add a new task..."
                   className="flex-1 bg-[#F5F5FA] rounded-xl px-4 py-3 text-[14px] font-semibold text-[#1D214E] outline-none border border-transparent focus:border-[#4E58CA]"
                 />
@@ -294,19 +303,17 @@ function Dashboard() {
 const TaskItem = ({ label, checked, onToggle, onDelete }) => (
   <div className="flex justify-between items-center group">
     <label className="flex items-center gap-4 cursor-pointer flex-1" onClick={onToggle}>
-      <div className={`w-[22px] h-[22px] rounded-md border-[2px] flex items-center justify-center transition-colors shrink-0 ${
-        checked ? "bg-[#4E58CA] border-[#4E58CA]" : "border-[#D1D5E0] bg-white group-hover:border-[#4E58CA]"
-      }`}>
+      <div className={`w-[22px] h-[22px] rounded-md border-[2px] flex items-center justify-center transition-colors shrink-0 ${checked ? "bg-[#4E58CA] border-[#4E58CA]" : "border-[#D1D5E0] bg-white group-hover:border-[#4E58CA]"
+        }`}>
         {checked && <IoCheckmark className="text-white text-md" />}
       </div>
-      <span className={`text-[15px] font-semibold transition-colors truncate max-w-[200px] ${
-        checked ? "text-[#A0A5BA] line-through decoration-[1.5px]" : "text-[#1D214E]"
-      }`}>
+      <span className={`text-[15px] font-semibold transition-colors truncate max-w-[200px] ${checked ? "text-[#A0A5BA] line-through decoration-[1.5px]" : "text-[#1D214E]"
+        }`}>
         {label}
       </span>
     </label>
-    <div 
-      onClick={(e) => { e.stopPropagation(); onDelete(); }} 
+    <div
+      onClick={(e) => { e.stopPropagation(); onDelete(); }}
       className="text-[#D1D5E0] hover:text-[#D64F5D] cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-lg hover:bg-[#FFF5F6]"
     >
       <IoTrash size={16} />

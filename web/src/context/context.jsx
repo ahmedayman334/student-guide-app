@@ -14,13 +14,51 @@ const defaultUser = {
   subjects: [
     { id: 1, name: "Advanced Microeconomics", credits: 4, grade: "A-", points: 3.7 },
     { id: 2, name: "Data Structures & Algorithms", credits: 3, grade: "A", points: 4.0 }
+  ],
+  coursework: [
+    { id: "c1", name: "Introduction to Programming", credits: 3, grade: "A", points: 4.0, type: "mandatory", term: "Year 1, Sem 1" },
+    { id: "c2", name: "Calculus I", credits: 3, grade: "A", points: 4.0, type: "mandatory", term: "Year 1, Sem 1" },
+    { id: "c3", name: "Drawing Foundations", credits: 3, grade: "A", points: 4.0, type: "elective", term: "Year 1, Sem 1" },
+    { id: "c4", name: "Technical Writing", credits: 3, grade: "B+", points: 3.3, type: "elective", term: "Year 1, Sem 1" },
+    { id: "c5", name: "Discrete Mathematics", credits: 3, grade: "A-", points: 3.7, type: "mandatory", term: "Year 1, Sem 2" },
+    { id: "c6", name: "Data Structures & Algorithms", credits: 3, grade: "A", points: 4.0, type: "mandatory", term: "Year 1, Sem 2" },
+    { id: "c7", name: "Object Oriented Programming", credits: 4, grade: "B+", points: 3.3, type: "mandatory", term: "Year 1, Sem 2" },
+    { id: "c8", name: "Digital Design", credits: 3, grade: "B", points: 3.0, type: "elective", term: "Year 1, Sem 2" },
+    { id: "c9", name: "Linear Algebra", credits: 3, grade: "B+", points: 3.3, type: "mandatory", term: "Year 2, Sem 1" },
+    { id: "c10", name: "Database Systems", credits: 3, grade: "A-", points: 3.7, type: "mandatory", term: "Year 2, Sem 1" },
+    { id: "c11", name: "Computer Architecture", credits: 4, grade: "B", points: 3.0, type: "mandatory", term: "Year 2, Sem 1" },
+    { id: "c12", name: "Physics for Computer Science", credits: 4, grade: "B-", points: 2.7, type: "elective", term: "Year 2, Sem 1" },
+    { id: "c13", name: "Software Engineering", credits: 4, grade: "A-", points: 3.7, type: "mandatory", term: "Year 2, Sem 2" },
+    { id: "c14", name: "Operating Systems", credits: 4, grade: "F", points: 0.0, type: "mandatory", term: "Year 2, Sem 2" },
+    { id: "c15", name: "System Programming", credits: 3, grade: "C+", points: 2.7, type: "mandatory", term: "Year 2, Sem 2" },
+    { id: "c16", name: "Artificial Intelligence", credits: 3, grade: "B", points: 3.0, type: "elective", term: "Year 2, Sem 2" },
+    { id: "c17", name: "Cyber Security", credits: 3, grade: "A", points: 4.0, type: "elective", term: "Year 3, Sem 1" },
+    { id: "c18", name: "Cloud Computing", credits: 3, grade: "A-", points: 3.7, type: "elective", term: "Year 3, Sem 1" },
+    { id: "c19", name: "Web Development", credits: 3, grade: "B+", points: 3.3, type: "elective", term: "Year 3, Sem 1" },
+    { id: "c20", name: "Statistics & Probability", credits: 3, grade: "A", points: 4.0, type: "mandatory", term: "Year 3, Sem 1" },
+    { id: "c21", name: "Human Computer Interaction", credits: 3, grade: "A", points: 4.0, type: "elective", term: "Year 3, Sem 1" },
+    { id: "c22", name: "Professional Ethics", credits: 3, grade: "A", points: 4.0, type: "elective", term: "Year 3, Sem 1" },
+    { id: "c23", name: "Computer Networks", credits: 3, grade: "B+", points: 3.3, type: "mandatory", term: "Year 3, Sem 1" },
+    { id: "c24", name: "Advanced Microeconomics", credits: 4, grade: "A-", points: 3.7, type: "elective", term: "Year 3, Sem 1" },
+    { id: "c25", name: "General Psychology", credits: 3, grade: "A", points: 4.0, type: "elective", term: "Year 3, Sem 1" },
+    { id: "c26", name: "Numerical Methods", credits: 3, grade: "B", points: 3.0, type: "elective", term: "Year 3, Sem 1" },
+    { id: "c27", name: "Formal Languages", credits: 4, grade: "B+", points: 3.3, type: "mandatory", term: "Year 3, Sem 1" }
   ]
 };
 
 export function UserProvider({children}) {
     const [userData, setUserData] = useState(() => {
-        const savedData = localStorage.getItem('studentGuideUserData');
-        return savedData ? JSON.parse(savedData) : null;
+        const savedDataRaw = localStorage.getItem('studentGuideUserData');
+        if (!savedDataRaw) return null;
+        try {
+            const parsed = JSON.parse(savedDataRaw);
+            if (parsed && !parsed.coursework) {
+                parsed.coursework = defaultUser.coursework;
+            }
+            return parsed;
+        } catch (e) {
+            return null;
+        }
     });
     
     const [isloggedIn, setIsLoggedIn] = useState(() => {
@@ -425,6 +463,43 @@ export function UserProvider({children}) {
         setUserData(prev => ({ ...prev, targetGpa: newTarget }));
     };
 
+    const addCoursework = (course) => {
+        setUserData(prev => {
+            const currentCoursework = prev?.coursework || [];
+            return {
+                ...prev,
+                coursework: [...currentCoursework, { ...course, id: `course_${Date.now()}` }]
+            };
+        });
+    };
+
+    const updateCoursework = (id, updatedCourse) => {
+        setUserData(prev => {
+            const currentCoursework = prev?.coursework || [];
+            return {
+                ...prev,
+                coursework: currentCoursework.map(c => c.id === id ? { ...c, ...updatedCourse } : c)
+            };
+        });
+    };
+
+    const deleteCoursework = (id) => {
+        setUserData(prev => {
+            const currentCoursework = prev?.coursework || [];
+            return {
+                ...prev,
+                coursework: currentCoursework.filter(c => c.id !== id)
+            };
+        });
+    };
+
+    const resetCoursework = () => {
+        setUserData(prev => ({
+            ...prev,
+            coursework: defaultUser.coursework
+        }));
+    };
+
     return (
         <userContext.Provider value={{
             userData, 
@@ -443,7 +518,11 @@ export function UserProvider({children}) {
             addAnnouncement,
             markNotificationAsRead,
             markAllNotificationsAsRead,
-            deleteNotification
+            deleteNotification,
+            addCoursework,
+            updateCoursework,
+            deleteCoursework,
+            resetCoursework
         }}>
             {children}
         </userContext.Provider>
