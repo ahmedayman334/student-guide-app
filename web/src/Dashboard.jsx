@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userContext } from './context/context';
+import { getTodos, createTodo, updateTodo, deleteTodo } from './api';
 import SideBar from './compontents/SideBar';
 import NotificationBell from './compontents/NotificationBell';
 import { FaStar } from "react-icons/fa";
@@ -32,7 +33,6 @@ function Dashboard() {
     navigate("/login");
   };
 
-  // Interactive Tasks State
   const [tasks, setTasks] = useState([
     { id: 1, label: "Finish Lab Report", checked: false },
     { id: 2, label: "Buy New Notebooks", checked: true },
@@ -42,19 +42,61 @@ function Dashboard() {
 
   const [newTaskLabel, setNewTaskLabel] = useState("");
 
-  const toggleTask = (id) => {
-    setTasks(tasks.map(t => t.id === id ? { ...t, checked: !t.checked } : t));
+  useEffect(() => {
+    getTodos()
+      .then((apiTodos) => {
+        if (apiTodos.length > 0) setTasks(apiTodos);
+      })
+      .catch(() => {});
+  }, []);
+
+  const toggleTask = async (id) => {
+    const task = tasks.find((t) => t.id === id);
+    if (!task) return;
+
+    const updated = tasks.map((t) =>
+      t.id === id ? { ...t, checked: !t.checked } : t
+    );
+    setTasks(updated);
+
+    if (task.apiId) {
+      try {
+        await updateTodo(task.apiId, { is_completed: !task.checked });
+      } catch {
+        setTasks(tasks);
+      }
+    }
   };
 
-  const deleteTask = (id) => {
-    setTasks(tasks.filter(t => t.id !== id));
+  const deleteTask = async (id) => {
+    const task = tasks.find((t) => t.id === id);
+    const prev = tasks;
+    setTasks(tasks.filter((t) => t.id !== id));
+
+    if (task?.apiId) {
+      try {
+        await deleteTodo(task.apiId);
+      } catch {
+        setTasks(prev);
+      }
+    }
   };
 
-  const handleAddTask = (e) => {
+  const handleAddTask = async (e) => {
     e.preventDefault();
-    if (newTaskLabel.trim()) {
-      setTasks([...tasks, { id: Date.now(), label: newTaskLabel.trim(), checked: false }]);
-      setNewTaskLabel("");
+    if (!newTaskLabel.trim()) return;
+
+    const label = newTaskLabel.trim();
+    setNewTaskLabel("");
+
+    try {
+      const created = await createTodo(label);
+      setTasks((prev) => [...prev, created]);
+    } catch {
+      setTasks((prev) => [
+        ...prev,
+        { id: Date.now(), label, checked: false },
+      ]);
     }
   };
 
