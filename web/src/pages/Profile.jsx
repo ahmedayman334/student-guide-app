@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userContext } from '../context/context';
+import { updateProfile as updateProfileApi, yearLabelToLevel } from '../api';
 import SideBar from '../compontents/SideBar';
 import NotificationBell from '../compontents/NotificationBell';
 import { FaPen, FaCheckCircle, FaUser, FaBuilding, FaMoon } from "react-icons/fa";
@@ -44,9 +45,19 @@ export default function Profile() {
     }
   }, [userData]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     updateProfile(formData);
-    alert("Profile changes saved successfully!");
+
+    try {
+      await updateProfileApi({
+        name: formData.name,
+        department: formData.department,
+        currentLevel: yearLabelToLevel(formData.year),
+      });
+      alert("Profile changes saved successfully!");
+    } catch (err) {
+      alert(err.message || "Saved locally. API update requires authentication.");
+    }
   };
 
   const initials = formData.name ? formData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : "JD";
