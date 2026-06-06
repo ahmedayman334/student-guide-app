@@ -289,6 +289,9 @@ class SendPasswordOTPView(APIView):
         
         try:
             send_mail(
+                # print("=========================================")
+                # print(f"Attempting to send OTP to: '{email}'")
+                # print("=========================================")
                 subject='Verification Code to Change Password',
                 message=f'Hello {student.full_name},\n\nYour verification code to set a new password is: {otp}\n\nIf you did not request this, please secure your account.',
                 from_email=settings.EMAIL_HOST_USER,
@@ -331,5 +334,5 @@ class ChangePasswordWithOTPView(generics.GenericAPIView):
                 return Response({"otp_code": "Invalid or expired OTP code!"}, status=status.HTTP_400_BAD_REQUEST)
                 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-78167248
-54489946
+
+18475823
