@@ -163,15 +163,12 @@ class LoginWithCookieView(APIView):
 
 
 class LogoutView(APIView):
-    # لازم يكون مسجل دخول أصلاً عشان يعمل لوج أوت
     permission_classes = [IsAuthenticated] 
 
     def post(self, request):
-        # 1. لو بتستخدم Token Authentication العادي بتاع جانجو (بيمسح التوكن من الداتابيز)
         if hasattr(request.user, 'auth_token'):
             request.user.auth_token.delete()
             
-        # 2. لو بتستخدم Session Authentication (وده اللي Swagger بيستخدمه في الكواليس)
         logout(request)
         
         return Response({"message": "Logout Successfully!"}, status=status.HTTP_200_OK)
@@ -268,30 +265,26 @@ class CohortMessageListCreateView(generics.ListCreateAPIView):
             target_level=profile.current_level
         )
 
-# 1. مسار إرسال الـ OTP للإيميل المربوط أوتوماتيك (مبياخدش أي بيانات في الـ Body)
 class SendPasswordOTPView(APIView):
-    permission_classes = [permissions.IsAuthenticated] # 👈 محمي
+    permission_classes = [permissions.IsAuthenticated] 
 
     def post(self, request):
         user = request.user
         student = user.student_profile
         
-        # لقطنا الإيميل المربوط بالحساب علطول
+        
         email = user.email 
         
         if not email:
             return Response({"error": "This account does not have a linked email."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # توليد OTP جديد وحفظه
+
         otp = str(random.randint(100000, 999999))
         student.otp_code = otp
         student.save()
         
         try:
             send_mail(
-                # print("=========================================")
-                # print(f"Attempting to send OTP to: '{email}'")
-                # print("=========================================")
                 subject='Verification Code to Change Password',
                 message=f'Hello {student.full_name},\n\nYour verification code to set a new password is: {otp}\n\nIf you did not request this, please secure your account.',
                 from_email=settings.EMAIL_HOST_USER,
@@ -306,11 +299,9 @@ class SendPasswordOTPView(APIView):
 class ChangePasswordWithOTPView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
-    # 👈 السطر السحري ده اللي هيخلي Swagger يرسم المربعات!
     serializer_class = ChangePasswordWithOTPSerializer 
 
     def post(self, request, *args, **kwargs):
-        # 👈 غيرنا دي عشان تقرأ السيريلايزر صح
         serializer = self.get_serializer(data=request.data) 
         
         if serializer.is_valid():
@@ -320,12 +311,10 @@ class ChangePasswordWithOTPView(generics.GenericAPIView):
             user = request.user
             student = user.student_profile
             
-            # التأكد من الـ OTP
             if student.otp_code == otp_code:
                 user.set_password(new_password)
                 user.save()
                 
-                # تنظيف الكود
                 student.otp_code = None
                 student.save()
                 
