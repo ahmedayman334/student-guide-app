@@ -166,7 +166,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         assigned_role = 'leader' if invite_code == 'LEADER_SECRET_2026' else 'student'
         otp = str(random.randint(100000, 999999))
 
-        # 👈 بداية التعديل: حساب السنة الأكاديمية بدل الميلادية
         from django.utils import timezone
         current_date = timezone.now().date()
         if current_date.month < 9:
@@ -175,7 +174,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             current_academic_year = current_date.year
             
         calculated_start_year = current_academic_year - input_level + 1
-        # 👈 نهاية التعديل
 
         student = Student.objects.create(
             user=user, 
@@ -221,7 +219,6 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
         if 'current_level' in validated_data:
             new_level = validated_data.pop('current_level')
             
-            # 👈 بداية التعديل: حساب السنة الأكاديمية بدل الميلادية
             from django.utils import timezone
             current_date = timezone.now().date()
             if current_date.month < 9:
@@ -230,7 +227,6 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
                 current_academic_year = current_date.year
                 
             instance.virtual_start_year = current_academic_year - new_level + 1
-            # 👈 نهاية التعديل
             
         return super().update(instance, validated_data)
 
@@ -279,7 +275,6 @@ class ChangePasswordWithOTPSerializer(serializers.Serializer):
     otp_code = serializers.CharField(max_length=6, required=True)
     new_password = serializers.CharField(required=True, min_length=8, write_only=True)
 
-    # حارس الفحص بتاعك للحروف والأرقام
     def validate_new_password(self, value):
         if not re.search(r'\d', value):
             raise serializers.ValidationError("Password must contain at least one number.")

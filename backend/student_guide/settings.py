@@ -115,6 +115,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication', 
         
     ],
+    'EXCEPTION_HANDLER': 'api.utils.custom_exception_handler',
 }
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
