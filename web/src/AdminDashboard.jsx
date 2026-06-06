@@ -19,6 +19,7 @@ import {
   IoLogOutOutline
 } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import { getStudents, createSchedule, createChat } from './api';
 
 export default function AdminDashboard() {
   const [activeMenu, setActiveMenu] = useState('Dashboard');
@@ -45,29 +46,53 @@ export default function AdminDashboard() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addSchedule({
-      title: formData.title,
-      type: formData.type,
-      date: formData.date,
-      time: formData.time,
-      room: formData.room
-    });
-    alert("Event added successfully! It will now appear on the student dashboard.");
-    setFormData({ title: '', type: 'Lecture', date: '', time: '', room: '' });
+    try {
+      const created = await createSchedule({
+        title: formData.title,
+        type: formData.type,
+        date: formData.date,
+        time: formData.time,
+        room: formData.room,
+        targetLevel: 1,
+      });
+      addSchedule(created);
+      alert("Event added successfully! It will now appear on the student dashboard.");
+      setFormData({ title: '', type: 'Lecture', date: '', time: '', room: '' });
+    } catch (err) {
+      addSchedule({
+        title: formData.title,
+        type: formData.type,
+        date: formData.date,
+        time: formData.time,
+        room: formData.room
+      });
+      alert(err.message || "Saved locally. API requires leader authentication.");
+      setFormData({ title: '', type: 'Lecture', date: '', time: '', room: '' });
+    }
   };
 
-  const handleAnnSubmit = (e) => {
+  const handleAnnSubmit = async (e) => {
     e.preventDefault();
     if (!annTitle.trim() || !annDesc.trim()) return;
-    addAnnouncement({
-      title: annTitle.trim(),
-      desc: annDesc.trim(),
-      priority: annPriority,
-      status: "Sent"
-    });
-    alert("Announcement published successfully! It will trigger real-time notifications.");
+
+    const content = `${annTitle.trim()}\n${annDesc.trim()}`;
+
+    try {
+      const created = await createChat(content);
+      addAnnouncement(created);
+      alert("Announcement published successfully!");
+    } catch (err) {
+      addAnnouncement({
+        title: annTitle.trim(),
+        desc: annDesc.trim(),
+        priority: annPriority,
+        status: "Sent"
+      });
+      alert(err.message || "Saved locally. API requires authentication.");
+    }
+
     setAnnTitle('');
     setAnnDesc('');
     setAnnPriority('important');
@@ -83,8 +108,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const res = await fetch("https://ahmedamara.pythonanywhere.com/api/students/");
-        const data = await res.json();
+        const data = await getStudents();
         setStudents(data);
       } catch (err) {
         console.error("Failed to fetch students:", err);
