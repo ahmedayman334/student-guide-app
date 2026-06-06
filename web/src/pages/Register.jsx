@@ -4,7 +4,9 @@ import { FiUser, FiHash, FiCalendar, FiBook, FiAtSign, FiLock, FiEye, FiEyeOff }
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { userContext } from "../context/context";
-import { register as apiRegister, getDepartments, yearLabelToLevel } from "../api";
+import { getDepartments, yearLabelToLevel } from "../api";
+import axios from "axios";
+import { env } from "../environment/environment";
 
 function Register() {
   const { loginUser } = useContext(userContext);
@@ -34,7 +36,7 @@ function Register() {
       .catch((err) => console.warn("Could not load departments:", err.message));
   }, []);
 
-  async function handelRegister(e) {
+  async function handleRegister(e) {
     e.preventDefault();
     setError("");
 
@@ -64,20 +66,36 @@ function Register() {
     setLoading(true);
 
     try {
-      const { user } = await apiRegister({
-        username: register.username.trim(),
-        email: register.email.trim(),
-        password,
-        full_name: register.FullName.trim(),
-        department: register.departmentId,
-        current_level: yearLabelToLevel(register.year),
-      });
+      const response = await axios.post(
+        `${ env.baseUrl }/register/`,
+        {
+          username: register.username.trim(),
+          email: register.email.trim(),
+          password,
+          full_name: register.FullName.trim(),
+          department: register.departmentId,
+          current_level: yearLabelToLevel(register.year),
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-      loginUser(user);
+      console.log(response.data);
+
+      if (response.data.user) {
+        loginUser(response.data.user);
+      }
       navigate("/dashboard");
     } catch (err) {
       console.error("Register error:", err);
-      setError(err.message || "Registration failed. Please try again.");
+    
+      // need modify from backend 
+      setError(
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Registration failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -107,7 +125,7 @@ function Register() {
             </div>
           )}
 
-          <form onSubmit={handelRegister} className="space-y-5">
+          <form onSubmit={handleRegister} className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-[14px] font-bold text-[#44415B] mb-2.5">
