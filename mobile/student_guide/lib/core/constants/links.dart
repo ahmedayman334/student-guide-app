@@ -1,6 +1,10 @@
 class AppLinks {
   AppLinks._();
 
+  // ── API base URL (replace with real URL when backend is ready) ─────────────
+  static const apiBase = 'https://YOUR_API_BASE_URL/api/v1';
+  static const scheduleEndpoint = '$apiBase/schedule';
+
   static const faculty = "https://sci.tanta.edu.eg/";
   static const courseRegistration = "https://tdb.tanta.edu.eg/ors/auth/login.aspx";
   static const books = "https://tdb.tanta.edu.eg/ebooks/Stud_login.aspx";
