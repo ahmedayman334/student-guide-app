@@ -127,6 +127,13 @@ export default function AdminDashboard() {
     { name: 'Settings', icon: <IoSettingsOutline size={20} /> },
   ];
 
+  const sentAnnouncements = announcements.filter(
+    (ann) => (ann.status || 'Sent') === 'Sent'
+  ).length;
+  const pendingItems = announcements.filter(
+    (ann) => ann.status === 'Draft'
+  ).length;
+
   return (
     <div className="flex min-h-screen bg-[#F5F6FA] font-sans text-left" dir="ltr">
       
@@ -207,33 +214,37 @@ export default function AdminDashboard() {
                   value={loading ? "..." : students.length} 
                   badge="+4%" 
                   badgeColor="text-[#059669] bg-[#DEF7EC]"
+                  onClick={() => setActiveMenu('Students')}
                 />
                 <StatCard 
                   icon={<IoCalendarOutline size={24} />} 
                   iconBg="bg-[#06B6D4]" 
                   iconColor="text-white"
                   title="Active Schedules" 
-                  value="148" 
+                  value={schedules.length} 
                   badge="Live" 
                   badgeColor="text-[#6B7280] bg-[#F3F4F6]"
+                  onClick={() => setActiveMenu('Schedule Manager')}
                 />
                 <StatCard 
                   icon={<IoMegaphoneOutline size={24} />} 
                   iconBg="bg-[#F59E0B]" 
                   iconColor="text-white"
                   title="Announcements Sent" 
-                  value="52" 
+                  value={sentAnnouncements} 
                   badge="Weekly" 
                   badgeColor="text-[#6B7280] bg-[#F3F4F6]"
+                  onClick={() => setActiveMenu('Announcements')}
                 />
                 <StatCard 
                   icon={<IoClipboardOutline size={24} />} 
                   iconBg="bg-[#F05252]" 
                   iconColor="text-white"
                   title="Pending Items" 
-                  value="14" 
+                  value={pendingItems} 
                   badge="Action Required" 
                   badgeColor="text-[#9B1C1C] bg-[#FDE8E8]"
+                  onClick={() => setActiveMenu('Announcements')}
                 />
               </div>
 
@@ -243,7 +254,12 @@ export default function AdminDashboard() {
                 <div className="col-span-2 bg-white rounded-[20px] p-7 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="text-[20px] font-bold text-[#1D214E]">Recent Announcements</h2>
-                    <button className="text-[#3B44B3] text-[13px] font-bold hover:underline">View All</button>
+                    <button
+                      onClick={() => setActiveMenu('Announcements')}
+                      className="text-[#3B44B3] text-[13px] font-bold hover:underline"
+                    >
+                      View All
+                    </button>
                   </div>
 
                   <div className="space-y-0 divide-y divide-[#F3F4F6]">
@@ -543,8 +559,16 @@ export default function AdminDashboard() {
   );
 }
 
-const StatCard = ({ icon, iconBg, iconColor, title, value, badge, badgeColor }) => (
-  <div className="bg-white rounded-[20px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] relative overflow-hidden">
+const StatCard = ({ icon, iconBg, iconColor, title, value, badge, badgeColor, onClick }) => (
+  <div
+    role={onClick ? 'button' : undefined}
+    tabIndex={onClick ? 0 : undefined}
+    onClick={onClick}
+    onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } } : undefined}
+    className={`bg-white rounded-[20px] p-6 shadow-[0_2px_15px_rgba(0,0,0,0.02)] relative overflow-hidden ${
+      onClick ? 'cursor-pointer hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 transition-all' : ''
+    }`}
+  >
     <div className="flex justify-between items-start mb-4">
       <div className={`w-12 h-12 rounded-full ${iconBg} ${iconColor} flex items-center justify-center shadow-sm`}>
         {icon}
