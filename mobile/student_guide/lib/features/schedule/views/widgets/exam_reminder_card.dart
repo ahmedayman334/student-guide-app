@@ -1,6 +1,7 @@
 // lib/features/schedule/views/widgets/exam_reminder_card.dart
 
 import 'package:flutter/material.dart';
+import 'package:student_guide/core/theming/app_colors.dart';
 
 enum ExamStatus { inDays, upcoming }
 
@@ -32,7 +33,7 @@ class ExamReminderCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -48,12 +49,12 @@ class ExamReminderCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Exam Reminders',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF1A1A2E),
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
               ),
               const Icon(Icons.campaign_rounded, color: Colors.redAccent, size: 22),
@@ -65,10 +66,10 @@ class ExamReminderCard extends StatelessWidget {
           Center(
             child: TextButton(
               onPressed: () {},
-              child: const Text(
+              child: Text(
                 'View Exam Schedule',
                 style: TextStyle(
-                  color: Color(0xFF4B6BFB),
+                  color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -94,7 +95,9 @@ class _ExamItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.darkSurfaceGrey
+            : const Color(0xFFF8F9FF),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -122,7 +125,7 @@ class _ExamItem extends StatelessWidget {
                 ),
                 Text(
                   '${exam.date} • ${exam.location} • ${exam.time}',
-                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                  style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12),
                 ),
                 const SizedBox(height: 4),
                 Container(

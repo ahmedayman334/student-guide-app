@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 import 'package:student_guide/features/schedule/cubit/schedule_cubit.dart';
 import 'package:student_guide/features/schedule/views/widgets/week_day_item.dart';
@@ -44,7 +43,7 @@ class WeeklyCalendarWidget extends StatelessWidget {
                       width: 4,
                       height: 24,
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
+                        color: Theme.of(context).colorScheme.primary,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -61,7 +60,7 @@ class WeeklyCalendarWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
-                color: AppColors.cardBackground,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Row(

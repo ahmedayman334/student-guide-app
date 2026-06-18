@@ -21,7 +21,7 @@ class AcademicStatusCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8),
@@ -32,7 +32,7 @@ class AcademicStatusCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.shield, color: AppColors.primary, size: 18),
+              Icon(Icons.shield, color: Theme.of(context).colorScheme.primary, size: 18),
               const SizedBox(width: 6),
               Text(
                 'Academic Status',
@@ -73,23 +73,32 @@ class _StatusRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
       decoration: BoxDecoration(
-        color: highlighted ? const Color(0xFFFFF8E7) : Colors.grey.shade50,
+        color: highlighted
+            ? (isDark
+                ? theme.colorScheme.tertiary.withValues(alpha: 0.15)
+                : const Color(0xFFFFF8E7))
+            : (isDark
+                ? AppColors.darkSurfaceGrey
+                : Colors.grey.shade50),
         borderRadius: BorderRadius.circular(8),
         border: highlighted
-            ? const Border(left: BorderSide(color: Color(0xFFFFB800), width: 3))
+            ? Border(left: BorderSide(color: theme.colorScheme.tertiary, width: 3))
             : null,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: AppTextStyles.bodyMedium),
+          Text(label, style: AppTextStyles.bodyMedium.copyWith(color: theme.textTheme.bodyMedium?.color)),
           Text(
             value,
             style: AppTextStyles.bodyMedium.copyWith(
               fontWeight: FontWeight.w600,
+              color: theme.textTheme.bodyMedium?.color,
             ),
           ),
         ],

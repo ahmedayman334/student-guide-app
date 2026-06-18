@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_guide/core/constants/app_images.dart';
 import 'package:student_guide/core/routing/app_routes.dart';
-import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 
 class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -13,7 +12,7 @@ class ShellAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         "Student Guide",
-        style: AppTextStyles.heading1.copyWith(color: AppColors.textPrimary),
+        style: AppTextStyles.heading1.copyWith(color: Theme.of(context).appBarTheme.foregroundColor),
       ),
       actions: [
         IconButton(

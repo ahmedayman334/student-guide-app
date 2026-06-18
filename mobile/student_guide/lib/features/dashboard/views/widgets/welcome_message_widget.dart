@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 
 class WelcomeMessage extends StatelessWidget {
@@ -24,24 +23,24 @@ class WelcomeMessage extends StatelessWidget {
                 TextSpan(
                   text: "welcome back, ",
                   style: AppTextStyles.displayTitle.copyWith(
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                 ),
                 TextSpan(
                   text: name,
                   style: AppTextStyles.displayTitle.copyWith(
-                    color: AppColors.primary,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ],
             ),
           ),
 
-          SizedBox(height: 6),
+          const SizedBox(height: 6),
           Text(
             "You have $classCount classes today. Stay focused!",
             style: AppTextStyles.subtitle.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).textTheme.bodySmall?.color,
             ),
           ),
         ],

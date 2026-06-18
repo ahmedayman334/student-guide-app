@@ -22,6 +22,14 @@ class WeekDayItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
+    final primaryColor = theme.colorScheme.primary;
+    final hintColor = isDark ? AppColors.darkTextHint : AppColors.textHint;
+    final secondaryColor = theme.textTheme.bodySmall?.color ?? AppColors.textSecondary;
+    final primaryTextColor = theme.textTheme.bodyMedium?.color ?? AppColors.textPrimary;
+
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
@@ -34,10 +42,10 @@ class WeekDayItem extends StatelessWidget {
               style: AppTextStyles.badge.copyWith(
                 fontSize: 11,
                 color: isSelected
-                    ? AppColors.primary
+                    ? primaryColor
                     : isWeekend
-                        ? AppColors.textHint
-                        : AppColors.textSecondary,
+                        ? hintColor
+                        : secondaryColor,
               ),
             ),
             const SizedBox(height: 6),
@@ -45,7 +53,7 @@ class WeekDayItem extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.primary : Colors.transparent,
+                color: isSelected ? primaryColor : Colors.transparent,
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
@@ -55,8 +63,8 @@ class WeekDayItem extends StatelessWidget {
                   color: isSelected
                       ? Colors.white
                       : isWeekend
-                          ? AppColors.textHint
-                          : AppColors.textPrimary,
+                          ? hintColor
+                          : primaryTextColor,
                   fontWeight:
                       isSelected ? FontWeight.bold : FontWeight.normal,
                 ),

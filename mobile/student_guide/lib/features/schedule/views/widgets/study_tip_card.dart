@@ -19,12 +19,12 @@ class StudyTipCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'STUDY TIP',
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF4B6BFB),
+              color: Theme.of(context).colorScheme.primary,
               letterSpacing: 1.5,
             ),
           ),

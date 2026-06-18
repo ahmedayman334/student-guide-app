@@ -25,10 +25,11 @@ class _PersonalInfoCardState extends State<PersonalInfoCard> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8),
@@ -48,12 +49,13 @@ class _PersonalInfoCardState extends State<PersonalInfoCard> {
                       'Personal Information',
                       style: AppTextStyles.heading3.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: theme.textTheme.bodyMedium?.color,
                       ),
                     ),
                     Text(
                       'Update your university profile details',
                       style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.textSecondary,
+                        color: theme.textTheme.bodySmall?.color,
                       ),
                     ),
                   ],
@@ -62,7 +64,7 @@ class _PersonalInfoCardState extends State<PersonalInfoCard> {
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: theme.colorScheme.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -125,7 +127,7 @@ class _FieldLabel extends StatelessWidget {
       child: Text(
         text,
         style: AppTextStyles.inputLabel.copyWith(
-          color: AppColors.textSecondary,
+          color: Theme.of(context).textTheme.bodySmall?.color,
         ),
       ),
     );
@@ -145,14 +147,16 @@ class _InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return TextField(
       controller: controller,
       readOnly: readOnly,
-      style: AppTextStyles.bodyMedium,
+      style: AppTextStyles.bodyMedium.copyWith(color: theme.textTheme.bodyMedium?.color),
       decoration: InputDecoration(
-        prefixIcon: Icon(icon, size: 18, color: AppColors.textSecondary),
+        prefixIcon: Icon(icon, size: 18, color: theme.textTheme.bodySmall?.color),
         filled: true,
-        fillColor: Colors.grey.shade100,
+        fillColor: theme.inputDecorationTheme.fillColor ?? (isDark ? AppColors.darkSurfaceGrey : Colors.grey.shade100),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -181,16 +185,19 @@ class _DropdownField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: theme.inputDecorationTheme.fillColor ?? (isDark ? AppColors.darkSurfaceGrey : Colors.grey.shade100),
         borderRadius: BorderRadius.circular(12),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
           isExpanded: true,
+          dropdownColor: theme.colorScheme.surface,
           icon: const Icon(Icons.expand_more),
           items: items
               .map(
@@ -198,9 +205,9 @@ class _DropdownField extends StatelessWidget {
                   value: e,
                   child: Row(
                     children: [
-                      Icon(icon, size: 18, color: AppColors.textSecondary),
+                      Icon(icon, size: 18, color: theme.textTheme.bodySmall?.color),
                       const SizedBox(width: 10),
-                      Text(e, style: AppTextStyles.bodyMedium),
+                      Text(e, style: AppTextStyles.bodyMedium.copyWith(color: theme.textTheme.bodyMedium?.color)),
                     ],
                   ),
                 ),
