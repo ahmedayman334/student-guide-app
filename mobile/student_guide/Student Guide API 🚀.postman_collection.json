@@ -1,0 +1,4199 @@
+{
+  "info": {
+    "_postman_id": "fe2cea3d-ded7-4d20-8f49-62a135e56740",
+    "name": "Student Guide API 🚀",
+    "description": "التوثيق الرسمي لجميع روابط مشروع دليل الطالب",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47642360"
+  },
+  "item": [
+    {
+      "name": "chats",
+      "item": [
+        {
+          "name": "chats list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/chats/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "chats",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/chats/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "chats",
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"content\": \"string\",\n    \"message_id\": \"string\",\n    \"sender_name\": \"string\",\n    \"department\": \"string\",\n    \"target_level\": 6852,\n    \"created_at\": \"1951-07-18T01:57:33.475Z\"\n  },\n  {\n    \"content\": \"string\",\n    \"message_id\": \"string\",\n    \"sender_name\": \"string\",\n    \"department\": \"string\",\n    \"target_level\": 6412,\n    \"created_at\": \"2017-09-27T16:57:47.692Z\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "chats create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/chats/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "chats",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/chats/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "chats",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"content\": \"string\",\n  \"message_id\": \"string\",\n  \"sender_name\": \"string\",\n  \"department\": \"string\",\n  \"target_level\": 269,\n  \"created_at\": \"1974-01-25T05:54:05.027Z\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "departments",
+      "item": [
+        {
+          "name": "{department_id}",
+          "item": [
+            {
+              "name": "departments read",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/departments/:department_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "departments",
+                    ":department_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "department_id",
+                      "value": "string",
+                      "description": "A unique value identifying this department."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/departments/:department_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "departments",
+                        ":department_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "department_id",
+                          "value": "string",
+                          "description": "A unique value identifying this department."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"name\": \"st\",\n  \"department_id\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "departments update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/departments/:department_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "departments",
+                    ":department_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "department_id",
+                      "value": "string",
+                      "description": "A unique value identifying this department."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/departments/:department_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "departments",
+                        ":department_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "department_id",
+                          "value": "string",
+                          "description": "A unique value identifying this department."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"name\": \"st\",\n  \"department_id\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "departments partial update",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/departments/:department_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "departments",
+                    ":department_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "department_id",
+                      "value": "string",
+                      "description": "A unique value identifying this department."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/departments/:department_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "departments",
+                        ":department_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "department_id",
+                          "value": "string",
+                          "description": "A unique value identifying this department."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"name\": \"st\",\n  \"department_id\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "departments delete",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/departments/:department_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "departments",
+                    ":department_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "department_id",
+                      "value": "string",
+                      "description": "A unique value identifying this department."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "204",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/departments/:department_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "departments",
+                        ":department_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "department_id",
+                          "value": "string",
+                          "description": "A unique value identifying this department."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "departments list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/departments/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departments",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/departments/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "departments",
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"name\": \"string\",\n    \"department_id\": \"string\"\n  },\n  {\n    \"name\": \"string\",\n    \"department_id\": \"string\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "departments create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/departments/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "departments",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/departments/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "departments",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"name\": \"st\",\n  \"department_id\": \"string\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "exams",
+      "item": [
+        {
+          "name": "{exam_id}",
+          "item": [
+            {
+              "name": "exams read",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/exams/:exam_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "exams",
+                    ":exam_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "exam_id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/exams/:exam_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "exams",
+                        ":exam_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "exam_id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"target_level\": -4565357987807129600,\n  \"exam_date\": \"1990-07-28\",\n  \"exam_id\": \"string\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\",\n  \"created_by\": 1171\n}"
+                }
+              ]
+            },
+            {
+              "name": "exams update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_level\": 2432544901885827000,\n  \"exam_date\": \"1961-12-21\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/exams/:exam_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "exams",
+                    ":exam_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "exam_id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"target_level\": 2432544901885827000,\n  \"exam_date\": \"1961-12-21\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/exams/:exam_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "exams",
+                        ":exam_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "exam_id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"target_level\": -4565357987807129600,\n  \"exam_date\": \"1990-07-28\",\n  \"exam_id\": \"string\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\",\n  \"created_by\": 1171\n}"
+                }
+              ]
+            },
+            {
+              "name": "exams partial update",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_level\": 2432544901885827000,\n  \"exam_date\": \"1961-12-21\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/exams/:exam_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "exams",
+                    ":exam_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "exam_id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"target_level\": 2432544901885827000,\n  \"exam_date\": \"1961-12-21\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/exams/:exam_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "exams",
+                        ":exam_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "exam_id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"target_level\": -4565357987807129600,\n  \"exam_date\": \"1990-07-28\",\n  \"exam_id\": \"string\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\",\n  \"created_by\": 1171\n}"
+                }
+              ]
+            },
+            {
+              "name": "exams delete",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/exams/:exam_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "exams",
+                    ":exam_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "exam_id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "204",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/exams/:exam_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "exams",
+                        ":exam_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "exam_id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "exams list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/exams/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/exams/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "exams",
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"target_level\": 9143134210398110000,\n    \"exam_date\": \"2007-09-20\",\n    \"exam_id\": \"string\",\n    \"start_time\": \"string\",\n    \"end_time\": \"string\",\n    \"hall_location\": \"string\",\n    \"department\": \"string\",\n    \"subject\": \"string\",\n    \"created_by\": 6024\n  },\n  {\n    \"target_level\": -5595542808908448000,\n    \"exam_date\": \"2013-07-02\",\n    \"exam_id\": \"string\",\n    \"start_time\": \"string\",\n    \"end_time\": \"string\",\n    \"hall_location\": \"string\",\n    \"department\": \"string\",\n    \"subject\": \"string\",\n    \"created_by\": 4962\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "exams create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target_level\": 2432544901885827000,\n  \"exam_date\": \"1961-12-21\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/exams/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exams",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_level\": 2432544901885827000,\n  \"exam_date\": \"1961-12-21\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/exams/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "exams",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"target_level\": -4565357987807129600,\n  \"exam_date\": \"1990-07-28\",\n  \"exam_id\": \"string\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"hall_location\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\",\n  \"created_by\": 1171\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "item": [
+        {
+          "name": "login create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/login/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "login",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"username\": \"string\",\n  \"password\": \"string\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "logout",
+      "item": [
+        {
+          "name": "logout create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/logout/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "logout",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/logout/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "logout",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "me",
+      "item": [
+        {
+          "name": "me list",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/me/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "me",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/me/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "me",
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "profile",
+      "item": [
+        {
+          "name": "change-password",
+          "item": [
+            {
+              "name": "request-otp",
+              "item": [
+                {
+                  "name": "profile change-password request-otp create",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/profile/change-password/request-otp/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "profile",
+                        "change-password",
+                        "request-otp",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "201",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/profile/change-password/request-otp/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "profile",
+                            "change-password",
+                            "request-otp",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "verify-otp",
+              "item": [
+                {
+                  "name": "profile change-password verify-otp create",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"otp_code\": \"s\",\n  \"new_password\": \"stringstring\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/profile/change-password/verify-otp/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "profile",
+                        "change-password",
+                        "verify-otp",
+                        ""
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "201",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"otp_code\": \"s\",\n  \"new_password\": \"stringstring\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/profile/change-password/verify-otp/",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "profile",
+                            "change-password",
+                            "verify-otp",
+                            ""
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"otp_code\": \"s\",\n  \"new_password\": \"stringstring\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "profile change-password update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"old_password\": \"string\",\n  \"new_password\": \"stringstring\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/profile/change-password/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "profile",
+                    "change-password",
+                    ""
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"old_password\": \"string\",\n  \"new_password\": \"stringstring\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/profile/change-password/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "profile",
+                        "change-password",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"old_password\": \"string\",\n  \"new_password\": \"stringstring\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "update",
+          "item": [
+            {
+              "name": "profile update update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "full_name",
+                      "value": "string",
+                      "type": "text"
+                    },
+                    {
+                      "key": "department",
+                      "value": "string",
+                      "type": "text"
+                    },
+                    {
+                      "key": "cover_image",
+                      "type": "file",
+                      "value": null
+                    },
+                    {
+                      "key": "current_level",
+                      "value": "3",
+                      "type": "text"
+                    },
+                    {
+                      "key": "current_cgpa",
+                      "value": "string",
+                      "type": "text"
+                    },
+                    {
+                      "key": "total_credits",
+                      "value": "3727609340336969700",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/profile/update/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "profile",
+                    "update",
+                    ""
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "full_name",
+                          "value": "string",
+                          "type": "text"
+                        },
+                        {
+                          "key": "department",
+                          "value": "string",
+                          "type": "text"
+                        },
+                        {
+                          "key": "cover_image",
+                          "type": "file",
+                          "src": []
+                        },
+                        {
+                          "key": "current_level",
+                          "value": "3",
+                          "type": "text"
+                        },
+                        {
+                          "key": "current_cgpa",
+                          "value": "string",
+                          "type": "text"
+                        },
+                        {
+                          "key": "total_credits",
+                          "value": "3727609340336969700",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/profile/update/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "profile",
+                        "update",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"cover_image\": \"http://GsqckRVt.uxgoDcCB4B-cRifAi8ScsGkjd7RHOlwQHE5AJe7G-Bo7VbsKotwlE1qSacHMSb9Om4VZTHr3ozwJdfSGtfD\",\n  \"current_level\": 1,\n  \"current_cgpa\": \"string\",\n  \"total_credits\": 7130161836062042000\n}"
+                }
+              ]
+            },
+            {
+              "name": "profile update partial update",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "full_name",
+                      "value": "string",
+                      "type": "text"
+                    },
+                    {
+                      "key": "department",
+                      "value": "string",
+                      "type": "text"
+                    },
+                    {
+                      "key": "cover_image",
+                      "type": "file",
+                      "value": null
+                    },
+                    {
+                      "key": "current_level",
+                      "value": "2",
+                      "type": "text"
+                    },
+                    {
+                      "key": "current_cgpa",
+                      "value": "string",
+                      "type": "text"
+                    },
+                    {
+                      "key": "total_credits",
+                      "value": "-1155325057390897200",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/profile/update/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "profile",
+                    "update",
+                    ""
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "full_name",
+                          "value": "string",
+                          "type": "text"
+                        },
+                        {
+                          "key": "department",
+                          "value": "string",
+                          "type": "text"
+                        },
+                        {
+                          "key": "cover_image",
+                          "type": "file",
+                          "src": []
+                        },
+                        {
+                          "key": "current_level",
+                          "value": "2",
+                          "type": "text"
+                        },
+                        {
+                          "key": "current_cgpa",
+                          "value": "string",
+                          "type": "text"
+                        },
+                        {
+                          "key": "total_credits",
+                          "value": "-1155325057390897200",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/profile/update/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "profile",
+                        "update",
+                        ""
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"cover_image\": \"http://GsqckRVt.uxgoDcCB4B-cRifAi8ScsGkjd7RHOlwQHE5AJe7G-Bo7VbsKotwlE1qSacHMSb9Om4VZTHr3ozwJdfSGtfD\",\n  \"current_level\": 1,\n  \"current_cgpa\": \"string\",\n  \"total_credits\": 7130161836062042000\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "register",
+      "item": [
+        {
+          "name": "register create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"ZrZq\",\n  \"email\": \"te10De@EXeCKToIrtKxwZHm.zrqy\",\n  \"password\": \"stringstring\",\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"current_level\": 2,\n  \"invite_code\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/register/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "register",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"ZrZq\",\n  \"email\": \"te10De@EXeCKToIrtKxwZHm.zrqy\",\n  \"password\": \"stringstring\",\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"current_level\": 2,\n  \"invite_code\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/register/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "register",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"username\": \"Tp0aQEYpc3E\",\n  \"email\": \"JNIVwguQ@s.zfvh\",\n  \"password\": \"stringstring\",\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"current_level\": 3,\n  \"cover_image\": \"http://HFuTIiK.vxpxrnpSO2zPxRx-lgsWIZd21hrIXOVpj\",\n  \"invite_code\": \"string\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "schedules",
+      "item": [
+        {
+          "name": "{schedule_id}",
+          "item": [
+            {
+              "name": "schedules read",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/schedules/:schedule_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "schedules",
+                    ":schedule_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "schedule_id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/schedules/:schedule_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "schedules",
+                        ":schedule_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "schedule_id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"target_level\": 8477178503666614000,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"sunday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"schedule_id\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\",\n  \"created_by\": 688\n}"
+                }
+              ]
+            },
+            {
+              "name": "schedules update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_level\": -839466987189243900,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"monday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/schedules/:schedule_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "schedules",
+                    ":schedule_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "schedule_id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"target_level\": -839466987189243900,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"monday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/schedules/:schedule_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "schedules",
+                        ":schedule_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "schedule_id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"target_level\": 8477178503666614000,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"sunday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"schedule_id\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\",\n  \"created_by\": 688\n}"
+                }
+              ]
+            },
+            {
+              "name": "schedules partial update",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_level\": -839466987189243900,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"monday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/schedules/:schedule_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "schedules",
+                    ":schedule_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "schedule_id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"target_level\": -839466987189243900,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"monday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/schedules/:schedule_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "schedules",
+                        ":schedule_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "schedule_id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"target_level\": 8477178503666614000,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"sunday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"schedule_id\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\",\n  \"created_by\": 688\n}"
+                }
+              ]
+            },
+            {
+              "name": "schedules delete",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/schedules/:schedule_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "schedules",
+                    ":schedule_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "schedule_id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "204",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/schedules/:schedule_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "schedules",
+                        ":schedule_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "schedule_id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "schedules list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/schedules/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "schedules",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/schedules/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "schedules",
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"target_level\": 2152980809950728200,\n    \"type\": \"string\",\n    \"hall_location\": \"string\",\n    \"day_of_week\": \"thursday\",\n    \"start_time\": \"string\",\n    \"end_time\": \"string\",\n    \"schedule_id\": \"string\",\n    \"department\": \"string\",\n    \"subject\": \"string\",\n    \"created_by\": 159\n  },\n  {\n    \"target_level\": -1281636626703386600,\n    \"type\": \"string\",\n    \"hall_location\": \"string\",\n    \"day_of_week\": \"wednesday\",\n    \"start_time\": \"string\",\n    \"end_time\": \"string\",\n    \"schedule_id\": \"string\",\n    \"department\": \"string\",\n    \"subject\": \"string\",\n    \"created_by\": 6723\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "schedules create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target_level\": -839466987189243900,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"monday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/schedules/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "schedules",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"target_level\": -839466987189243900,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"monday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/schedules/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "schedules",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"target_level\": 8477178503666614000,\n  \"type\": \"string\",\n  \"hall_location\": \"string\",\n  \"day_of_week\": \"sunday\",\n  \"start_time\": \"string\",\n  \"end_time\": \"string\",\n  \"schedule_id\": \"string\",\n  \"department\": \"string\",\n  \"subject\": \"string\",\n  \"created_by\": 688\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "students",
+      "item": [
+        {
+          "name": "{student_id}",
+          "item": [
+            {
+              "name": "students read",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/students/:student_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "students",
+                    ":student_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "student_id",
+                      "value": "string",
+                      "description": "A unique value identifying this student."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/students/:student_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "students",
+                        ":student_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "student_id",
+                          "value": "string",
+                          "description": "A unique value identifying this student."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"full_name\": \"string\",\n  \"student_id\": \"stri\",\n  \"department\": \"string\",\n  \"current_level\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -2332494135061582000,\n  \"cover_image\": \"https://EDxPrfqPpoQZmBzxGeEuXpnMtcpFmVz.bymmil2GmAoLsnQ\",\n  \"current_cgpa\": \"string\",\n  \"total_credits\": 4596511293755040000\n}"
+                }
+              ]
+            },
+            {
+              "name": "students update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -8667300700139200000,\n  \"current_cgpa\": \"string\",\n  \"total_credits\": -1262477626742306800\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/students/:student_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "students",
+                    ":student_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "student_id",
+                      "value": "string",
+                      "description": "A unique value identifying this student."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -8667300700139200000,\n  \"current_cgpa\": \"string\",\n  \"total_credits\": -1262477626742306800\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/students/:student_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "students",
+                        ":student_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "student_id",
+                          "value": "string",
+                          "description": "A unique value identifying this student."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"full_name\": \"string\",\n  \"student_id\": \"stri\",\n  \"department\": \"string\",\n  \"current_level\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -2332494135061582000,\n  \"cover_image\": \"https://EDxPrfqPpoQZmBzxGeEuXpnMtcpFmVz.bymmil2GmAoLsnQ\",\n  \"current_cgpa\": \"string\",\n  \"total_credits\": 4596511293755040000\n}"
+                }
+              ]
+            },
+            {
+              "name": "students partial update",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -8667300700139200000,\n  \"current_cgpa\": \"string\",\n  \"total_credits\": -1262477626742306800\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/students/:student_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "students",
+                    ":student_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "student_id",
+                      "value": "string",
+                      "description": "A unique value identifying this student."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -8667300700139200000,\n  \"current_cgpa\": \"string\",\n  \"total_credits\": -1262477626742306800\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/students/:student_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "students",
+                        ":student_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "student_id",
+                          "value": "string",
+                          "description": "A unique value identifying this student."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"full_name\": \"string\",\n  \"student_id\": \"stri\",\n  \"department\": \"string\",\n  \"current_level\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -2332494135061582000,\n  \"cover_image\": \"https://EDxPrfqPpoQZmBzxGeEuXpnMtcpFmVz.bymmil2GmAoLsnQ\",\n  \"current_cgpa\": \"string\",\n  \"total_credits\": 4596511293755040000\n}"
+                }
+              ]
+            },
+            {
+              "name": "students delete",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/students/:student_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "students",
+                    ":student_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "student_id",
+                      "value": "string",
+                      "description": "A unique value identifying this student."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "204",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/students/:student_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "students",
+                        ":student_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "student_id",
+                          "value": "string",
+                          "description": "A unique value identifying this student."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "students list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/students/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/students/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "students",
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"full_name\": \"string\",\n    \"student_id\": \"string\",\n    \"department\": \"string\",\n    \"current_level\": \"string\",\n    \"role\": \"student\",\n    \"virtual_start_year\": -10019518227638272,\n    \"cover_image\": \"http://lEPqVFABEUJ.yhzgvIGV44mL29lQ.u2vn0x5zQ6CGhmitf+POtF0ZJizum59xJ\",\n    \"current_cgpa\": \"string\",\n    \"total_credits\": 2153441243221162000\n  },\n  {\n    \"full_name\": \"string\",\n    \"student_id\": \"str\",\n    \"department\": \"string\",\n    \"current_level\": \"string\",\n    \"role\": \"student\",\n    \"virtual_start_year\": 6077219867219139000,\n    \"cover_image\": \"https://p.mnvyfj.gq9p.Kax,mRZ,d3iK4qM2\",\n    \"current_cgpa\": \"string\",\n    \"total_credits\": 283636994047789060\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "students create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -8667300700139200000,\n  \"current_cgpa\": \"string\",\n  \"total_credits\": -1262477626742306800\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"string\",\n  \"department\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -8667300700139200000,\n  \"current_cgpa\": \"string\",\n  \"total_credits\": -1262477626742306800\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/students/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "students",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"full_name\": \"string\",\n  \"student_id\": \"stri\",\n  \"department\": \"string\",\n  \"current_level\": \"string\",\n  \"role\": \"student\",\n  \"virtual_start_year\": -2332494135061582000,\n  \"cover_image\": \"https://EDxPrfqPpoQZmBzxGeEuXpnMtcpFmVz.bymmil2GmAoLsnQ\",\n  \"current_cgpa\": \"string\",\n  \"total_credits\": 4596511293755040000\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "subjects",
+      "item": [
+        {
+          "name": "{subject_id}",
+          "item": [
+            {
+              "name": "subjects read",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/subjects/:subject_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subjects",
+                    ":subject_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "subject_id",
+                      "value": "string",
+                      "description": "A unique value identifying this subject."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subjects/:subject_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subjects",
+                        ":subject_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "subject_id",
+                          "value": "string",
+                          "description": "A unique value identifying this subject."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"subject_code\": \"str\",\n  \"name\": \"string\",\n  \"credits\": -5702818773352030000,\n  \"departments\": [\n    \"string\"\n  ],\n  \"subject_id\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "subjects update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject_code\": \"string\",\n  \"name\": \"string\",\n  \"credits\": -4569371408252565500,\n  \"departments\": [\n    \"string\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subjects/:subject_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subjects",
+                    ":subject_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "subject_id",
+                      "value": "string",
+                      "description": "A unique value identifying this subject."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subject_code\": \"string\",\n  \"name\": \"string\",\n  \"credits\": -4569371408252565500,\n  \"departments\": [\n    \"string\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subjects/:subject_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subjects",
+                        ":subject_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "subject_id",
+                          "value": "string",
+                          "description": "A unique value identifying this subject."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"subject_code\": \"str\",\n  \"name\": \"string\",\n  \"credits\": -5702818773352030000,\n  \"departments\": [\n    \"string\"\n  ],\n  \"subject_id\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "subjects partial update",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject_code\": \"string\",\n  \"name\": \"string\",\n  \"credits\": -4569371408252565500,\n  \"departments\": [\n    \"string\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subjects/:subject_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subjects",
+                    ":subject_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "subject_id",
+                      "value": "string",
+                      "description": "A unique value identifying this subject."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"subject_code\": \"string\",\n  \"name\": \"string\",\n  \"credits\": -4569371408252565500,\n  \"departments\": [\n    \"string\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/subjects/:subject_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subjects",
+                        ":subject_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "subject_id",
+                          "value": "string",
+                          "description": "A unique value identifying this subject."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"subject_code\": \"str\",\n  \"name\": \"string\",\n  \"credits\": -5702818773352030000,\n  \"departments\": [\n    \"string\"\n  ],\n  \"subject_id\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "subjects delete",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/subjects/:subject_id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subjects",
+                    ":subject_id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "subject_id",
+                      "value": "string",
+                      "description": "A unique value identifying this subject."
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "204",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/subjects/:subject_id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "subjects",
+                        ":subject_id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "subject_id",
+                          "value": "string",
+                          "description": "A unique value identifying this subject."
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "subjects list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subjects/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subjects",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/subjects/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subjects",
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"subject_code\": \"string\",\n    \"name\": \"string\",\n    \"credits\": -2776730724857895000,\n    \"departments\": [\n      \"string\"\n    ],\n    \"subject_id\": \"string\"\n  },\n  {\n    \"subject_code\": \"string\",\n    \"name\": \"string\",\n    \"credits\": 7091659965047409000,\n    \"departments\": [\n      \"string\"\n    ],\n    \"subject_id\": \"string\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "subjects create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject_code\": \"string\",\n  \"name\": \"string\",\n  \"credits\": -4569371408252565500,\n  \"departments\": [\n    \"string\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/subjects/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subjects",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject_code\": \"string\",\n  \"name\": \"string\",\n  \"credits\": -4569371408252565500,\n  \"departments\": [\n    \"string\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subjects/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subjects",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"subject_code\": \"str\",\n  \"name\": \"string\",\n  \"credits\": -5702818773352030000,\n  \"departments\": [\n    \"string\"\n  ],\n  \"subject_id\": \"string\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "todos",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "todos read",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/todos/:id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "todos",
+                    ":id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/todos/:id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "todos",
+                        ":id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"task_name\": \"string\",\n  \"todo_id\": \"string\",\n  \"is_completed\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "todos update",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"task_name\": \"string\",\n  \"is_completed\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/todos/:id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "todos",
+                    ":id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"task_name\": \"string\",\n  \"is_completed\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/todos/:id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "todos",
+                        ":id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"task_name\": \"string\",\n  \"todo_id\": \"string\",\n  \"is_completed\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "todos partial update",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"task_name\": \"string\",\n  \"is_completed\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/todos/:id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "todos",
+                    ":id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "200",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"task_name\": \"string\",\n  \"is_completed\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/todos/:id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "todos",
+                        ":id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"task_name\": \"string\",\n  \"todo_id\": \"string\",\n  \"is_completed\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "todos delete",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/todos/:id/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "todos",
+                    ":id",
+                    ""
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "204",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/todos/:id/",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "todos",
+                        ":id",
+                        ""
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "todos list",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/todos/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "todos",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/todos/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "todos",
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"task_name\": \"string\",\n    \"todo_id\": \"string\",\n    \"is_completed\": true\n  },\n  {\n    \"task_name\": \"string\",\n    \"todo_id\": \"string\",\n    \"is_completed\": true\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "todos create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"task_name\": \"string\",\n  \"is_completed\": true\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/todos/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "todos",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"task_name\": \"string\",\n  \"is_completed\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/todos/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "todos",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"task_name\": \"string\",\n  \"todo_id\": \"string\",\n  \"is_completed\": true\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "verify-otp",
+      "item": [
+        {
+          "name": "verify-otp create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"ehsEg9sh@xTEAlsIOioW.xxau\",\n  \"otp_code\": \"str\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/verify-otp/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "verify-otp",
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"ehsEg9sh@xTEAlsIOioW.xxau\",\n  \"otp_code\": \"str\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/verify-otp/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "verify-otp",
+                    ""
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"email\": \"ehsEg9sh@xTEAlsIOioW.xxau\",\n  \"otp_code\": \"str\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://ahmedamara.pythonanywhere.com/api"
+    }
+  ]
+}

@@ -1,10 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_guide/features/dashboard/views/widgets/boost_your_gpa_widget.dart';
 import 'package:student_guide/features/dashboard/views/widgets/quick_tasks_widget.dart';
 import 'package:student_guide/features/dashboard/views/widgets/stat_card_grid_view.dart';
 import 'package:student_guide/features/dashboard/views/widgets/today_schedule_widget.dart';
 import 'package:student_guide/features/dashboard/views/widgets/welcome_message_widget.dart';
+import 'package:student_guide/features/schedule/cubit/schedule_cubit.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -15,12 +16,19 @@ class DashboardView extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: WelcomeMessage(name: 'Ahmed', classCount: 3),
+            child: BlocBuilder<ScheduleCubit, ScheduleState>(
+              builder: (context, state) {
+                return WelcomeMessage(
+                  name: 'Ahmed',
+                  classCount: state.todayLectures.length,
+                );
+              },
+            ),
           ),
-          StatCardGridView(),
-          TodayScheduleWidget(),
-          SliverToBoxAdapter(child: BoostGpaBanner()),
-          SliverToBoxAdapter(child: QuickTasksWidget()),
+          const StatCardGridView(),
+          const TodayScheduleWidget(),
+          const SliverToBoxAdapter(child: BoostGpaBanner()),
+          const SliverToBoxAdapter(child: QuickTasksWidget()),
         ],
       ),
     );

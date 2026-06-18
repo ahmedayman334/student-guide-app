@@ -15,7 +15,7 @@ class GpaCalculatorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (_) => GpaCubit(), child: const _GpaBody());
+    return const _GpaBody();
   }
 }
 
@@ -33,7 +33,6 @@ class _GpaBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
