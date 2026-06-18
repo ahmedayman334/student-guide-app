@@ -1,4 +1,12 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
+import {
+  clearSession,
+  getMe,
+  getSchedules,
+  getChats,
+  logout as apiLogout,
+  saveSession,
+} from "../api";
 
 export const userContext = createContext();
 
@@ -62,8 +70,10 @@ export function UserProvider({children}) {
     });
     
     const [isloggedIn, setIsLoggedIn] = useState(() => {
-        return !!localStorage.getItem('token');
+        return !!localStorage.getItem('token') || !!localStorage.getItem('access_token');
     });
+
+    const [apiLoading, setApiLoading] = useState(false);
 
     const [schedules, setSchedules] = useState(() => {
         const saved = localStorage.getItem('globalSchedules');
@@ -148,6 +158,45 @@ export function UserProvider({children}) {
             }
         ];
     });
+
+    const refreshFromApi = useCallback(async () => {
+        if (!localStorage.getItem('token') && !localStorage.getItem('access_token')) return;
+
+        setApiLoading(true);
+        try {
+            const me = await getMe();
+            if (me) {
+                setUserData(prev => ({
+                    ...defaultUser,
+                    ...prev,
+                    ...me,
+                    coursework: prev?.coursework || defaultUser.coursework,
+                    notifications: prev?.notifications || [],
+                    targetGpa: prev?.targetGpa ?? defaultUser.targetGpa,
+                }));
+            }
+
+            const apiSchedules = await getSchedules();
+            if (apiSchedules.length > 0) {
+                setSchedules(apiSchedules);
+            }
+
+            const apiChats = await getChats();
+            if (apiChats.length > 0) {
+                setAnnouncements(apiChats);
+            }
+        } catch (err) {
+            console.warn("API sync skipped:", err.message);
+        } finally {
+            setApiLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isloggedIn) {
+            refreshFromApi();
+        }
+    }, [isloggedIn, refreshFromApi]);
 
     useEffect(() => {
         if (userData) {
@@ -411,27 +460,36 @@ export function UserProvider({children}) {
 
         const newUserData = {
             ...defaultUser,
-            ...(savedData.email === userApiData.email ? savedData : {}), // Keep old data if same user
-            
-            // Override with newly provided data
-            name: userApiData.username || userApiData.FullName || savedData.name || defaultUser.name,
+            ...(savedData.id === userApiData.id || savedData.email === userApiData.email ? savedData : {}),
+            ...userApiData,
+            name: userApiData.name || userApiData.FullName || savedData.name || defaultUser.name,
             email: userApiData.email || savedData.email || defaultUser.email,
-            id: userApiData.id || savedData.id || defaultUser.id,
+            id: userApiData.id || userApiData.studentId || savedData.id || defaultUser.id,
             year: userApiData.year || savedData.year || defaultUser.year,
             department: userApiData.department || savedData.department || defaultUser.department,
-            notifications: savedData.email === userApiData.email ? (savedData.notifications || []) : []
+            gpa: userApiData.gpa ?? savedData.gpa ?? defaultUser.gpa,
+            credits: userApiData.credits ?? savedData.credits ?? defaultUser.credits,
+            notifications:
+                savedData.id === userApiData.id || savedData.email === userApiData.email
+                    ? (savedData.notifications || [])
+                    : [],
+            coursework: savedData.coursework || defaultUser.coursework,
         };
 
         setUserData(newUserData);
         setIsLoggedIn(true);
-        localStorage.setItem('token', 'fake-token');
+        saveSession(newUserData);
     };
 
-    const logoutUser = () => {
+    const logoutUser = async () => {
+        try {
+            await apiLogout();
+        } catch {
+            clearSession();
+        }
         setUserData(null);
         setIsLoggedIn(false);
-        localStorage.removeItem('token');
-        localStorage.removeItem('studentGuideUserData');
+        clearSession();
     };
 
     const updateProfile = (newData) => {
@@ -503,7 +561,9 @@ export function UserProvider({children}) {
     return (
         <userContext.Provider value={{
             userData, 
-            isloggedIn, 
+            isloggedIn,
+            apiLoading,
+            refreshFromApi,
             loginUser, 
             logoutUser, 
             updateProfile,

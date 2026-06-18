@@ -52,21 +52,21 @@ class Student(models.Model):
         Academic year rolls over on September 1st.
         """
         if not self.virtual_start_year:
-            return 1 # عشان لو مفيش سنة متسجلة يرجعه فرقة أولى بدل ما يضرب إيرور
+            return 
             
         from django.utils import timezone
         current_date = timezone.now().date()
         
-        # حساب السنة الأكاديمية الحالية
+        
         if current_date.month < 9:
             current_academic_year = current_date.year - 1
         else:
             current_academic_year = current_date.year
             
-        # 👈 هنا السر: استخدمنا السنة الأكاديمية اللي حسبناها، مش السنة الميلادية!
+        
         level = current_academic_year - self.virtual_start_year + 1
         
-        # نضمن إن الرقم مستحيل يقل عن 1 ومستحيل يزيد عن 5
+        
         return max(1, min(level, 5))
     def __str__(self):
         return f"{self.full_name} ({self.role.capitalize()})"

@@ -6,6 +6,14 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-
   ],
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://ahmedamara.pythonanywhere.com",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 })
