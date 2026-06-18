@@ -17,8 +17,9 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: const Color(0xFFF0F1FA),
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -53,19 +54,19 @@ class _LoginViewState extends State<LoginView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.school, color: AppColors.primary, size: 28),
+                  Icon(Icons.school, color: theme.colorScheme.primary, size: 28),
                   const SizedBox(width: 8),
-                  Text('Student Guide', style: AppTextStyles.heading2),
+                  Text('Student Guide', style: AppTextStyles.heading2.copyWith(color: theme.textTheme.bodyMedium?.color)),
                 ],
               ),
               const SizedBox(height: 32),
 
               // Welcome heading
-              Text('Welcome Back', style: AppTextStyles.heading1.copyWith(fontSize: 30)),
+              Text('Welcome Back', style: AppTextStyles.heading1.copyWith(fontSize: 30, color: theme.textTheme.bodyMedium?.color)),
               const SizedBox(height: 8),
               Text(
                 'Continue your scholarly progress today.',
-                style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+                style: AppTextStyles.bodyMedium.copyWith(color: theme.textTheme.bodySmall?.color),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 36),
@@ -96,7 +97,7 @@ class _LoginViewState extends State<LoginView> {
                     child: Text(
                       'Forgot?',
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.primary,
+                        color: theme.colorScheme.primary,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -113,7 +114,7 @@ class _LoginViewState extends State<LoginView> {
                   icon: Icon(
                     _obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                     size: 20,
-                    color: AppColors.textSecondary,
+                    color: theme.textTheme.bodySmall?.color,
                   ),
                   onPressed: () => setState(() => _obscure = !_obscure),
                 ),
@@ -127,9 +128,9 @@ class _LoginViewState extends State<LoginView> {
                     value: _remember,
                     onChanged: (v) => setState(() => _remember = v!),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                    activeColor: AppColors.primary,
+                    activeColor: theme.colorScheme.primary,
                   ),
-                  Text('Remember this session', style: AppTextStyles.bodyMedium),
+                  Text('Remember this session', style: AppTextStyles.bodyMedium.copyWith(color: theme.textTheme.bodyMedium?.color)),
                 ],
               ),
               const SizedBox(height: 24),
@@ -158,7 +159,7 @@ class _LoginViewState extends State<LoginView> {
                     ],
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4A5BC4),
+                    backgroundColor: theme.colorScheme.primary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                     elevation: 0,
                   ),
@@ -169,18 +170,18 @@ class _LoginViewState extends State<LoginView> {
               // OR divider
               Row(
                 children: [
-                  Expanded(child: Divider(color: Colors.grey.shade300)),
+                  Expanded(child: Divider(color: theme.dividerTheme.color ?? Colors.grey.shade300)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
                       'OR CONNECT WITH',
                       style: AppTextStyles.inputLabel.copyWith(
-                        color: AppColors.textSecondary,
+                        color: theme.textTheme.bodySmall?.color,
                         letterSpacing: 0.8,
                       ),
                     ),
                   ),
-                  Expanded(child: Divider(color: Colors.grey.shade300)),
+                  Expanded(child: Divider(color: theme.dividerTheme.color ?? Colors.grey.shade300)),
                 ],
               ),
               const SizedBox(height: 20),
@@ -199,12 +200,12 @@ class _LoginViewState extends State<LoginView> {
               RichText(
                 text: TextSpan(
                   text: 'New to the guide?  ',
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.bodyMedium.copyWith(color: theme.textTheme.bodySmall?.color),
                   children: [
                     TextSpan(
                       text: 'Create Student Account',
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: const Color(0xFF4A5BC4),
+                        color: theme.colorScheme.primary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -231,7 +232,10 @@ class _FieldLabel extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         text,
-        style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w700),
+        style: AppTextStyles.bodyMedium.copyWith(
+          fontWeight: FontWeight.w700,
+          color: Theme.of(context).textTheme.bodyMedium?.color,
+        ),
       ),
     );
   }
@@ -256,18 +260,20 @@ class _AuthField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return TextField(
       controller: controller,
       obscureText: obscure,
       keyboardType: keyboardType,
-      style: AppTextStyles.bodyMedium,
+      style: AppTextStyles.bodyMedium.copyWith(color: theme.textTheme.bodyMedium?.color),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: AppTextStyles.bodyMedium.copyWith(color: Colors.grey.shade400),
-        prefixIcon: Icon(icon, size: 20, color: Colors.grey.shade400),
+        hintStyle: AppTextStyles.bodyMedium.copyWith(color: theme.hintColor),
+        prefixIcon: Icon(icon, size: 20, color: theme.hintColor),
         suffixIcon: suffix,
         filled: true,
-        fillColor: const Color(0xFFE8EAF6),
+        fillColor: theme.inputDecorationTheme.fillColor ?? (isDark ? AppColors.darkSurfaceGrey : const Color(0xFFE8EAF6)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide.none,
@@ -286,16 +292,20 @@ class _SocialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return OutlinedButton.icon(
       onPressed: () {},
       icon: Icon(icon, size: 20),
-      label: Text(label, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600)),
+      label: Text(label, style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600, color: isDark ? Colors.white : Colors.black87)),
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 14),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        side: BorderSide(color: Colors.grey.shade300),
-        foregroundColor: Colors.black87,
-        backgroundColor: Colors.white,
+        side: BorderSide(
+          color: isDark ? AppColors.darkDivider : Colors.grey.shade300,
+        ),
+        foregroundColor: isDark ? Colors.white : Colors.black87,
+        backgroundColor: isDark ? AppColors.darkSurfaceGrey : Colors.white,
       ),
     );
   }

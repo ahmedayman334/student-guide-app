@@ -6,7 +6,7 @@ class RegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(iconTheme: IconThemeData(color: Colors.black)),
+      appBar: AppBar(),
 
       body: Center(child: Text("Register screen")),
     );

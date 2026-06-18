@@ -18,6 +18,8 @@ class TargetCgpaPlanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final requiredAvg =
         ((targetCgpa * (totalCredits + 7)) - (currentCgpa * totalCredits)) / 7;
     final neededAvg = requiredAvg.clamp(0.0, 4.0);
@@ -25,9 +27,9 @@ class TargetCgpaPlanner extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border(left: BorderSide(color: AppColors.primary, width: 4)),
+        border: Border(left: BorderSide(color: theme.colorScheme.primary, width: 4)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -41,12 +43,12 @@ class TargetCgpaPlanner extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.track_changes, color: AppColors.primary, size: 20),
+              Icon(Icons.track_changes, color: theme.colorScheme.primary, size: 20),
               const SizedBox(width: 8),
               Text(
                 'Target CGPA Planner',
                 style: AppTextStyles.heading3.copyWith(
-                  color: AppColors.textPrimary,
+                  color: theme.textTheme.bodyMedium?.color,
                 ),
               ),
             ],
@@ -55,16 +57,16 @@ class TargetCgpaPlanner extends StatelessWidget {
           Text(
             'Desired Final CGPA',
             style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+              color: theme.textTheme.bodySmall?.color,
             ),
           ),
           const SizedBox(height: 8),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
-              activeTrackColor: AppColors.primary,
-              inactiveTrackColor: AppColors.divider,
-              thumbColor: AppColors.primary,
-              overlayColor: AppColors.primary.withValues(alpha: 0.1),
+              activeTrackColor: theme.colorScheme.primary,
+              inactiveTrackColor: theme.dividerTheme.color ?? AppColors.divider,
+              thumbColor: theme.colorScheme.primary,
+              overlayColor: theme.colorScheme.primary.withValues(alpha: 0.1),
               trackHeight: 4,
             ),
             child: Slider(
@@ -81,13 +83,13 @@ class TargetCgpaPlanner extends StatelessWidget {
               Text(
                 'Current: ${currentCgpa.toStringAsFixed(2)}',
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: theme.textTheme.bodySmall?.color,
                 ),
               ),
               Text(
                 'Target: ${targetCgpa.toStringAsFixed(2)}',
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textPrimary,
+                  color: theme.textTheme.bodyMedium?.color,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -97,19 +99,19 @@ class TargetCgpaPlanner extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.surfaceGrey,
+              color: isDark ? AppColors.darkSurfaceGrey : AppColors.surfaceGrey,
               borderRadius: BorderRadius.circular(10),
             ),
             child: RichText(
               text: TextSpan(
                 style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
+                  color: theme.textTheme.bodySmall?.color,
                 ),
                 children: [
                   TextSpan(
                     text: 'SIMULATION RESULT\n',
                     style: AppTextStyles.sectionLabel.copyWith(
-                      color: AppColors.textSecondary,
+                      color: theme.textTheme.bodySmall?.color,
                     ),
                   ),
                   const TextSpan(text: 'To reach '),
@@ -117,7 +119,7 @@ class TargetCgpaPlanner extends StatelessWidget {
                     text: targetCgpa.toStringAsFixed(2),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimary,
+                      color: theme.textTheme.bodyMedium?.color,
                     ),
                   ),
                   const TextSpan(text: ', you need an average of '),
@@ -125,7 +127,7 @@ class TargetCgpaPlanner extends StatelessWidget {
                     text: neededAvg.toStringAsFixed(2),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                      color: theme.colorScheme.primary,
                     ),
                   ),
                   const TextSpan(text: ' across the next 3 semesters.'),

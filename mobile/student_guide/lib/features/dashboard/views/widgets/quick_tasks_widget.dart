@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 import 'package:student_guide/features/dashboard/cubit/dashboard_cubit.dart';
 
@@ -52,7 +51,7 @@ class QuickTasksWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Quick Tasks", style: AppTextStyles.heading2),
-                  IconButton(onPressed: () => _addNewTask(context), icon: const Icon(Icons.add_circle, color: AppColors.primary)),
+                  IconButton(onPressed: () => _addNewTask(context), icon: Icon(Icons.add_circle, color: Theme.of(context).colorScheme.primary)),
                 ],
               ),
               const SizedBox(height: 8),
@@ -61,7 +60,7 @@ class QuickTasksWidget extends StatelessWidget {
                   children: [
                     Checkbox(
                       value: task.isDone,
-                      activeColor: AppColors.primary,
+                      activeColor: Theme.of(context).colorScheme.primary,
                       onChanged: (_) => context.read<DashboardCubit>().toggleTask(task.id),
                     ),
                     Expanded(
@@ -69,13 +68,13 @@ class QuickTasksWidget extends StatelessWidget {
                         task.title,
                         style: AppTextStyles.bodyMedium.copyWith(
                           decoration: task.isDone ? TextDecoration.lineThrough : TextDecoration.none,
-                          color: task.isDone ? AppColors.textSecondary : AppColors.textPrimary,
+                          color: task.isDone ? Theme.of(context).textTheme.bodySmall?.color : Theme.of(context).textTheme.bodyMedium?.color,
                         ),
                       ),
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete_outline, size: 20),
-                      color: AppColors.textSecondary,
+                      color: Theme.of(context).textTheme.bodySmall?.color,
                       onPressed: () => context.read<DashboardCubit>().removeTask(task.id),
                     ),
                   ],

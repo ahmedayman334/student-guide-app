@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 
 class StatCard extends StatelessWidget {
@@ -36,18 +35,18 @@ class StatCard extends StatelessWidget {
           Text(
             title,
             style: AppTextStyles.cardLabel.copyWith(
-              color: AppColors.bottomNavInactive,
+              color: Theme.of(context).textTheme.bodySmall?.color,
             ),
           ),
 
-          SizedBox(height: 6),
+          const SizedBox(height: 6),
           Text(
             value,
             style: AppTextStyles.statNumber.copyWith(
-              color: AppColors.textPrimary,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           if (subtitle != null) Text(subtitle!, style: AppTextStyles.bodySmall),
         ],
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 import 'package:student_guide/features/gpa_calculator/models/subject_entry_model.dart';
 import 'package:student_guide/features/gpa_calculator/views/widgets/subject_row.dart';
@@ -23,7 +22,7 @@ class SemesterSubjectsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -41,7 +40,7 @@ class SemesterSubjectsCard extends StatelessWidget {
               Text(
                 'Semester\nSubjects',
                 style: AppTextStyles.heading2
-                    .copyWith(color: AppColors.textPrimary),
+                    .copyWith(color: Theme.of(context).textTheme.bodyMedium?.color),
               ),
               ElevatedButton.icon(
                 onPressed: onAdd,
@@ -50,7 +49,7 @@ class SemesterSubjectsCard extends StatelessWidget {
                     style: AppTextStyles.buttonSecondary
                         .copyWith(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

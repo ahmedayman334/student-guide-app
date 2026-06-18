@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 import 'package:student_guide/features/gpa_calculator/cubit/gpa_cubit.dart';
 import 'package:student_guide/features/gpa_calculator/cubit/gpa_state.dart';
@@ -39,13 +38,13 @@ class _GpaBody extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     'ACADEMIC TOOL',
                     style: AppTextStyles.sectionLabel.copyWith(
-                      color: AppColors.primary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -55,7 +54,7 @@ class _GpaBody extends StatelessWidget {
                 Text(
                   'Simulate your semester outcomes and plan your path to academic excellence with precision.',
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).textTheme.bodySmall?.color,
                   ),
                 ),
                 AcademicHistoryCard(

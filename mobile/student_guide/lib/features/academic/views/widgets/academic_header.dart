@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_guide/core/theming/app_colors.dart';
 import 'package:student_guide/core/theming/app_text_style.dart'
     show AppTextStyles;
 
@@ -22,7 +21,7 @@ class AcademicHeader extends StatelessWidget {
               TextSpan(
                 text: 'Academic\n',
                 style: AppTextStyles.displayTitle.copyWith(
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
               ),
               TextSpan(
@@ -45,9 +44,9 @@ class AcademicHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
+        Text(
           'Explore specialized faculties and discover over 450 subjects curated for your academic journey.',
-          style: TextStyle(fontSize: 13, color: Color(0xFF6B7280), height: 1.5),
+          style: TextStyle(fontSize: 13, color: Theme.of(context).textTheme.bodySmall?.color, height: 1.5),
         ),
       ],
     );

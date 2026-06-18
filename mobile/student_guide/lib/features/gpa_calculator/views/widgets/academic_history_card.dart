@@ -20,9 +20,9 @@ class AcademicHistoryCard extends StatelessWidget {
     required this.onLastGpaChanged,
   });
 
-  InputDecoration get _inputDecoration => InputDecoration(
+  InputDecoration _inputDecoration(BuildContext context) => InputDecoration(
     filled: true,
-    fillColor: AppColors.surfaceGrey,
+    fillColor: Theme.of(context).inputDecorationTheme.fillColor ?? AppColors.surfaceGrey,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
       borderSide: BorderSide.none,
@@ -33,7 +33,7 @@ class AcademicHistoryCard extends StatelessWidget {
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+      borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5),
     ),
     contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
   );
@@ -43,7 +43,7 @@ class AcademicHistoryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -58,12 +58,12 @@ class AcademicHistoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.history_edu, color: AppColors.primary, size: 20),
+              Icon(Icons.history_edu, color: Theme.of(context).colorScheme.primary, size: 20),
               const SizedBox(width: 8),
               Text(
                 'Academic History',
                 style: AppTextStyles.heading3.copyWith(
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
               ),
             ],
@@ -72,7 +72,7 @@ class AcademicHistoryCard extends StatelessWidget {
           Text(
             'Enter your current academic standing.',
             style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textSecondary,
+              color: Theme.of(context).textTheme.bodySmall?.color,
             ),
           ),
           const SizedBox(height: 16),
@@ -86,7 +86,7 @@ class AcademicHistoryCard extends StatelessWidget {
                       ? currentCgpa.toStringAsFixed(2)
                       : '',
                   hint: '0.00',
-                  inputDecoration: _inputDecoration,
+                  inputDecoration: _inputDecoration(context),
                   onChanged: (val) =>
                       onCgpaChanged(double.tryParse(val) ?? 0.0),
                 ),
@@ -98,7 +98,7 @@ class AcademicHistoryCard extends StatelessWidget {
                   label: 'TOTAL CREDITS',
                   initialValue: totalCredits > 0 ? '$totalCredits' : '',
                   hint: '0',
-                  inputDecoration: _inputDecoration,
+                  inputDecoration: _inputDecoration(context),
                   keyboardType: TextInputType.number,
                   onChanged: (val) => onCreditsChanged(int.tryParse(val) ?? 0),
                 ),
@@ -110,7 +110,7 @@ class AcademicHistoryCard extends StatelessWidget {
                   label: 'LAST SEM GPA',
                   initialValue: lastGpa > 0 ? lastGpa.toStringAsFixed(2) : '',
                   hint: 'optional',
-                  inputDecoration: _inputDecoration,
+                  inputDecoration: _inputDecoration(context),
                   onChanged: (val) =>
                       onLastGpaChanged(double.tryParse(val) ?? 0.0),
                 ),
@@ -148,7 +148,7 @@ class _HistoryField extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.sectionLabel.copyWith(
-            color: AppColors.textSecondary,
+            color: Theme.of(context).textTheme.bodySmall?.color,
           ),
         ),
         const SizedBox(height: 6),
@@ -156,12 +156,12 @@ class _HistoryField extends StatelessWidget {
           initialValue: initialValue,
           keyboardType: keyboardType,
           style: AppTextStyles.inputValue.copyWith(
-            color: AppColors.textPrimary,
+            color: Theme.of(context).textTheme.bodyMedium?.color,
           ),
           decoration: inputDecoration.copyWith(
             hintText: hint,
             hintStyle: AppTextStyles.inputHint.copyWith(
-              color: AppColors.textHint,
+              color: Theme.of(context).hintColor,
             ),
           ),
           onChanged: onChanged,

@@ -6,10 +6,11 @@ class AiRecommenderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0F1FF),
+        color: isDark ? AppColors.darkSurfaceGrey : const Color(0xFFF0F1FF),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -34,18 +35,18 @@ class AiRecommenderCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'AI Course Recommender',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1A2E),
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                 ),
                 const SizedBox(height: 2),
-                const Text(
+                Text(
                   'Get personalized path suggestions based on your GPA.',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                  style: TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodySmall?.color),
                 ),
                 const SizedBox(height: 12),
                 SizedBox(

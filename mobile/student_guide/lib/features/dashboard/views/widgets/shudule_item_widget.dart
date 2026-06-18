@@ -24,12 +24,15 @@ class ScheduleItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        color: isNext ? AppColors.background : AppColors.cardScheduleBackground,
+        color: isDark
+            ? (isNext ? Theme.of(context).colorScheme.surface : AppColors.darkSurfaceGrey)
+            : (isNext ? AppColors.background : AppColors.cardScheduleBackground),
         border: Border(
           left: BorderSide(
-            color: isNext ? AppColors.accent : Colors.transparent,
+            color: isNext ? Theme.of(context).colorScheme.primary : Colors.transparent,
             width: 3,
           ),
         ),
@@ -48,13 +51,13 @@ class ScheduleItemWidget extends StatelessWidget {
                 Text(
                   subject,
                   style: AppTextStyles.heading2.copyWith(
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                 ),
                 Text(
                   "$room • $professor",
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).textTheme.bodySmall?.color,
                   ),
                 ),
               ],
@@ -66,7 +69,7 @@ class ScheduleItemWidget extends StatelessWidget {
               Text(
                 time,
                 style: AppTextStyles.timeSlot.copyWith(
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
               ),
 
@@ -77,13 +80,13 @@ class ScheduleItemWidget extends StatelessWidget {
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.accent,
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
                     badge!,
                     style: AppTextStyles.badge.copyWith(
-                      color: AppColors.background,
+                      color: Colors.white,
                     ),
                   ),
                 ),

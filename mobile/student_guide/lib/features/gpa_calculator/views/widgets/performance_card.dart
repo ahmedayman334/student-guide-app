@@ -19,6 +19,7 @@ class PerformanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final hasHistory = lastGpa > 0;
     final shift = hasHistory
         ? ((currentGpa - lastGpa) / lastGpa * 100).clamp(-100.0, 100.0)
@@ -31,7 +32,7 @@ class PerformanceCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColors.cardBackground,
+            color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
@@ -52,7 +53,7 @@ class PerformanceCard extends StatelessWidget {
                     Text(
                       'Performance Shift',
                       style: AppTextStyles.heading3.copyWith(
-                        color: AppColors.textPrimary,
+                        color: theme.textTheme.bodyMedium?.color,
                       ),
                     ),
                     Text(
@@ -66,7 +67,7 @@ class PerformanceCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
                     value: (currentGpa / 4.0).clamp(0.0, 1.0),
-                    backgroundColor: AppColors.divider,
+                    backgroundColor: theme.dividerTheme.color ?? AppColors.divider,
                     valueColor: AlwaysStoppedAnimation<Color>(shiftColor),
                     minHeight: 8,
                   ),
@@ -75,10 +76,10 @@ class PerformanceCard extends StatelessWidget {
                 Text(
                   'Your projected GPA is ${isPositive ? 'higher' : 'lower'} than last semester\'s ${lastGpa.toStringAsFixed(2)} by ${(currentGpa - lastGpa).abs().toStringAsFixed(2)} points.',
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: theme.textTheme.bodySmall?.color,
                   ),
                 ),
-                Divider(height: 24, color: AppColors.divider),
+                Divider(height: 24, color: theme.dividerTheme.color ?? AppColors.divider),
               ],
               StatRow(
                 label: 'Current CGPA',
@@ -94,7 +95,7 @@ class PerformanceCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: AppColors.tertiary.withValues(alpha: 0.08),
+            color: theme.colorScheme.tertiary.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Row(
@@ -109,14 +110,14 @@ class PerformanceCard extends StatelessWidget {
                     Text(
                       'Strategy Tip',
                       style: AppTextStyles.heading3.copyWith(
-                        color: AppColors.textPrimary,
+                        color: theme.textTheme.bodyMedium?.color,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       strategyTip,
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
+                        color: theme.textTheme.bodySmall?.color,
                       ),
                     ),
                   ],

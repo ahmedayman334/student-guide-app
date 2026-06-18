@@ -16,9 +16,9 @@ class SubjectRow extends StatelessWidget {
     required this.onChanged,
   });
 
-  InputDecoration get _inputDecoration => InputDecoration(
+  InputDecoration _inputDecoration(BuildContext context) => InputDecoration(
         filled: true,
-        fillColor: AppColors.surfaceGrey,
+        fillColor: Theme.of(context).inputDecorationTheme.fillColor ?? AppColors.surfaceGrey,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide.none,
@@ -29,7 +29,7 @@ class SubjectRow extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -37,13 +37,14 @@ class SubjectRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.divider),
+        border: Border.all(color: theme.dividerTheme.color ?? AppColors.divider),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,16 +52,16 @@ class SubjectRow extends StatelessWidget {
           // ── Subject Name ───────────────────────────────
           Text('SUBJECT NAME',
               style: AppTextStyles.sectionLabel
-                  .copyWith(color: AppColors.textSecondary)),
+                  .copyWith(color: theme.textTheme.bodySmall?.color)),
           const SizedBox(height: 6),
           TextFormField(
             initialValue: entry.name.isEmpty ? null : entry.name,
             style: AppTextStyles.inputValue
-                .copyWith(color: AppColors.textPrimary),
-            decoration: _inputDecoration.copyWith(
+                .copyWith(color: theme.textTheme.bodyMedium?.color),
+            decoration: _inputDecoration(context).copyWith(
               hintText: 'Add subject name...',
               hintStyle: AppTextStyles.inputHint
-                  .copyWith(color: AppColors.textHint),
+                  .copyWith(color: theme.hintColor),
             ),
             onChanged: (val) {
               entry.name = val;
@@ -79,7 +80,7 @@ class SubjectRow extends StatelessWidget {
                   children: [
                     Text('CREDITS',
                         style: AppTextStyles.sectionLabel
-                            .copyWith(color: AppColors.textSecondary)),
+                            .copyWith(color: theme.textTheme.bodySmall?.color)),
                     const SizedBox(height: 6),
                     TextFormField(
                       initialValue: entry.credits == 0
@@ -87,8 +88,8 @@ class SubjectRow extends StatelessWidget {
                           : '${entry.credits}',
                       keyboardType: TextInputType.number,
                       style: AppTextStyles.inputValue
-                          .copyWith(color: AppColors.textPrimary),
-                      decoration: _inputDecoration,
+                          .copyWith(color: theme.textTheme.bodyMedium?.color),
+                      decoration: _inputDecoration(context),
                       onChanged: (val) {
                         entry.credits = int.tryParse(val) ?? 0;
                         onChanged();
@@ -105,22 +106,22 @@ class SubjectRow extends StatelessWidget {
                   children: [
                     Text('GRADE',
                         style: AppTextStyles.sectionLabel
-                            .copyWith(color: AppColors.textSecondary)),
+                            .copyWith(color: theme.textTheme.bodySmall?.color)),
                     const SizedBox(height: 6),
                     DropdownButtonFormField<double>(
                       initialValue: entry.grade,
                       hint: Text('Select Grade',
                           style: AppTextStyles.inputHint
-                              .copyWith(color: AppColors.textHint)),
+                              .copyWith(color: theme.hintColor)),
                       icon: const Icon(Icons.keyboard_arrow_down_rounded,
                           size: 18),
-                      decoration: _inputDecoration,
+                      decoration: _inputDecoration(context),
                       items: gradeOptions
                           .map((g) => DropdownMenuItem(
                                 value: g.value,
                                 child: Text(g.label,
                                     style: AppTextStyles.inputValue.copyWith(
-                                        color: AppColors.textPrimary)),
+                                        color: theme.textTheme.bodyMedium?.color)),
                               ))
                           .toList(),
                       onChanged: (val) {

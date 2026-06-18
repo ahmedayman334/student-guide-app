@@ -11,10 +11,12 @@ class DepartmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -34,7 +36,7 @@ class DepartmentCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: department.iconBackground,
+                  color: isDark ? department.iconColor.withValues(alpha: 0.15) : department.iconBackground,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -45,9 +47,9 @@ class DepartmentCard extends StatelessWidget {
               ),
               Text(
                 '${department.subjectCount} Subjects',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
-                  color: Color(0xFF6B7280),
+                  color: theme.textTheme.bodySmall?.color,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -69,9 +71,9 @@ class DepartmentCard extends StatelessWidget {
           // ── Description ───────────────────────────────────
           Text(
             department.description,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
-              color: Color(0xFF6B7280),
+              color: theme.textTheme.bodySmall?.color,
               height: 1.4,
             ),
           ),

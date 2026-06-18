@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_guide/core/theming/app_text_style.dart';
 
-import '../../../../core/theming/app_colors.dart';
-
 class ProfileHeaderWidget extends StatelessWidget {
   final String name;
   final String subtitle; // e.g. "B.Sc. Computer Science • 3rd Year"
@@ -44,7 +42,7 @@ class ProfileHeaderWidget extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 38,
-                    backgroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     child: CircleAvatar(
                       radius: 34,
                       backgroundColor: const Color(0xFF6B7FD4),
@@ -62,7 +60,7 @@ class ProfileHeaderWidget extends StatelessWidget {
                     right: 0,
                     child: CircleAvatar(
                       radius: 11,
-                      backgroundColor: AppColors.primary, // your teal/green
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       child: const Icon(
                         Icons.edit,
                         size: 12,
@@ -81,12 +79,12 @@ class ProfileHeaderWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name, style: AppTextStyles.heading1),
+              Text(name, style: AppTextStyles.heading1.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color)),
               const SizedBox(height: 2),
               Text(
                 subtitle,
                 style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).textTheme.bodySmall?.color,
                 ),
               ),
             ],

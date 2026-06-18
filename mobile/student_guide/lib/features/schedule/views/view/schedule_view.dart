@@ -120,7 +120,7 @@ class _SectionHeader extends StatelessWidget {
         Container(
           width: 4,
           height: 24,
-          decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(2)),
+          decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, borderRadius: BorderRadius.circular(2)),
         ),
         const SizedBox(width: 8),
         Text(title, style: AppTextStyles.heading2),
@@ -134,20 +134,33 @@ class _EmptyDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(
+          color: isDark ? AppColors.darkDivider : Colors.grey.shade200,
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.calendar_today_outlined, color: AppColors.textSecondary.withValues(alpha: 0.5), size: 40),
+          Icon(
+            Icons.calendar_today_outlined,
+            color: (theme.textTheme.bodySmall?.color ?? AppColors.textSecondary).withValues(alpha: 0.5),
+            size: 40,
+          ),
           const SizedBox(height: 12),
-          Text('No lectures scheduled for this day.', style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary)),
+          Text(
+            'No lectures scheduled for this day.',
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: theme.textTheme.bodySmall?.color,
+            ),
+          ),
         ],
       ),
     );
